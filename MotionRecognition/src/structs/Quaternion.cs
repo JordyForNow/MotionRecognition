@@ -1,6 +1,6 @@
 namespace MotionRecognition 
 {
-    internal struct Quaternion
+    public struct Quaternion
     {
         public float x { get; set; }
         public float y { get; set; }
