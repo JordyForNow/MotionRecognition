@@ -1,8 +1,11 @@
-//macos search
+// MacOS search
 **.DS_Store
-//.vs settings
+
+// Skip .vs
 **.vs/
-//skip builds
+
+// Skip builds
 MotionRecognition/bin
-//skip intermediates
+
+// Skip intermediates
 MotionRecognition/obj
