@@ -1,5 +1,4 @@
-﻿using System;
-namespace MotionRecognition.src
+﻿namespace MotionRecognition.src
 {
     public class Vector3
     {
