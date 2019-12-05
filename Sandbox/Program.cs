@@ -1,5 +1,4 @@
-﻿using System;
-using MotionRecognition;
+﻿using MotionRecognition;
 
 namespace Sandbox
 {

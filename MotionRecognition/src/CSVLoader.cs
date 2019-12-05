@@ -17,15 +17,14 @@ namespace MotionRecognition
 		}
 		private Table parseFile(bool hasHeader = true)
 		{
-			var lines = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path));
-			var rawData = lines.Select(line => line.Split(','))
-					.Select(item =>
-					{
-						Console.WriteLine(item);
-						return new
-						{
-						};
-					});
+			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
+			foreach(var row in rows)
+			{
+				foreach(var cell in row)
+				{
+
+				}
+			}
 			return new Table();
 		}
 
