@@ -1,10 +1,14 @@
-﻿using System;
-namespace MotionRecognition.src
+﻿namespace MotionRecognition
 {
-	public class CSVLoader
+	public class CSVLoader : IDataLoader
 	{
-		public CSVLoader()
+		public MotionImage LoadImage()
 		{
+			MotionImage image = new MotionImage();
+
+			
+
+			return image;
 		}
 	}
 }

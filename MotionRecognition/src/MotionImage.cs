@@ -1,10 +1,10 @@
-﻿using System;
-namespace MotionRecognition.src
+﻿namespace MotionRecognition
 {
-	public class MotionImage
+	public class MotionImage : IImage
 	{
 		public MotionImage()
 		{
+
 		}
 	}
 }
