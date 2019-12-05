@@ -1,4 +1,5 @@
 ﻿using System;
+using MotionRecognition;
 
 namespace Sandbox
 {
@@ -6,7 +7,8 @@ namespace Sandbox
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            CSVLoader loader = new CSVLoader("data.csv");
+            loader.LoadImage();
         }
     }
 }
