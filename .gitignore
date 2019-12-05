@@ -1,3 +1,8 @@
-.vs/
-MotionRecognition/bin/
-MotionRecognition/obj/
+//macos search
+**.DS_Store
+//.vs settings
+**.vs/
+//skip builds
+MotionRecognition/bin
+//skip intermediates
+MotionRecognition/obj

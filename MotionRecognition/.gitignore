@@ -1,6 +1,0 @@
-//macos search
-**.DS_Store
-//skip builds
-MotionRecognition/bin
-//skip intermediates
-MotionRecognition/obj
