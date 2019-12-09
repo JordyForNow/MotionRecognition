@@ -4,17 +4,17 @@ using System.IO;
 
 namespace UnitTests
 {
-    public class Tests
-    {
-        [SetUp]
-        public void Setup()
-        {
-        }
+	public class Tests
+	{
+		[SetUp]
+		public void Setup()
+		{
+		}
 
-        [Test]
-        public void TestLoader()
-        {
+		[Test]
+		public void TestLoader()
+		{
 			Assert.Pass();
-        }
-    }
+		}
+	}
 }

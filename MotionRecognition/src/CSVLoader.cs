@@ -22,7 +22,7 @@ namespace MotionRecognition
 		{
 			var table = new Table<Measurement>();
 			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
-			foreach(var row in rows)
+			foreach (var row in rows)
 			{
 				if (string.IsNullOrEmpty(row[0])) continue;
 

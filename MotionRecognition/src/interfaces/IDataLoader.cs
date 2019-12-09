@@ -1,7 +1,7 @@
-namespace MotionRecognition 
+﻿namespace MotionRecognition
 {
-    public interface IDataLoader 
-    {
+	public interface IDataLoader
+	{
 		MotionImage LoadImage();
-    }
+	}
 }
