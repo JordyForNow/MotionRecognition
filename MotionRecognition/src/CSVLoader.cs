@@ -29,12 +29,11 @@ namespace MotionRecognition
 				Sample<Measurement> sample = new Sample<Measurement>();
 				sample.timestamp = float.Parse(row[0]);
 				sample.sampleData = new List<Measurement>();
-				for (uint i = 1; i < row.Count(); i++)
+				for (uint i = 1; i < row.Count(); i += 2)
 				{
 					Measurement m = new Measurement();
 					m.parse(row[i], row[i + 1]);
 					sample.sampleData.Add(m);
-					i++;
 				}
 				table.samples.Add(sample);
 			}
@@ -45,8 +44,6 @@ namespace MotionRecognition
 		{
 			MotionImage image = new MotionImage();
 			Table<Measurement> t = parseFile();
-			foreach (var item in t.samples)
-				Console.WriteLine(item.sampleData[0].pos.x);
 			return image;
 		}
 	}

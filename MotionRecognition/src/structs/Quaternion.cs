@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 namespace MotionRecognition 
 {
     public struct Quaternion
@@ -10,7 +10,6 @@ namespace MotionRecognition
 
 		public bool parse(string input = "(0.0|0.0|0.0|0.0)")
 		{
-			System.Console.WriteLine(input);
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
 
 			var points = input.Substring(1, input.Length - 2).Split("| ");
@@ -25,7 +24,7 @@ namespace MotionRecognition
 
 		public override string ToString()
 		{
-			return x + "," + y + "," + z + ",";
+			return x + "," + y + "," + z + "," + w;
 		}
 	}
 }

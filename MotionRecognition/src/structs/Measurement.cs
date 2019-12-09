@@ -2,15 +2,14 @@
 {
 	public struct Measurement
 	{
-		public Vec3 pos { get; set; }
-		public Quaternion angle { get; set; }
+		public Vec3 pos;
+		public Quaternion angle;
 
 		public void parse(string pos, string angle)
 		{
-			System.Console.WriteLine(pos + ":" + angle);	
 			this.pos = new Vec3();
 			this.angle = new Quaternion();
-			if (!this.pos.parse(pos)) throw new System.Exception("je weet t");
+			this.pos.parse(pos);
 			this.angle.parse(angle);
 		}
 
