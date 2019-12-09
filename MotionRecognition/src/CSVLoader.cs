@@ -1,42 +1,52 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MotionRecognition
 {
 	public class CSVLoader : IDataLoader
 	{
 		private string path;
-		public CSVLoader(string path)
+		private int measurementsize;
+		public CSVLoader(string path, int measurementsize)
 		{
 			this.path = path;
+			this.measurementsize = measurementsize;
 		}
-		struct Table
+		class Table<T>
 		{
-
+			public List<Sample<T>> samples = new List<Sample<T>>();
 		}
-		private Table parseFile(bool hasHeader = true)
+		private Table<Measurement> parseFile(bool hasHeader = true)
 		{
+			var table = new Table<Measurement>();
 			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
 			foreach(var row in rows)
 			{
+				if (string.IsNullOrEmpty(row[0])) continue;
+
 				Sample<Measurement> sample = new Sample<Measurement>();
-				// sample.timestamp = float.Parse(row[0]);
-				for(uint i = 1; i < row.Count(); i++)
+				sample.timestamp = float.Parse(row[0]);
+				sample.sampleData = new List<Measurement>();
+				for (uint i = 1; i < row.Count(); i++)
 				{
-					Vec3 vec = new Vec3();
-					vec.parse(row[i]);
+					Measurement m = new Measurement();
+					m.parse(row[i], row[i + 1]);
+					sample.sampleData.Add(m);
 					i++;
 				}
+				table.samples.Add(sample);
 			}
-			return new Table();
+			return table;
 		}
 
 		public MotionImage LoadImage()
 		{
 			MotionImage image = new MotionImage();
-			Table t = parseFile();
-
+			Table<Measurement> t = parseFile();
+			foreach (var item in t.samples)
+				Console.WriteLine(item.sampleData[0].pos.x);
 			return image;
 		}
 	}
