@@ -6,7 +6,7 @@ namespace Sandbox
     {
         static void Main(string[] args)
         {
-            CSVLoader loader = new CSVLoader("data.csv");
+            CSVLoader loader = new CSVLoader("data.csv", 21);
             loader.LoadImage();
         }
     }
