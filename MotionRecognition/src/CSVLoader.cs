@@ -28,7 +28,7 @@ namespace MotionRecognition
 
 				Sample<Measurement> sample = new Sample<Measurement>();
 				sample.timestamp = float.Parse(row[0]);
-				sample.sampleData = new List<Measurement>();
+				sample.sampleData = new List<Measurement>(measurementsize);
 				for (uint i = 1; i < row.Count(); i += 2)
 				{
 					Measurement m = new Measurement();
