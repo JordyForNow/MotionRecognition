@@ -2,6 +2,6 @@
 {
 	public interface ISerializable<T>
 	{
-		public void parse(T str);
+		public void parse(string pos, string angle);
 	}
 }

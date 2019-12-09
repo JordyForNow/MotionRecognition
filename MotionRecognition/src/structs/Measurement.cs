@@ -7,7 +7,6 @@
 
 		public void parse(string pos, string angle)
 		{
-			pos 
 		}
 	}
 }

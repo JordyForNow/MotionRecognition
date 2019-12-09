@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 namespace MotionRecognition
 {
     public struct Vec3
@@ -6,9 +8,13 @@ namespace MotionRecognition
         public float y { get; set; }
         public float z { get; set; }
 
-		public void parse(string input = "{0.0|0.0|0.0}")
+		public bool parse(string input = "{0.0|0.0|0.0}")
 		{
-			input.Substring(1, )
+            if(!(input[0] == '{' && input[input.Length - 1] == '}')) return false;
+            if(input.Count(o => o == '|') != 2) return false;
+
+			Console.WriteLine(input.Substring(1, input.Length - 2).Split('|'));
+            return true;
 		}
     }
 }

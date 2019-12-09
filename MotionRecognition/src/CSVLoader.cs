@@ -21,10 +21,12 @@ namespace MotionRecognition
 			foreach(var row in rows)
 			{
 				Sample<Measurement> sample = new Sample<Measurement>();
-				sample.timestamp = float.Parse(row[0]);
+				// sample.timestamp = float.Parse(row[0]);
 				for(uint i = 1; i < row.Count(); i++)
 				{
-					Measurement m = new Measurement { ;
+					Vec3 vec = new Vec3();
+					vec.parse(row[i]);
+					i++;
 				}
 			}
 			return new Table();
