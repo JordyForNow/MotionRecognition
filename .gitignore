@@ -1,16 +1,16 @@
-// MacOS search
+# MacOS search
 **.DS_Store
 
-// Skip .vs
+# Skip .vs
 **.vs/
 
-// Skip builds
+# Skip builds
 **/bin
 
-// Skip intermediates
+# Skip intermediates
 **/obj
 
-//Python gitignore
+# Python gitignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
