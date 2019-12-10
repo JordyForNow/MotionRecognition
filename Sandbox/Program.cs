@@ -12,6 +12,7 @@ namespace Sandbox
 
 			Motion3DImage image = new Motion3DImage(ref table);
 
+			image.Serialize();
 		}
 	}
 }

@@ -6,12 +6,17 @@ namespace UnitTests
 {
 	public class Tests
 	{
+		Table<Measurement> table;
+
 		[SetUp]
-		public void Setup()
+		public void Setup()	
 		{
+			CSVLoader loader = new CSVLoader("../Sandbox/data.csv", 21);
+			table = loader.GetData();
 		}
 
 		#region ParserTests
+
 
 		[Test]
 		public void MeasurementParserWithCorrectValueReturnsTrue()
@@ -68,5 +73,18 @@ namespace UnitTests
 		}
 
 		#endregion
-    }
+
+		#region SerializingTests
+
+		[Test]
+		public void SerializeImage()
+		{			
+			Motion3DImage image = new Motion3DImage(ref table);
+			image.Serialize("./testdata");
+
+			Assert.AreEqual(image.DeSerialize("./testdata"), image);
+		}
+		
+		#endregion
+	}
 }
