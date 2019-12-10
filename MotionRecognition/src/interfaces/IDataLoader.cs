@@ -1,7 +1,7 @@
 ﻿namespace MotionRecognition
 {
-	public interface IDataLoader
+	public interface IDataLoader<T>
 	{
-		MotionImage LoadImage();
+		T LoadImage();
 	}
 }

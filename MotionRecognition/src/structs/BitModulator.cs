@@ -1,11 +1,12 @@
 ﻿using System;
 namespace MotionRecognition
 {
+	[Serializable]
 	public class BitModulator
 	{
 		uint arr = 0;
 
-		public bool SetIndex(byte i, bool b)
+		public bool SetIndex(int i, bool b)
 		{
 			if (i >= 32) return false;
 			if(b)
@@ -15,6 +16,7 @@ namespace MotionRecognition
 			return true;
 		}
 
+		public uint GetVal() => arr;
 		public override string ToString()
 		{
 			return ToString(false);
