@@ -56,8 +56,6 @@ namespace MotionRecognition
 			MotionImage image = new MotionImage();
 			Table<Measurement> t = parseFile();
 
-
-
 			return image;
 		}
 		#endregion
