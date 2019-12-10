@@ -51,11 +51,15 @@ namespace MotionRecognition
 		}
 		#endregion
 		#region PublicFunc
+
+		public float Remap(float value, float from1, float to1, float from2, float to2)
+		{
+			return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+		}
 		public MotionImage LoadImage()
 		{
 			MotionImage image = new MotionImage();
 			Table<Measurement> t = parseFile();
-
 			return image;
 		}
 		#endregion
