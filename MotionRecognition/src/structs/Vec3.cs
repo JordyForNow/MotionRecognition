@@ -13,7 +13,6 @@ namespace MotionRecognition
 		#region PublicFunc
 		public bool parse(string input = "(0.0| 0.0| 0.0)")
 		{
-			System.Console.WriteLine(input);
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
 
 			var points = input.Substring(1, input.Length - 2).Split("| ");
