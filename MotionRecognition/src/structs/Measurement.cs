@@ -7,12 +7,13 @@
 		public Quaternion angle;
 		#endregion
 		#region PublicFunc
-		public void parse(string pos, string angle)
+		public bool parse(string pos, string angle)
 		{
 			this.pos = new Vec3();
 			this.angle = new Quaternion();
-			this.pos.parse(pos);
-			this.angle.parse(angle);
+			if(!this.pos.parse(pos)) return false;
+			if(!this.angle.parse(angle)) return false;
+			return true;
 		}
 		#endregion
 		#region Operations

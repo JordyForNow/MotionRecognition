@@ -11,7 +11,7 @@ namespace MotionRecognition
 		public float w;
 		#endregion
 		#region PublicFunc
-		public bool parse(string input = "(0.0|0.0|0.0|0.0)")
+		public bool parse(string input = "(0.0| 0.0| 0.0| 0.0)")
 		{
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
 
