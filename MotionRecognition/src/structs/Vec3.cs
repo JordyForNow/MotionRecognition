@@ -3,14 +3,17 @@ using System.Linq;
 
 namespace MotionRecognition
 {
-	public struct Vec3
+	public struct Vec3 : CSVCell
 	{
-		public float x { get; set; }
-		public float y { get; set; }
-		public float z { get; set; }
-
+		#region Properties
+		public float x;
+		public float y;
+		public float z;
+		#endregion
+		#region PublicFunc
 		public bool parse(string input = "(0.0|0.0|0.0)")
 		{
+			System.Console.WriteLine(input);
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
 
 			var points = input.Substring(1, input.Length - 2).Split("| ");
@@ -22,10 +25,12 @@ namespace MotionRecognition
 			this.z = float.Parse(points[2]);
 			return true;
 		}
-
+		#endregion
+		#region Operations
 		public override string ToString()
 		{
 			return this.x + "," + this.y + "," + this.z;
 		}
+		#endregion
 	}
 }

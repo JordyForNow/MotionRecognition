@@ -2,13 +2,15 @@
 
 namespace MotionRecognition
 {
-	public struct Quaternion
+	public struct Quaternion : CSVCell
 	{
-		public float x { get; set; }
-		public float y { get; set; }
-		public float z { get; set; }
-		public float w { get; set; }
-
+		#region Properties
+		public float x;
+		public float y;
+		public float z;
+		public float w;
+		#endregion
+		#region PublicFunc
 		public bool parse(string input = "(0.0|0.0|0.0|0.0)")
 		{
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
@@ -22,10 +24,12 @@ namespace MotionRecognition
 			w = float.Parse(points[3]);
 			return true;
 		}
-
+		#endregion
+		#region Operations
 		public override string ToString()
 		{
 			return x + "," + y + "," + z + "," + w;
 		}
+		#endregion
 	}
 }
