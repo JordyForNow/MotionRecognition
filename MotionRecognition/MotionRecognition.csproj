@@ -8,7 +8,6 @@
     <Compile Remove="Class1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\" />
     <Folder Include="src\interfaces\" />
   </ItemGroup>
   <ItemGroup>

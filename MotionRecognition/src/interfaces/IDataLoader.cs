@@ -2,6 +2,6 @@
 {
 	public interface IDataLoader<T>
 	{
-		T LoadImage();
+		Table<T> GetData();
 	}
 }

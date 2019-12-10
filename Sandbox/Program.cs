@@ -7,7 +7,11 @@ namespace Sandbox
 		static void Main(string[] args)
 		{
 			CSVLoader loader = new CSVLoader("data.csv", 21);
-			loader.LoadImage();
+
+			var table = loader.GetData();
+
+			Motion3DImage image = new Motion3DImage(ref table);
+
 		}
 	}
 }
