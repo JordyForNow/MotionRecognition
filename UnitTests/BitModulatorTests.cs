@@ -6,6 +6,29 @@ namespace UnitTests
 	class BitModulatorTests
 	{
 		[Test]
+		public void BitModulator()
+		{
+			BitModulator b = new BitModulator();
+			b.SetIndex(0, true);
+			Assert.IsTrue(b.GetVal() == 1);
+		}
+
+		[Test]
+		public void BitModulatorExceedsBuffer()
+		{
+			BitModulator b = new BitModulator();
+			Assert.IsFalse(b.SetIndex(32, true));
+		}
+
+		[Test]
+		public void BitModulatorToStringBits()
+		{
+			BitModulator b = new BitModulator();
+			b.SetIndex(0, true);
+			Assert.IsTrue(b.ToString(true) == "11111111111111111111111111111110");
+		}
+
+		[Test]
 		public void BitModulator_Equals_BothSet()
 		{
 			BitModulator bm1 = new BitModulator();
