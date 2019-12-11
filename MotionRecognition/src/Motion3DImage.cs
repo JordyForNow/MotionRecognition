@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MotionRecognition
 {
@@ -17,7 +18,7 @@ namespace MotionRecognition
             side = new BitModulator[size, size];
         }
 
-        public Motion3DImage(ref Table<Measurement> t) : base()
+        public Motion3DImage(ref Table<Measurement> t) : this()
         {
             LoadImage(ref t);
         }
@@ -60,64 +61,79 @@ namespace MotionRecognition
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
 
-        public void Serialize(string path = "./data")
+        public void Serialize(string filePath = "./data")
         {
-            if (File.Exists(path))
-                File.Delete(path);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
 
-            using (FileStream fs = File.Create(path))
+            using (FileStream fs = File.Create(filePath))
             {
-				AddText(fs, size + "\n");
+                AddText(fs, size + "\n");
                 writeBitModulator(fs, top);
                 AddText(fs, "|");
                 writeBitModulator(fs, side);
             }
         }
 
-        public Motion3DImage DeSerialize(string path = "./data")
+        public Motion3DImage DeSerialize(string filePath = "./data")
         {
-            if (!File.Exists(path))
+            if (!File.Exists(filePath))
                 throw new FileNotFoundException();
 
             Motion3DImage image = new Motion3DImage();
 
-            string[] data = File.ReadAllText(path).Split("|");
+            string file = File.ReadAllText(filePath);
 
+			var d = file.Split("\n");
+			this.size = int.Parse(d[0]);
+			
+			string[] data = d[1].Split("|");
             string[] top = data[0].Split("-");
             string[] side = data[1].Split("-");
 
-
+			this.top = createBitModulator(top);
+			this.side = createBitModulator(side);
 
             return image;
-
         }
 
         private BitModulator[,] createBitModulator(string[] arr)
         {
-            BitModulator[,] bm = new BitModulator[size,size];
+            BitModulator[,] bm = new BitModulator[size, size];
+
             foreach (string val in arr)
             {
-				val.Replace("{}", "");
+                string v = Regex.Replace(val, "({|})", "");
+
+                string[] values = v.Split(",");
+				int x = int.Parse(values[0]);
+				int y = int.Parse(values[1]);
+
+                bm[x, y] = new BitModulator();
+                bm[x, y].SetVal(uint.Parse(values[2]));
             }
 
-			return bm;
+            return bm;
         }
 
         private void writeBitModulator(FileStream fs, BitModulator[,] b)
         {
+			bool first = true;
+
             for (uint x = 0; x < size; x++)
             {
                 for (uint y = 0; y < size; y++)
                 {
                     if (b[x, y] == null) continue;
 
-                    if (y == size - 1)
+                    if (first)
                     {
                         AddText(fs, $"{{{x},{y},{b[x, y].GetVal()}}}");
+						first = false;
                     }
                     else
                     {
-                        AddText(fs, $"{{{x},{y},{b[x, y].GetVal()}}}-");
+                        AddText(fs, $"-{{{x},{y},{b[x, y].GetVal()}}}");
                     }
 
                 }
@@ -129,5 +145,15 @@ namespace MotionRecognition
             byte[] info = new UTF8Encoding(true).GetBytes(value);
             fs.Write(info, 0, info.Length);
         }
+		
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
+
+			return true;
+		}
     }
 }

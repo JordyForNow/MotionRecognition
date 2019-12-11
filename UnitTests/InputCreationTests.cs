@@ -1,6 +1,5 @@
 ﻿using MotionRecognition;
 using NUnit.Framework;
-using System.IO;
 
 namespace UnitTests
 {
@@ -11,7 +10,7 @@ namespace UnitTests
 		[SetUp]
 		public void Setup()	
 		{
-			CSVLoader loader = new CSVLoader("../Sandbox/data.csv", 21);
+			CSVLoader loader = new CSVLoader("./data.csv", 21);
 			table = loader.GetData();
 		}
 

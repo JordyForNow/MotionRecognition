@@ -17,6 +17,11 @@ namespace MotionRecognition
 		}
 
 		public uint GetVal() => arr;
+		public void SetVal(uint arr) 
+		{
+			this.arr = arr;
+		}
+
 		public override string ToString()
 		{
 			return ToString(false);
