@@ -1,12 +1,13 @@
 ﻿namespace MotionRecognition
 {
-	public struct Measurement
+	public struct JointMeasurement
 	{
 		#region Properties
 		public Vec3 pos;
 		public Quaternion angle;
 		#endregion
 		#region PublicFunc
+		// parse the sub values.
 		public bool parse(string pos, string angle)
 		{
 			this.pos = new Vec3();

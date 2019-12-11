@@ -7,32 +7,32 @@ namespace UnitTests
 {
 	class Motion3DImageTests
 	{
-		Table<Measurement> table1;
-		Table<Measurement> table2;
+		Table<JointMeasurement> table1;
+		Table<JointMeasurement> table2;
 
 		[SetUp]
 		public void Setup()
 		{
-			table1 = new Table<Measurement>();
-			table2 = new Table<Measurement>();
+			table1 = new Table<JointMeasurement>();
+			table2 = new Table<JointMeasurement>();
 
 			populateTable(ref table1);
 			populateTable(ref table2);
 		}
 
-		private void populateTable(ref Table<Measurement> table)
+		private void populateTable(ref Table<JointMeasurement> table)
 		{
-			List<Sample<Measurement>> samples = new List<Sample<Measurement>>();
+			List<Sample<JointMeasurement>> samples = new List<Sample<JointMeasurement>>();
 			Random random = new Random();
 
 			for (int x = 0; x < 50; x++)
 			{
-				List<Measurement> measurements = new List<Measurement>();
+				List<JointMeasurement> measurements = new List<JointMeasurement>();
 				for (int i = 0; i < 21; i++)
 				{
-					measurements.Add(new Measurement() { pos = new Vec3() { x = random.Next(500), y = random.Next(500), z = random.Next(500) } });
+					measurements.Add(new JointMeasurement() { pos = new Vec3() { x = random.Next(500), y = random.Next(500), z = random.Next(500) } });
 				}
-				samples.Add(new Sample<Measurement>() { sampleData = measurements });
+				samples.Add(new Sample<JointMeasurement>() { sampleData = measurements });
 			}
 
 			table.samples = samples;

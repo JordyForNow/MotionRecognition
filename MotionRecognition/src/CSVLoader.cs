@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MotionRecognition
 {
-	public class CSVLoader : IDataLoader<Measurement>
+	public class CSVLoader : IDataLoader<JointMeasurement>
 	{
 		#region Properties
 		private string path;
@@ -23,20 +23,23 @@ namespace MotionRecognition
 		}
 		#endregion
 		#region PrivateFunc
-		private Table<Measurement> parseFile(bool hasHeader = true)
+		private Table<JointMeasurement> parseFile(bool hasHeader = true)
 		{
-			var table = new Table<Measurement>();
+			// create a new table.
+			var table = new Table<JointMeasurement>();
+			// if the file has a header then skip it.
 			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
+			// for each row we create a sample
 			foreach (var row in rows)
 			{
 				if (string.IsNullOrEmpty(row[0])) continue;
 
-				Sample<Measurement> sample = new Sample<Measurement>();
+				Sample<JointMeasurement> sample = new Sample<JointMeasurement>();
 				sample.timestamp = float.Parse(row[0]);
-				sample.sampleData = new List<Measurement>(measurementsize);
+				sample.sampleData = new List<JointMeasurement>(measurementsize);
 				for (uint i = 1; i < row.Count(); i += 2)
 				{
-					Measurement m = new Measurement();
+					JointMeasurement m = new JointMeasurement();
 					m.parse(row[i], row[i + 1]);
 					sample.sampleData.Add(m);
 				}
@@ -47,7 +50,7 @@ namespace MotionRecognition
 		#endregion
 		#region PublicFunc
 
-		public Table<Measurement> GetData()
+		public Table<JointMeasurement> GetData()
 		{
 			return parseFile();
 		}
