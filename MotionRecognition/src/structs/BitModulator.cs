@@ -8,7 +8,7 @@ namespace MotionRecognition
 		uint arr = 0;
 
 		// create a new bitmodulator or create one from a string.
-		public BitModulator() {}
+		public BitModulator() { }
 		public BitModulator(string val)
 		{
 			arr = uint.Parse(val);

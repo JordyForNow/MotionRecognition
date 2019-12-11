@@ -12,8 +12,8 @@
 		{
 			this.pos = new Vec3();
 			this.angle = new Quaternion();
-			if(!this.pos.parse(pos)) return false;
-			if(!this.angle.parse(angle)) return false;
+			if (!this.pos.parse(pos)) return false;
+			if (!this.angle.parse(angle)) return false;
 			return true;
 		}
 		#endregion

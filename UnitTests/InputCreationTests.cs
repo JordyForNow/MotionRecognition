@@ -8,7 +8,7 @@ namespace UnitTests
 		Table<JointMeasurement> table;
 
 		[SetUp]
-		public void Setup()	
+		public void Setup()
 		{
 			CSVLoader loader = new CSVLoader("./data.csv", 21);
 			table = loader.GetData();
@@ -75,13 +75,13 @@ namespace UnitTests
 
 		[Test]
 		public void SerializeImage()
-		{			
+		{
 			Motion3DImage image = new Motion3DImage(ref table);
 			image.Serialize("./testdata");
 
 			Assert.AreEqual(image.DeSerialize("./testdata"), image);
 		}
-		
+
 		#endregion
 	}
 }
