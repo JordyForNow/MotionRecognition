@@ -6,6 +6,12 @@ namespace MotionRecognition
 	{
 		uint arr = 0;
 
+		public BitModulator() {}
+		public BitModulator(string val)
+		{
+			arr = uint.Parse(val);
+		}
+
 		public bool SetIndex(int i, bool b)
 		{
 			if (i >= 32) return false;
