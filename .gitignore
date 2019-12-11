@@ -3,6 +3,7 @@
 
 // Skip .vs
 **.vs/
+.vscode/
 
 // Skip builds
 **/bin
