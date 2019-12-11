@@ -64,10 +64,10 @@ namespace MotionRecognition
             return (Value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
 
-        public void Serialize(string filePath = "./data")
-        {
-            if (File.Exists(filePath))
-                File.Delete(filePath);
+		public void Serialize(string filePath = "./data")
+		{
+			if (File.Exists(filePath))
+				File.Delete(filePath);
 
             using (FileStream fs = File.Create(filePath))
             {
@@ -116,8 +116,8 @@ namespace MotionRecognition
 
             File.Close();
 
-            return this;
-        }
+			return this;
+		}
 
         private BitModulator[,] createBitModulator(string[] stringArr)
         {
@@ -127,16 +127,16 @@ namespace MotionRecognition
             {
                 string v = Regex.Replace(val, "({|})", "");
 
-                string[] values = v.Split(",");
-                int x = int.Parse(values[0]);
-                int y = int.Parse(values[1]);
+				string[] values = v.Split(",");
+				int x = int.Parse(values[0]);
+				int y = int.Parse(values[1]);
 
-                bm[x, y] = new BitModulator();
-                bm[x, y].SetVal(uint.Parse(values[2]));
-            }
+				bm[x, y] = new BitModulator();
+				bm[x, y].SetVal(uint.Parse(values[2]));
+			}
 
-            return bm;
-        }
+			return bm;
+		}
 
         private void writeBitModulator(FileStream fs, BitModulator[,] Map)
         {
@@ -156,14 +156,14 @@ namespace MotionRecognition
             fs.Write(info, 0, info.Length);
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            }
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
 
-            var other = (Motion3DImage)obj;
+			var other = (Motion3DImage)obj;
 
             if (Size != other.Size) return false;
 
@@ -190,8 +190,8 @@ namespace MotionRecognition
                 }
             }
 
-            return true;
-        }
+			return true;
+		}
 
         public void SetSize(int s)
         {
