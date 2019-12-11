@@ -5,7 +5,7 @@ namespace UnitTests
 {
 	public class Tests
 	{
-		Table<Measurement> table;
+		Table<JointMeasurement> table;
 
 		[SetUp]
 		public void Setup()	
@@ -16,11 +16,10 @@ namespace UnitTests
 
 		#region ParserTests
 
-
 		[Test]
 		public void MeasurementParserWithCorrectValueReturnsTrue()
 		{
-			Measurement m = new Measurement();
+			JointMeasurement m = new JointMeasurement();
 			bool result = m.parse("(0.3| 0.9| 1.4)", "(9.0| 10.1| 4.3| 2.3)");
 
 			Assert.IsTrue(result);
@@ -29,7 +28,7 @@ namespace UnitTests
 		[Test]
 		public void MeasurementParserWithFaultyValueReturnsFalse()
 		{
-			Measurement m = new Measurement();
+			JointMeasurement m = new JointMeasurement();
 			bool result = m.parse("this is", "faulty");
 
 			Assert.IsFalse(result);

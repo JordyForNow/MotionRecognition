@@ -5,27 +5,31 @@ using System.Text.RegularExpressions;
 
 namespace MotionRecognition
 {
-    [Serializable]
     public class Motion3DImage : IImage
     {
+		// size is the maximum field size of top and side: 2*(sizeˆsize)
         public int size;
+		// top and side are the 3D composited images.
         public BitModulator[,] top, side;
 
-        public Motion3DImage(int s = 500)
+		// standaard size is
+        public Motion3DImage(int _size = 500)
         {
-            SetSize(s);
+            SetSize(_size);
         }
 
-        public Motion3DImage(ref Table<Measurement> t) : this()
+        public Motion3DImage(ref Table<JointMeasurement> _table) : this()
         {
-            LoadImage(ref t);
+            CreateImageFromTable(ref _table);
         }
 
-        public void LoadImage(ref Table<Measurement> t)
+		// Create an 3DImage from a table of measurements
+        public void CreateImageFromTable(ref Table<JointMeasurement> _table)
         {
+			// find the current base range with the minimum and the maximum
             Vec3 vecMin = new Vec3();
             Vec3 vecMax = new Vec3();
-            foreach (var s in t.samples)
+            foreach (var s in _table.samples)
             {
                 foreach (var m in s.sampleData)
                 {
@@ -38,8 +42,9 @@ namespace MotionRecognition
                     vecMax.z = m.pos.z > vecMax.z ? m.pos.z : vecMax.z;
                 }
             }
+			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
             int x, y, z;
-            foreach (var sample in t.samples)
+            foreach (var sample in _table.samples)
             {
                 for (int i = 0; i < sample.sampleData.Count; i++)
                 {
@@ -54,6 +59,7 @@ namespace MotionRecognition
             }
         }
 
+		// this function remaps floats to a given range
         private float Remap(float value, float from1, float to1, float from2, float to2)
         {
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
@@ -82,7 +88,7 @@ namespace MotionRecognition
             int index = 0;
             string line;
 
-            System.IO.StreamReader file = new System.IO.StreamReader(filePath);
+            StreamReader file = new StreamReader(filePath);
 
             while ((line = file.ReadLine()) != null)
             {
@@ -133,14 +139,14 @@ namespace MotionRecognition
             return bm;
         }
 
-        private void writeBitModulator(FileStream fs, BitModulator[,] b)
+        private void writeBitModulator(FileStream fs, BitModulator[,] _map)
         {
             for (uint x = 0; x < size; x++)
             {
                 for (uint y = 0; y < size; y++)
                 {
-                    if (b[x, y] != null)
-                        AddText(fs, $"{x},{y},{b[x, y].GetVal()} {Environment.NewLine}");
+                    if (_map[x, y] != null)
+                        AddText(fs, $"{x},{y},{_map[x, y].GetVal()} {Environment.NewLine}");
                 }
             }
         }
