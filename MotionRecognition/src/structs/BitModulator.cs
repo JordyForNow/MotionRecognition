@@ -9,7 +9,7 @@ namespace MotionRecognition
 		public bool SetIndex(int i, bool b)
 		{
 			if (i >= 32) return false;
-			if(b)
+			if (b)
 				arr |= ((uint)1 << i);
 			else
 				arr &= ~((uint)1 << i);
@@ -17,7 +17,7 @@ namespace MotionRecognition
 		}
 
 		public uint GetVal() => arr;
-		public void SetVal(uint arr) 
+		public void SetVal(uint arr)
 		{
 			this.arr = arr;
 		}
@@ -28,12 +28,26 @@ namespace MotionRecognition
 		}
 		public string ToString(bool bit)
 		{
-			if(bit)
+			if (bit)
 			{
 				uint b = ~arr;
 				return Convert.ToString(b, toBase: 2);
 			}
 			return arr.ToString();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
+
+			var other = (BitModulator)obj;
+
+			if (GetVal() != other.GetVal()) return false;
+
+			return true;
 		}
 	}
 }
