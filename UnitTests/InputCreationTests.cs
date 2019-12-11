@@ -1,11 +1,12 @@
-﻿using MotionRecognition;
+﻿using System.Collections.Generic;
+using MotionRecognition;
 using NUnit.Framework;
 
 namespace UnitTests
 {
 	public class Tests
 	{
-		Table<JointMeasurement> table;
+		List<Sample<JointMeasurement>> table;
 
 		[SetUp]
 		public void Setup()

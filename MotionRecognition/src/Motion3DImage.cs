@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,18 +18,18 @@ namespace MotionRecognition
             SetSize(_Size);
         }
 
-        public Motion3DImage(ref Table<JointMeasurement> _Table) : this()
+        public Motion3DImage(ref List<Sample<JointMeasurement>> _Table) : this()
         {
             CreateImageFromTable(ref _Table);
         }
 
 		// Create an 3DImage from a table of measurements
-        public void CreateImageFromTable(ref Table<JointMeasurement> _Table)
+        public void CreateImageFromTable(ref List<Sample<JointMeasurement>> _SampleList)
         {
 			// find the current base range with the minimum and the maximum
             Vec3 vecMin = new Vec3();
             Vec3 vecMax = new Vec3();
-            foreach (var s in _Table.samples)
+            foreach (var s in _SampleList)
             {
                 foreach (var m in s.sampleData)
                 {
@@ -43,7 +44,7 @@ namespace MotionRecognition
             }
 			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
             int x, y, z;
-            foreach (var sample in _Table.samples)
+            foreach (var sample in _SampleList)
             {
                 for (int i = 0; i < sample.sampleData.Count; i++)
                 {

@@ -1,7 +1,9 @@
-﻿namespace MotionRecognition
+﻿using System.Collections.Generic;
+
+namespace MotionRecognition
 {
 	public interface IDataLoader<T>
 	{
-		Table<T> GetData();
+		List<Sample<T>> GetData();
 	}
 }

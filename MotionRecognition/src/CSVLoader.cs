@@ -18,10 +18,10 @@ namespace MotionRecognition
 		}
 
 		#region PrivateFunctions
-		private Table<JointMeasurement> parseFile(bool hasHeader = true)
+		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true)
 		{
 			// create a new Table.
-			var Table = new Table<JointMeasurement>();
+			var SampleList = new List<Sample<JointMeasurement>>();
 			// if the file has a header then skip it.
 			var Rows = (hasHeader ? File.ReadAllLines(Path).Skip(1) : File.ReadAllLines(Path)).Select(line => line.Split(','));
 			// for each row we create a sample
@@ -38,14 +38,14 @@ namespace MotionRecognition
 					m.parse(Row[i], Row[i + 1]);
 					Sample.sampleData.Add(m);
 				}
-				Table.samples.Add(Sample);
+				SampleList.Add(Sample);
 			}
-			return Table;
+			return SampleList;
 		}
 		#endregion
 
 		#region PublicFunctions
-		public Table<JointMeasurement> GetData()
+		public List<Sample<JointMeasurement>> GetData()
 		{
 			return parseFile();
 		}
