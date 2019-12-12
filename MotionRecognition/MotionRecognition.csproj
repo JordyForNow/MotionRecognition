@@ -7,7 +7,8 @@
   <ItemGroup>
     <Compile Remove="Class1.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="src\" />
+    <PackageReference Include="NeuralNetwork.NET" Version="2.1.2" />
   </ItemGroup>
 </Project>

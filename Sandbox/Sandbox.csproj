@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NeuralNetwork.NET" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MotionRecognition\MotionRecognition.csproj" />
   </ItemGroup>
 </Project>
