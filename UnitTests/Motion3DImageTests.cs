@@ -30,7 +30,7 @@ namespace UnitTests
 				List<JointMeasurement> Measurements = new List<JointMeasurement>();
 				for (int i = 0; i < 21; i++)
 				{
-					Measurements.Add(new JointMeasurement() { Pos = new Vec3() { x = random.Next(500), y = random.Next(500), z = random.Next(500) } });
+					Measurements.Add(new JointMeasurement() { pos = new Vec3() { x = random.Next(500), y = random.Next(500), z = random.Next(500) } });
 				}
 				Samples.Add(new Sample<JointMeasurement>() { sampleData = Measurements });
 			}

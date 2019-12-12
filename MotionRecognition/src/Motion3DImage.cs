@@ -25,6 +25,7 @@ namespace MotionRecognition
             top = new BitModulator[size, size];
             side = new BitModulator[size, size];
         }
+
         public Motion3DImage(ref List<Sample<JointMeasurement>> _table) : this()
         {
             CreateImageFromTable(ref _table);
@@ -127,9 +128,9 @@ namespace MotionRecognition
                     {
                         continue;
                     }
-                    else if ((top[x, y] == null && other.top[x, y] != null) || (t	op[x, y] != null && other.top[x, y] == null)) // If either cell is not set they are not equal.
+                    else if ((top[x, y] == null && other.top[x, y] != null) || (top[x, y] != null && other.top[x, y] == null)) // If either cell is not set they are not equal.
                     {
-                        return false;
+    		           return false;
                     }
                     else if (top[x, y].Equals(other.top[x, y])) // If equals they are equal.
                     {
@@ -140,7 +141,7 @@ namespace MotionRecognition
                         return false;
                     }
                 }
-            }
+			}
 
             return true;
         }
