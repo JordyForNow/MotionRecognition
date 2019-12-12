@@ -38,7 +38,7 @@ namespace MotionRecognition
 					top[x,y] = bm;
 					break;
 				case Angle.SIDE:
-					top[x,y] = bm;
+					side[x,y] = bm;
 					break;
 			}
 		}

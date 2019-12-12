@@ -43,7 +43,6 @@ namespace MotionRecognition
             while ((line = file.ReadLine()) != null)
             {
                 string[] values = line.Split(",");
-				
 
                 switch (index)
                 {
