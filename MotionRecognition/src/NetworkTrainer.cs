@@ -7,11 +7,11 @@ namespace MotionRecognition
 {
 	class NetworkTrainer
 	{
-		INeuralNetwork Network;
+		INeuralNetwork network;
 
-		public NetworkTrainer(INeuralNetwork Network)
+		public NetworkTrainer(INeuralNetwork _network)
 		{
-			this.Network = Network;
+			network = _network;
 		}
 		
 		public void Run()

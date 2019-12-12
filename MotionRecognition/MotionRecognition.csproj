@@ -9,6 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Keras.NET" Version="3.6.1.12" />
     <PackageReference Include="NeuralNetwork.NET" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Python.Runtime">
+      <HintPath>..\Sandbox\bin\Debug\netcoreapp3.0\Python.Runtime.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

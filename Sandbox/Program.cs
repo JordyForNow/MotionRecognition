@@ -8,6 +8,8 @@ namespace Sandbox
         static void Main(string[] args)
         {
             NetworkController controller = new NetworkController();
+
+            Neural.Run();
         }
     }
 }

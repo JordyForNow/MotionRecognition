@@ -7,34 +7,35 @@ namespace MotionRecognition
 	public class NetworkController
 	{
 
-		private INeuralNetwork Network;
-		private NetworkTrainer Trainer;
-		private NetworkPredictor Predictor;
+		private INeuralNetwork network;
+		private NetworkTrainer trainer;
+		private NetworkPredictor predictor;
 
 		public NetworkController()
 		{
 			
 		}
 
-		public NetworkController(INeuralNetwork network)
+		public NetworkController(INeuralNetwork _network)
 		{
-			this.Network = network;
+			network = _network;
 		}
 
 		public void TrainNetwork()
 		{
-			if (Network == null)
+			if (network == null)
 			{
 				throw new NoNetworkAvailableException("No network was found.");
 			}
 
-			Trainer = new NetworkTrainer(Network);
-			Trainer.Run();
+			trainer = new NetworkTrainer(network);
+			trainer.Run();
 		}
 
 		public bool PredictNetwork()
 		{
-			return false;
+			predictor = new NetworkPredictor(network);
+			return predictor.Run();
 		}
 
 	}

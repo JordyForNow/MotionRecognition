@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Keras.NET" Version="3.6.1.12" />
     <PackageReference Include="NeuralNetwork.NET" Version="2.1.2" />
   </ItemGroup>
 
