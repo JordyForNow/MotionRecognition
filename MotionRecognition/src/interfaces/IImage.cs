@@ -1,9 +1,11 @@
-﻿namespace MotionRecognition
+﻿using System;
+using System.Collections.Generic;
+
+namespace MotionRecognition
 {
-	public class IImage
-	{
-		public IImage()
-		{
-		}
-	}
+    public interface IImage<T>
+    {
+        void CreateImageFromTable(ref List<T> _Table);
+        bool Equals(object obj);
+    }
 }

@@ -11,6 +11,7 @@ namespace MotionRecognition
 		private string Path;
 		// Holds the amount of joints in the data that is to be loaded
 		private int jointsCount;
+		
 		public CSVLoader(string _Path, int _jointsCount)
 		{
 			this.Path = _Path;

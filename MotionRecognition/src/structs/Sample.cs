@@ -7,5 +7,7 @@ namespace MotionRecognition
 	{
 		public Single Timestamp;
 		public List<T> sampleData;
+
+		public Sample() {}
 	}
 }

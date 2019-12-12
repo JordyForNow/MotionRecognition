@@ -77,10 +77,10 @@ namespace UnitTests
 		[Test]
 		public void SerializeImage()
 		{
-			Motion3DImage image = new Motion3DImage(ref table);
-			image.Serialize("./testdata");
-
-			Assert.AreEqual(image.DeSerialize("./testdata"), image);
+			Motion3DImage image = new Motion3DImage(ref table), image2;
+			ImageSerializer.Serialize(image, "./testSerializedData");
+			image2 = ImageSerializer.DeSerialize("./testSerializedData");
+			Assert.IsTrue(image.Equals(image2));
 		}
 
 		#endregion
