@@ -34,9 +34,9 @@ namespace MotionRecognition
 				sample.sampleData = new List<JointMeasurement>(jointsCount);
 				for (uint i = 1; i < row.Count(); i += 2)
 				{
-					JointMeasurement m = new JointMeasurement();
-					m.parse(row[i], row[i + 1]);
-					sample.sampleData.Add(m);
+					JointMeasurement measurement = new JointMeasurement();
+					measurement.parse(row[i], row[i + 1]);
+					sample.sampleData.Add(measurement);
 				}
 				sampleList.Add(sample);
 			}
