@@ -5,7 +5,7 @@ namespace MotionRecognition
 {
     public interface IImage<T>
     {
-        void CreateImageFromTable(ref List<T> _Table);
+        void CreateImageFromTable(ref List<T> _table);
         bool Equals(object obj);
     }
 }

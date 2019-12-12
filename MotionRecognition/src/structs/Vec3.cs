@@ -5,17 +5,14 @@ namespace MotionRecognition
 {
 	public struct Vec3 : CSVCell
 	{
-		public float x;
-		public float y;
-		public float z;
+		public float x, y, z;
 
-		#region PublicFunc
-		public bool parse(string Input = "(0.0| 0.0| 0.0)")
+		public bool parse(string input = "(0.0| 0.0| 0.0)")
 		{
 			// check if the input is a CSVCell
-			if (!(Input[0] == '(' && Input[Input.Length - 1] == ')')) return false;
+			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
 			// split the string into the subvalues.
-			var points = Input.Substring(1, Input.Length - 2).Split("| ");
+			var points = input.Substring(1, input.Length - 2).Split("| ");
 			// check if points has 3 values.
 			if (points.Length > 3) return false;
 
@@ -24,13 +21,10 @@ namespace MotionRecognition
 			this.z = float.Parse(points[2]);
 			return true;
 		}
-		#endregion
-		
-		#region Operations
+
 		public override string ToString()
 		{
 			return this.x + "," + this.y + "," + this.z;
 		}
-		#endregion
 	}
 }

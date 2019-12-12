@@ -2,26 +2,22 @@
 {
 	public struct JointMeasurement
 	{
-		public Vec3 Pos;
-		public Quaternion Angle;
+		public Vec3 pos;
+		public Quaternion angle;
 
-		#region PublicFunctions
 		// parse the sub values.
-		public bool parse(string Pos, string Angle)
+		public bool parse(string pos, string angle)
 		{
-			this.Pos = new Vec3();
-			this.Angle = new Quaternion();
-			if(!this.Pos.parse(Pos)) return false;
-			if(!this.Angle.parse(Angle)) return false;
+			this.pos = new Vec3();
+			this.angle = new Quaternion();
+			if(!this.pos.parse(pos)) return false;
+			if(!this.angle.parse(angle)) return false;
 			return true;
 		}
-		#endregion
 		
-		#region Operations
 		public override string ToString()
 		{
-			return "{" + this.Pos + "|" + this.Angle + "}";
+			return "{" + this.pos + "|" + this.angle + "}";
 		}
-		#endregion
 	}
 }

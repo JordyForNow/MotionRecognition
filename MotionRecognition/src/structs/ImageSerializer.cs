@@ -6,16 +6,16 @@ using System.Text.RegularExpressions;
 
 namespace MotionRecognition
 {
-	public static class ImageSerializer 
-	{
-        public static void Serialize(Motion3DImage obj, string filePath = "./data")
+    public static class ImageSerializer
+    {
+        public static void Serialize(Motion3DImage obj, string filePath = "./serializedData")
         {
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
-			BitModulator[,] top = obj.GetBitModulator(Motion3DImage.Angle.TOP);
-			BitModulator[,] side = obj.GetBitModulator(Motion3DImage.Angle.SIDE);
-			int size = obj.size;
+            BitModulator[,] top = obj.GetBitModulator(Motion3DImage.Angle.TOP);
+            BitModulator[,] side = obj.GetBitModulator(Motion3DImage.Angle.SIDE);
+            int size = obj.size;
 
             using (FileStream fs = File.Create(filePath))
             {
@@ -26,16 +26,15 @@ namespace MotionRecognition
             }
         }
 
-        public static Motion3DImage DeSerialize(string filePath = "./data")
+        public static Motion3DImage DeSerialize(string filePath = "./serializedData")
         {
-			Motion3DImage image = null;
+            Motion3DImage image = null;
 
             if (!System.IO.File.Exists(filePath))
                 throw new FileNotFoundException();
 
             //Index 0 = size, 1 = values for Top, 2 = values for Side
-            int index = 0;
-			int x = 0, y = 0;
+            int index = 0, x = 0, y = 0;
             string line;
 
             StreamReader file = new StreamReader(filePath);
@@ -51,20 +50,20 @@ namespace MotionRecognition
                         index = 1;
                         break;
                     case 1:
-                        //If seperator, switch to index 2 
+                        //If seperator, switch to index 2 and start filling side 
                         if (line == "|")
                         {
                             index = 2;
                             break;
                         }
-						x = int.Parse(values[0]); 
-						y = int.Parse(values[1]);
-						image.SetPosition(Motion3DImage.Angle.TOP, x, y, new BitModulator(values[2]));
+                        x = int.Parse(values[0]);
+                        y = int.Parse(values[1]);
+                        image.SetPosition(Motion3DImage.Angle.TOP, x, y, new BitModulator(values[2]));
                         break;
                     case 2:
-						x = int.Parse(values[0]); 
-						y = int.Parse(values[1]);
-						image.SetPosition(Motion3DImage.Angle.SIDE, x, y, new BitModulator(values[2]));
+                        x = int.Parse(values[0]);
+                        y = int.Parse(values[1]);
+                        image.SetPosition(Motion3DImage.Angle.SIDE, x, y, new BitModulator(values[2]));
                         break;
                 }
             }
@@ -74,11 +73,11 @@ namespace MotionRecognition
             return image;
         }
 
-        private static void writeBitModulator(FileStream fs, ref BitModulator[,] map, ref int Size)
+        private static void writeBitModulator(FileStream fs, ref BitModulator[,] map, ref int size)
         {
-            for (uint x = 0; x < Size; x++)
+            for (uint x = 0; x < size; x++)
             {
-                for (uint y = 0; y < Size; y++)
+                for (uint y = 0; y < size; y++)
                 {
                     if (map[x, y] != null)
                         AddText(fs, $"{x},{y},{map[x, y].GetVal()} {Environment.NewLine}");
@@ -86,12 +85,10 @@ namespace MotionRecognition
             }
         }
 
-        private static void AddText(FileStream fs, string Value)
+        private static void AddText(FileStream fs, string value)
         {
-            byte[] info = new UTF8Encoding(true).GetBytes(Value);
+            byte[] info = new UTF8Encoding(true).GetBytes(value);
             fs.Write(info, 0, info.Length);
         }
-
-
-	}
+    }
 }

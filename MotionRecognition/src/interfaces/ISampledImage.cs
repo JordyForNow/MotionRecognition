@@ -5,7 +5,7 @@ namespace MotionRecognition
 {
     public interface ISampledImage<T>
     {
-        void CreateImageFromTable(ref List<Sample<T>> _Table);
+        void CreateImageFromTable(ref List<Sample<T>> _table);
         bool Equals(object obj);
     }
 }

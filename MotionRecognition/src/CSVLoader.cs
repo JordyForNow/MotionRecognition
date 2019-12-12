@@ -8,48 +8,44 @@ namespace MotionRecognition
 	public class CSVLoader : IDataLoader<JointMeasurement>
 	{
 		// Path points to the CSV file that is to be loaded
-		private string Path;
+		private string path;
 		// Holds the amount of joints in the data that is to be loaded
 		private int jointsCount;
 		
-		public CSVLoader(string _Path, int _jointsCount)
+		public CSVLoader(string _path, int _jointsCount)
 		{
-			this.Path = _Path;
+			this.path = _path;
 			this.jointsCount = _jointsCount;
 		}
-
-		#region PrivateFunctions
+		
 		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true)
 		{
 			// create a new Table.
-			var SampleList = new List<Sample<JointMeasurement>>();
+			var sampleList = new List<Sample<JointMeasurement>>();
 			// if the file has a header then skip it.
-			var Rows = (hasHeader ? File.ReadAllLines(Path).Skip(1) : File.ReadAllLines(Path)).Select(line => line.Split(','));
+			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
 			// for each row we create a sample
-			foreach (var Row in Rows)
+			foreach (var row in rows)
 			{
-				if (string.IsNullOrEmpty(Row[0])) continue;
+				if (string.IsNullOrEmpty(row[0])) continue;
 
-				Sample<JointMeasurement> Sample = new Sample<JointMeasurement>();
-				Sample.Timestamp = float.Parse(Row[0]);
-				Sample.sampleData = new List<JointMeasurement>(jointsCount);
-				for (uint i = 1; i < Row.Count(); i += 2)
+				Sample<JointMeasurement> sample = new Sample<JointMeasurement>();
+				sample.timestamp = float.Parse(row[0]);
+				sample.sampleData = new List<JointMeasurement>(jointsCount);
+				for (uint i = 1; i < row.Count(); i += 2)
 				{
 					JointMeasurement m = new JointMeasurement();
-					m.parse(Row[i], Row[i + 1]);
-					Sample.sampleData.Add(m);
+					m.parse(row[i], row[i + 1]);
+					sample.sampleData.Add(m);
 				}
-				SampleList.Add(Sample);
+				sampleList.Add(sample);
 			}
-			return SampleList;
+			return sampleList;
 		}
-		#endregion
 
-		#region PublicFunctions
 		public List<Sample<JointMeasurement>> GetData()
 		{
 			return parseFile();
 		}
-		#endregion
 	}
 }
