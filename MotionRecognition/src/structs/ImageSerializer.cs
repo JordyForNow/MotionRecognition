@@ -37,7 +37,7 @@ namespace MotionRecognition
             if (!System.IO.File.Exists(filePath))
                 throw new FileNotFoundException();
 
-            //Index to determine what to read from file 0 = size, 1 = values for Top, 2 = values for Side.
+            // Index to determine what to read from file 0 = size, 1 = values for Top, 2 = values for side.
             int index = 0, x = 0, y = 0;
             string line;
 
@@ -49,26 +49,25 @@ namespace MotionRecognition
 
                 switch (index)
                 {
-                    case 0:
-						// Get size from file.
+					
+                    case 0: // Get size from file.
                         image = new Motion3DImage(int.Parse(line));
                         index = 1;
                         break;
-                    case 1:
-                        // If seperator, switch to index 2 and start filling side.
+					
+                    case 1: // If seperator, switch to index 2 and start filling side.
                         if (line == "|")
                         {
                             index = 2;
                             break;
                         }
 
-						// Get values for top BitModulator from file.
+                        // Get values for top BitModulator from file.
                         x = int.Parse(values[0]);
                         y = int.Parse(values[1]);
                         image.SetPosition(Motion3DImage.Angle.TOP, x, y, new BitModulator(values[2]));
                         break;
-                    case 2:
-						// Get values for side BitModulator from file.
+                    case 2: // Get values for side BitModulator from file.
                         x = int.Parse(values[0]);
                         y = int.Parse(values[1]);
                         image.SetPosition(Motion3DImage.Angle.SIDE, x, y, new BitModulator(values[2]));

@@ -14,7 +14,7 @@ namespace MotionRecognition
             SIDE = 1
         }
 
-        // Size is the maximum field size of Top and Side: 2*(sizeˆsize)
+        // Size is the maximum field size of Top and Side: 2*(sizeˆsize).
         public readonly int size;
         // Top and Side are the 3D composited images.
         private BitModulator[,] top, side;
@@ -57,10 +57,11 @@ namespace MotionRecognition
         }
 
         #region PublicFunctions 
-        // Create an 3DImage from a table of measurements
+        
+		// Create a 3DImage from a table of measurements.
         public void CreateImageFromTable(ref List<Sample<JointMeasurement>> _sampleList)
         {
-            // Find the current base range with the minimum and the maximum
+            // Find the current base range with the minimum and the maximum.
             Vec3 vecMin = new Vec3();
             Vec3 vecMax = new Vec3();
             foreach (var s in _sampleList)
@@ -122,11 +123,11 @@ namespace MotionRecognition
             {
                 for (int y = 0; y < size; y++)
                 {
-                    if (top[x, y] == null && other.top[x, y] == null) // Ff both cells are not set they are equal.
+                    if (top[x, y] == null && other.top[x, y] == null) // If both cells are not set they are equal.
                     {
                         continue;
                     }
-                    else if ((top[x, y] == null && other.top[x, y] != null) || (top[x, y] != null && other.top[x, y] == null)) // if either cell is not set they are not equal
+                    else if ((top[x, y] == null && other.top[x, y] != null) || (t	op[x, y] != null && other.top[x, y] == null)) // If either cell is not set they are not equal.
                     {
                         return false;
                     }

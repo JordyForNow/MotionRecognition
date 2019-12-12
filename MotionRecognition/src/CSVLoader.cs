@@ -7,9 +7,9 @@ namespace MotionRecognition
 {
 	public class CSVLoader : IDataLoader<JointMeasurement>
 	{
-		// Path points to the CSV file that is to be loaded
+		// Path points to the CSV file that is to be loaded.
 		private string path;
-		// Holds the amount of joints in the data that is to be loaded
+		// Holds the amount of joints in the data that is to be loaded.
 		private int jointsCount;
 		
 		public CSVLoader(string _path, int _jointsCount)
@@ -24,7 +24,7 @@ namespace MotionRecognition
 			var sampleList = new List<Sample<JointMeasurement>>();
 			// If the file has a header then skip it.
 			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
-			// For each row we create a sample.
+			// For each row a sample is created.
 			foreach (var row in rows)
 			{
 				if (string.IsNullOrEmpty(row[0])) continue;
