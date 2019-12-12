@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using MotionRecognition;
 
 namespace Sandbox
@@ -10,16 +10,11 @@ namespace Sandbox
 			// TODO: make relative
 			Environment.SetEnvironmentVariable("PATH", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
 			Environment.SetEnvironmentVariable("PYTHONHOME", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36\python.exe", EnvironmentVariableTarget.Process);
-			Neural.Run2();
-			
-			CSVLoader loader = new CSVLoader("data.csv", 21);
-
-			var table = loader.GetData();
-
-			Motion3DImage image = new Motion3DImage(ref table);
-			ImageSerializer.Serialize(image);
-			Motion3DImage image2 = ImageSerializer.DeSerialize();
-			ImageSerializer.Serialize(image2, "./data2");
+			NetworkController control = new NetworkController();
+			uint[,,] d = new uint[1,1,1];
+			bool[] b = new bool[1];
+			control.TrainNetwork(ref d, b);
+			control.Run();
 		}
 	}
 }

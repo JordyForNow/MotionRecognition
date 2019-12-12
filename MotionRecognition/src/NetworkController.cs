@@ -19,22 +19,21 @@ namespace MotionRecognition
 			network = _network;
 		}
 
-		public void TrainNetwork()
+		public void TrainNetwork(ref uint[,,] _trainingData, bool[] _trainingAnswers)
+		{
+			trainer = new NetworkTrainer(ref _trainingData, _trainingAnswers);
+			trainer.Run();
+		}
+
+		public bool PredictNetwork()
 		{
 			if (network == null)
 			{
 				throw new NoNetworkAvailableException("No network was found.");
 			}
 
-			trainer = new NetworkTrainer();
-			trainer.Run();
-		}
-
-		public bool PredictNetwork()
-		{
 			predictor = new NetworkPredictor(network);
 			return predictor.Run();
 		}
-
 	}
 }
