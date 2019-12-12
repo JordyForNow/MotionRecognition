@@ -16,5 +16,10 @@
     <Reference Include="Python.Runtime">
       <HintPath>..\Sandbox\bin\Debug\netcoreapp3.0\Python.Runtime.dll</HintPath>
     </Reference>
+    <Folder Include="src\interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="12.2.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 </Project>
