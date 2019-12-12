@@ -20,11 +20,11 @@ namespace MotionRecognition
 		
 		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true)
 		{
-			// create a new Table.
+			// Create a new Table.
 			var sampleList = new List<Sample<JointMeasurement>>();
-			// if the file has a header then skip it.
+			// If the file has a header then skip it.
 			var rows = (hasHeader ? File.ReadAllLines(path).Skip(1) : File.ReadAllLines(path)).Select(line => line.Split(','));
-			// for each row we create a sample
+			// For each row we create a sample.
 			foreach (var row in rows)
 			{
 				if (string.IsNullOrEmpty(row[0])) continue;

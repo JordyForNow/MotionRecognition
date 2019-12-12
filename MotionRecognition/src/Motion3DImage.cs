@@ -60,7 +60,7 @@ namespace MotionRecognition
         // Create an 3DImage from a table of measurements
         public void CreateImageFromTable(ref List<Sample<JointMeasurement>> _sampleList)
         {
-            // find the current base range with the minimum and the maximum
+            // Find the current base range with the minimum and the maximum
             Vec3 vecMin = new Vec3();
             Vec3 vecMax = new Vec3();
             foreach (var s in _sampleList)
@@ -98,7 +98,7 @@ namespace MotionRecognition
 
         #region PrivateFunctions
 
-        // this function remaps floats to a given range
+        // This function remaps floats to a given range.
         private float Remap(float value, float from1, float to1, float from2, float to2)
         {
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
@@ -122,7 +122,7 @@ namespace MotionRecognition
             {
                 for (int y = 0; y < size; y++)
                 {
-                    if (top[x, y] == null && other.top[x, y] == null) // if both cells are not set they are equal
+                    if (top[x, y] == null && other.top[x, y] == null) // Ff both cells are not set they are equal.
                     {
                         continue;
                     }
@@ -130,11 +130,11 @@ namespace MotionRecognition
                     {
                         return false;
                     }
-                    else if (top[x, y].Equals(other.top[x, y])) // if equals they are equal
+                    else if (top[x, y].Equals(other.top[x, y])) // If equals they are equal.
                     {
                         continue;
                     }
-                    else // the cells are not equal
+                    else // The cells are not equal.
                     {
                         return false;
                     }

@@ -9,11 +9,11 @@ namespace MotionRecognition
 
 		public bool parse(string input = "(0.0| 0.0| 0.0)")
 		{
-			// check if the input is a CSVCell
+			// Check if the input is a CSVCell.
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
-			// split the string into the subvalues.
+			// Split the string into the subvalues.
 			var points = input.Substring(1, input.Length - 2).Split("| ");
-			// check if points has 3 values.
+			// Check if points has 3 values.
 			if (points.Length > 3) return false;
 
 			this.x = float.Parse(points[0]);

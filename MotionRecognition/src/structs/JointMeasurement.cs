@@ -5,7 +5,7 @@
 		public Vec3 pos;
 		public Quaternion angle;
 
-		// parse the sub values.
+		// Parse the sub values.
 		public bool parse(string pos, string angle)
 		{
 			this.pos = new Vec3();
