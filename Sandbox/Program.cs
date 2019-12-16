@@ -10,10 +10,13 @@ namespace Sandbox
 
 			var table = loader.GetData();
 
-			Motion3DImage image = new Motion3DImage(ref table);
+			Motion3DImage image = new Motion3DImage(100);
+			image.CreateImageFromTable(ref table);
 			ImageSerializer.Serialize(image);
 			Motion3DImage image2 = ImageSerializer.DeSerialize();
 			ImageSerializer.Serialize(image2, "./data2");
+
+			image.toImage();
 		}
 	}
 }

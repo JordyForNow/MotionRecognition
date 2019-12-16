@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace MotionRecognition
 {
@@ -95,6 +93,40 @@ namespace MotionRecognition
                 }
             }
         }
+
+		public void toImage(string filename = "test.bmp")
+		{
+			Bitmap g = new Bitmap(size, size);
+
+			for (int y = 0; y < size; y++)
+			{
+				for (int x = 0; x < size; x++)
+				{
+					if (top[y,x] != null)
+					{
+						g.SetPixel(x, y, Color.White);
+					}
+					else
+					{
+						g.SetPixel(x, y, Color.Black);
+					}
+
+				}
+			}
+			for (int y = 0; y < size; y++)
+			{
+				for (int x = 0; x < size; x++)
+				{
+					if (side[y, x] != null)
+					{
+						g.SetPixel(x, y, Color.Green);
+					}
+
+				}
+			}
+
+			g.Save(filename);
+		}
 
         #endregion
 
