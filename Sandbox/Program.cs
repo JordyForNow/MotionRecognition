@@ -16,7 +16,7 @@ namespace Sandbox
 			Motion3DImage image2 = ImageSerializer.DeSerialize();
 			ImageSerializer.Serialize(image2, "./data2");
 
-			image.toImage();
+			image.toImage("img.bmp");
 		}
 	}
 }

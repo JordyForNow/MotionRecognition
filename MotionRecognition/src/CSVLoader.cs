@@ -11,13 +11,13 @@ namespace MotionRecognition
 		private string path;
 		// Holds the amount of joints in the data that is to be loaded.
 		private int jointsCount;
-		
+
 		public CSVLoader(string _path, int _jointsCount)
 		{
 			this.path = _path;
 			this.jointsCount = _jointsCount;
 		}
-		
+
 		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true)
 		{
 			// Create a new Table.

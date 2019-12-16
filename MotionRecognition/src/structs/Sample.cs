@@ -8,6 +8,6 @@ namespace MotionRecognition
 		public Single timestamp;
 		public List<T> sampleData;
 
-		public Sample() {}
+		public Sample() { }
 	}
 }

@@ -6,62 +6,26 @@ namespace UnitTests
 	class BitModulatorTests
 	{
 		[Test]
-		public void BitModulator()
+		public void BitModulator_SetIndex()
 		{
-			BitModulator b = new BitModulator();
-			b.SetIndex(0, true);
-			Assert.IsTrue(b.GetVal() == 1);
+			int val = 0;
+			BitModulator.SetIndex(ref val, 0, true);
+			Assert.IsTrue(val == 1);
 		}
 
 		[Test]
-		public void BitModulatorExceedsBuffer()
+		public void BitModulator_ExceedsBuffer()
 		{
-			BitModulator b = new BitModulator();
-			Assert.IsFalse(b.SetIndex(32, true));
+			int val = 0;
+			Assert.IsFalse(BitModulator.SetIndex(ref val, 32, true));
 		}
 
 		[Test]
-		public void BitModulatorToStringBits()
+		public void BitModulator_ToString_Bits()
 		{
-			BitModulator b = new BitModulator();
-			b.SetIndex(0, true);
-			Assert.IsTrue(b.ToString(true) == "11111111111111111111111111111110");
-		}
-
-		[Test]
-		public void BitModulator_Equals_BothSet()
-		{
-			BitModulator bm1 = new BitModulator();
-			BitModulator bm2 = new BitModulator();
-
-			Assert.AreEqual(bm1, bm2);
-		}
-
-		[Test]
-		public void BitModulator_Equals_OtherNull()
-		{
-			BitModulator bm1 = new BitModulator();
-			BitModulator bm2 = null;
-
-			Assert.AreNotEqual(bm1, bm2);
-		}
-
-		[Test]
-		public void BitModulator_Equals_FirstNull()
-		{
-			BitModulator bm1 = null;
-			BitModulator bm2 = new BitModulator();
-
-			Assert.AreNotEqual(bm1, bm2);
-		}
-
-		[Test]
-		public void BitModulator_Equals_BothNull()
-		{
-			BitModulator bm1 = null;
-			BitModulator bm2 = null;
-
-			Assert.AreEqual(bm1, bm2);
+			int val = 0;
+			BitModulator.SetIndex(ref val, 0, true);
+			Assert.IsTrue(BitModulator.ToString(ref val) == "11111111111111111111111111111110");
 		}
 	}
 }
