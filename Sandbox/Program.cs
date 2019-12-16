@@ -11,7 +11,16 @@ namespace Sandbox
 		{
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 			{
-				Console.WriteLine("Windows");
+				string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
+				if (Environment.OSVersion.Version.Major >= 6)
+				{
+					path = Directory.GetParent(path).ToString();
+				}
+
+				path += "\\AppData\\Local\\Programs\\Python\\Python36";
+				Environment.SetEnvironmentVariable("PATH", @path, EnvironmentVariableTarget.Process);
+				path += "\\python.exe";
+				Environment.SetEnvironmentVariable("PYTHONHOME", @path, EnvironmentVariableTarget.Process);
 			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 			{
 				Console.WriteLine("Linux");
@@ -20,15 +29,9 @@ namespace Sandbox
 				Console.WriteLine("OSX");
 			}
 
-			//string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
-			//if (Environment.OSVersion.Version.Major >= 6)
-			//{
-			//	path = Directory.GetParent(path).ToString();
-			//}
-			//Console.WriteLine(path);
 			// TODO: make relative
-			Environment.SetEnvironmentVariable("PATH", @"C:\Users\buste\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
-			Environment.SetEnvironmentVariable("PYTHONHOME", @"C:\Users\buste\AppData\Local\Programs\Python\Python36\python.exe", EnvironmentVariableTarget.Process);
+			Environment.SetEnvironmentVariable("PATH", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
+			Environment.SetEnvironmentVariable("PYTHONHOME", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36\python.exe", EnvironmentVariableTarget.Process);
 			NetworkController control = new NetworkController();
 			//uint[,,] d = new uint[1,1,1];
 			//bool[] b = new bool[1];
