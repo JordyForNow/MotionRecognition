@@ -41,18 +41,12 @@ namespace MotionRecognition
 			var loaded_model = Sequential.ModelFromJson(File.ReadAllText("model.json"));
 			loaded_model.LoadWeight("model.h5");
 		}
-
 		public static void Run2()
-		{
-			int batch_size = 128;
+        {
+			int batch_size = 512;
 			int num_classes = 10;
 			int epochs = 1;
 
-        public static void Run2()
-        {
-            int batch_size = 512;
-            int num_classes = 10;
-            int epochs = 1;
 			// input image dimensions
 			int img_rows = 28, img_cols = 28;
 
@@ -111,19 +105,26 @@ namespace MotionRecognition
 			Console.WriteLine($"Test loss: {score[0]}");
 			Console.WriteLine($"Test accuracy: {score[1]}");
 
-            model.Fit(x_train, y_train,
-                        batch_size: batch_size,
-                        epochs: epochs,
-                        verbose: 1,
-                        validation_data: new NDarray[] { x_test, y_test });
-            var score = model.Evaluate(x_test, y_test, verbose: 0);
-            Console.WriteLine($"Test loss: {score[0]}");
-            Console.WriteLine($"Test accuracy: {score[1]}");
-        }
+			//Save model and weights
+			string json = model.ToJson();
+			File.WriteAllText("model.json", json);
+			model.SaveWeight("model.h5");
 
 			//Load model and weight
-			//var loaded_model = Sequential.ModelFromJson(File.ReadAllText("model.json"));
-			//loaded_model.LoadWeight("model.h5");
+			var loaded_model = Sequential.ModelFromJson(File.ReadAllText("model.json"));
+			loaded_model.LoadWeight("model.h5");
+
+			//Predictions
+			int image_index = 10;
+			Console.WriteLine("Actual animal:" + y_test[image_index].argmax());
+			var pred = loaded_model.Predict(x_test[image_index].reshape(-1, 28, 28, 1));
+			Console.WriteLine("Predicted animal:" + pred.argmax());
+
+			image_index = 11;
+			Console.WriteLine("Actual animal:" + y_test[image_index].argmax());
+			pred = loaded_model.Predict(x_test[image_index].reshape(-1, 28, 28, 1));
+			Console.WriteLine("Predicted animal:" + pred.argmax());
 		}
+
 	}
 }

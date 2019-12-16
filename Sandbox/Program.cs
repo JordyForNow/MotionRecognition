@@ -27,12 +27,13 @@ namespace Sandbox
 			//}
 			//Console.WriteLine(path);
 			// TODO: make relative
-			Environment.SetEnvironmentVariable("PATH", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
-			Environment.SetEnvironmentVariable("PYTHONHOME", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36\python.exe", EnvironmentVariableTarget.Process);
+			Environment.SetEnvironmentVariable("PATH", @"C:\Users\buste\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
+			Environment.SetEnvironmentVariable("PYTHONHOME", @"C:\Users\buste\AppData\Local\Programs\Python\Python36\python.exe", EnvironmentVariableTarget.Process);
 			NetworkController control = new NetworkController();
 			//uint[,,] d = new uint[1,1,1];
 			//bool[] b = new bool[1];
 			//control.TrainNetwork(ref d, b);
+			Neural.Run2();
 			
 		}
 	}
