@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace MotionRecognition
 {
@@ -15,12 +14,12 @@ namespace MotionRecognition
 		// Size is the maximum field size of Top and Side: 2*(sizeˆsize).
 		public readonly int size;
 		// Top and Side are the 3D composited images.
-		private int[,] data;
+		private int[,] movementMap;
 
 		public Motion3DImage(int _size = 500)
 		{
 			this.size = _size;
-			data = new int[size * 2, size];
+			movementMap = new int[size * 2, size];
 		}
 
 		public Motion3DImage(ref List<Sample<JointMeasurement>> _table) : this()
@@ -33,17 +32,17 @@ namespace MotionRecognition
 			switch (a)
 			{
 				case Angle.TOP:
-					data[y, x] = val;
+					movementMap[y, x] = val;
 					break;
 				case Angle.SIDE:
-					data[y + size, x] = val;
+					movementMap[y + size, x] = val;
 					break;
 			}
 		}
 
 		public int[,] GetData()
 		{
-			return data;
+			return movementMap;
 		}
 
 		#region PublicFunctions 
@@ -77,46 +76,11 @@ namespace MotionRecognition
 					x = (int)Math.Round(Remap(sample.sampleData[i].pos.x, vecMin.x, vecMax.x, 0, size - 1));
 					y = (int)Math.Round(Remap(sample.sampleData[i].pos.y, vecMin.y, vecMax.y, 0, size - 1));
 					z = (int)Math.Round(Remap(sample.sampleData[i].pos.z, vecMin.z, vecMax.z, 0, size - 1));
-					BitModulator.SetIndex(ref this.data[x, y], i, true);
-					BitModulator.SetIndex(ref this.data[size + z, y], i, true);
+					BitModulator.SetIndex(ref this.movementMap[x, y], i, true);
+					BitModulator.SetIndex(ref this.movementMap[size + z, y], i, true);
 				}
 			}
 		}
-
-		public void toImage(string filename = "test.bmp")
-		{
-			Bitmap g = new Bitmap(size, size);
-
-			for (int y = 0; y < size; y++)
-			{
-				for (int x = 0; x < size; x++)
-				{
-					if (data[y, x] != 0)
-					{
-						g.SetPixel(x, y, Color.White);
-					}
-					else
-					{
-						g.SetPixel(x, y, Color.Black);
-					}
-
-				}
-			}
-			for (int y = 0; y < size; y++)
-			{
-				for (int x = 0; x < size; x++)
-				{
-					if (data[y + size, x] != 0)
-					{
-						g.SetPixel(x, y, Color.Green);
-					}
-
-				}
-			}
-
-			g.Save(filename);
-		}
-
 		#endregion
 
 		#region PrivateFunctions
@@ -145,7 +109,7 @@ namespace MotionRecognition
 			{
 				for (int x = 0; x < size; x++)
 				{
-					if (data[y, x] != other.data[y, x]) // If both cells are not equal return false.
+					if (movementMap[y, x] != other.movementMap[y, x]) // If both cells are not equal return false.
 					{
 						return false;
 					}
