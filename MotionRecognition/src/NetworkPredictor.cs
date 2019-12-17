@@ -6,11 +6,11 @@ namespace MotionRecognition
 	class NetworkPredictor
 	{
 		BaseModel model;
-		private string inputData;
+		private int[,] inputData;
 
 		public NetworkPredictor(string _networkWeights,
 								string _networkLayers,
-								string _inputData)
+								int[,] _inputData)
 		{
 			model = Sequential.ModelFromJson(File.ReadAllText(_networkLayers));
 			model.LoadWeight(_networkWeights);

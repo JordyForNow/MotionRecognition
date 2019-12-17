@@ -187,10 +187,24 @@ namespace MotionRecognition
 			if (!File.Exists(predictData))
 				throw new FileNotFoundException("Network input was not found.");
 
+			// load CSV file and create image
+			CSVLoader loader;
+			List<Sample<JointMeasurement>> table;
+			Motion3DImage image;
+
+			loader = new CSVLoader(predictData, CSVSize);
+
+			table = loader.GetData();
+
+			image = new Motion3DImage(100);
+			image.CreateImageFromTable(ref table);
+
+			int[,] data = image.GetData();
+
 			predictor = new NetworkPredictor(
 				_networkWeights: networkWeights,
 				_networkLayers: networkLayers,
-				_inputData: predictData);
+				_inputData: data);
 
 			return predictor.Run();
 		}
