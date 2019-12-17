@@ -52,7 +52,12 @@ namespace MotionRecognition
 					if (!Directory.Exists(inputData))
 						throw new FolderNotFoundException("Input data folder was not found.");
 
-					int fileCount = Directory.GetFiles(inputData, "*.csv*", SearchOption.TopDirectoryOnly).Length;
+					// Get total number of '.csv' files inside folder.
+					int fileCount = Directory.GetFiles(
+						inputData, 
+						"*.csv*", 
+						SearchOption.TopDirectoryOnly
+						).Length;
 
 					dataset = new int[fileCount, networkInputSize, networkInputSize * 2];
 
@@ -108,17 +113,6 @@ namespace MotionRecognition
 					break;
 			}
 		}
-		/*{
-		 *	{
-		 *		{0,0,0,0,0,,0 },
-		 *		{ 0,0,0,0,}
-		 *	},
-		 *	{
-		 *		{ },
-		 *		{ }
-		 *	}
-		 *}
-		 */
 
 		public void Project2DInto3D(int[,] source, int index)
 		{
@@ -139,7 +133,10 @@ namespace MotionRecognition
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 			{
 				// Get user directory.
-				path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
+				path = Directory.GetParent(
+						Environment.GetFolderPath(
+						Environment.SpecialFolder.ApplicationData)
+					).FullName;
 
 				if (Environment.OSVersion.Version.Major >= 6)
 				{
