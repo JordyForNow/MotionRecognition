@@ -12,7 +12,7 @@ namespace MotionRecognition
 		private NDarray trainingData;
 		private NDarray trainingAnswers;
 
-		public NetworkTrainer(ref uint[,,] _trainingData, bool[] _trainingAnswers)
+		public NetworkTrainer(ref int[,,] _trainingData, bool[] _trainingAnswers)
 		{
 			trainingData = new NDarray(_trainingData);
 			trainingAnswers = new NDarray(_trainingAnswers);
