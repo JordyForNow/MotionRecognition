@@ -20,98 +20,178 @@ namespace MotionRecognition
 		private NetworkPredictor predictor;
 
 		private networkActions action;
-		private string inputData;
+		private string predictData;
+		private string correctTrainingData;
+		private string incorrectTrainingData;
+		private string outputDirectory;
+		private string outputName;
 		private string networkWeights;
 		private string networkLayers;
 		private int networkInputSize;
 		private int CSVSize;
+		private int epochs;
+		private int batchSize;
 
 		private int[,,] dataset;
+		private int[] trainingAnswers;
 
 		public MotionRecognizer(networkActions _action,
-								string _inputData,
-								string _networkWeights,
-								string _networkLayers,
+								string _predictData = null,
+								string _correctTrainingData = null,
+								string _incorrectTrainingData = null,
+								string _outputDirectory = null,
+								string _outputName = null,
+								string _networkWeights = null,
+								string _networkLayers = null,
 								int _networkInputSize = 100,
-								int _CSVSize = 21)
+								int _CSVSize = 21,
+								int _epochs = 3,
+								int _batchSize = 32)
 		{
 			action = _action;
-			inputData = _inputData;
+			predictData = _predictData;
+			correctTrainingData = _correctTrainingData;
+			incorrectTrainingData = _incorrectTrainingData;
+			outputDirectory = _outputDirectory;
+			outputName = _outputName;
 			networkWeights = _networkWeights;
 			networkLayers = _networkLayers;
 			networkInputSize = _networkInputSize;
 			CSVSize = _CSVSize;
+			epochs = _epochs;
+			batchSize = _batchSize;
+
 			SetPathVariables();
 		}
 
-		public void Run()
+		public bool Run()
 		{
 			switch(action)
 			{
 				case networkActions.TRAIN:
-					if (!Directory.Exists(inputData))
-						throw new FolderNotFoundException("Input data folder was not found.");
-
-					// Get total number of '.csv' files inside folder.
-					int fileCount = Directory.GetFiles(
-						inputData, 
-						"*.csv*", 
-						SearchOption.TopDirectoryOnly
-						).Length;
-
-					dataset = new int[fileCount, networkInputSize, networkInputSize * 2];
-
-					DirectoryInfo inputDirectory = new DirectoryInfo(inputData);
-
-					CSVLoader loader;
-					List<Sample<JointMeasurement>> table;
-					Motion3DImage image;
-					int index = 0;
-
-					foreach (var file in inputDirectory.GetFiles("*.csv"))
-					{
-
-						loader = new CSVLoader(file.FullName, CSVSize);
-
-						table = loader.GetData();
-
-						image = new Motion3DImage(100);
-						image.CreateImageFromTable(ref table);
-
-						Project2DInto3D(image.GetData(), index);
-						index++;
-
-					}
-
-					break;
+					return Train();
 				case networkActions.PREDICT:
-					if (!Regex.IsMatch(networkWeights, @"(\.h5$)"))
-						throw new WrongFileTypeException("Wrong network weights location given.");
-
-					if (!File.Exists(networkWeights))
-						throw new FileNotFoundException("Network weights were not found.");
-
-					if (!Regex.IsMatch(networkLayers, @"(\.json$)"))
-						throw new WrongFileTypeException("Wrong network layers location given.");
-
-					if (!File.Exists(networkLayers))
-						throw new FileNotFoundException("Network layers were not found.");
-
-					if (!Regex.IsMatch(inputData, @"(\.csv$)"))
-						throw new WrongFileTypeException("Wrong network input given.");
-
-					if (!File.Exists(inputData))
-						throw new FileNotFoundException("Network input was not found.");
-
-					predictor = new NetworkPredictor(
-						_networkWeights: networkWeights,
-						_networkLayers: networkLayers,
-						_inputData: inputData);
-
-					Console.WriteLine(predictor.Run());
-
-					break;
+					return Predict();
+				default:
+					return false;
 			}
+		}
+
+		private bool Train()
+		{
+			if (!Directory.Exists(correctTrainingData))
+				throw new DirectoryNotFoundException("Correct input data directory was not found.");
+
+			if (!Directory.Exists(incorrectTrainingData))
+				throw new DirectoryNotFoundException("Incorrect input data directory was not found.");
+
+			if (correctTrainingData == incorrectTrainingData)
+				throw new DataCrossoverException("Correct and incorrect data point to the same directory.");
+
+			if (!Directory.Exists(outputDirectory))
+				throw new DirectoryNotFoundException("Output directory was not found.");
+
+			if (File.Exists(outputDirectory + outputName + ".h5"))
+				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".h5 already exists.");
+
+			if (File.Exists(outputDirectory + outputName + ".json"))
+				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".json already exists.");
+
+			// Get total number of '.csv' files inside Directory.
+			int fileCount = Directory.GetFiles(
+				correctTrainingData,
+				"*.csv*",
+				SearchOption.TopDirectoryOnly
+				).Length;
+
+			fileCount += Directory.GetFiles(
+				incorrectTrainingData,
+				"*.csv*",
+				SearchOption.TopDirectoryOnly
+				).Length;
+
+			dataset = new int[fileCount, networkInputSize, networkInputSize * 2];
+			trainingAnswers = new int[fileCount];
+
+			DirectoryInfo inputDirectory = new DirectoryInfo(correctTrainingData);
+
+			CSVLoader loader;
+			List<Sample<JointMeasurement>> table;
+			Motion3DImage image;
+			int index = 0;
+
+			foreach (var file in inputDirectory.GetFiles("*.csv"))
+			{
+
+				loader = new CSVLoader(file.FullName, CSVSize);
+
+				table = loader.GetData();
+
+				image = new Motion3DImage(100);
+				image.CreateImageFromTable(ref table);
+
+				Project2DInto3D(image.GetData(), index);
+				trainingAnswers[index] = 1;
+				index++;
+
+			}
+
+			inputDirectory = new DirectoryInfo(incorrectTrainingData);
+
+			foreach (var file in inputDirectory.GetFiles("*.csv"))
+			{
+
+				loader = new CSVLoader(file.FullName, CSVSize);
+
+				table = loader.GetData();
+
+				image = new Motion3DImage(100);
+				image.CreateImageFromTable(ref table);
+
+				Project2DInto3D(image.GetData(), index);
+				trainingAnswers[index] = 0;
+				index++;
+
+			}
+
+			trainer = new NetworkTrainer(
+				_inputData: ref dataset,
+				_inputAnswers: ref trainingAnswers,
+				_outputDirectory: outputDirectory,
+				_outputName: outputName,
+				_inputSize: networkInputSize,
+				_epochs: epochs,
+				_batchSize: batchSize);
+
+			return trainer.Run();
+		}
+
+		private bool Predict()
+		{
+			if (!Regex.IsMatch(networkWeights, @"(\.h5$)"))
+				throw new WrongFileTypeException("Wrong network weights location given.");
+
+			if (!File.Exists(networkWeights))
+				throw new FileNotFoundException("Network weights were not found.");
+
+			if (!Regex.IsMatch(networkLayers, @"(\.json$)"))
+				throw new WrongFileTypeException("Wrong network layers location given.");
+
+			if (!File.Exists(networkLayers))
+				throw new FileNotFoundException("Network layers were not found.");
+
+			if (!Regex.IsMatch(predictData, @"(\.csv$)"))
+				throw new WrongFileTypeException("Wrong network input given.");
+
+			if (!File.Exists(predictData))
+				throw new FileNotFoundException("Network input was not found.");
+
+			predictor = new NetworkPredictor(
+				_networkWeights: networkWeights,
+				_networkLayers: networkLayers,
+				_inputData: predictData);
+
+			return predictor.Run();
 		}
 
 		public void Project2DInto3D(int[,] source, int index)

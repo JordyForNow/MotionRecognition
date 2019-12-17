@@ -50,13 +50,13 @@ namespace Sandbox
 			//Neural.Run2();
 
 
-			MotionRecognizer recognizer = new MotionRecognizer(
+			/*MotionRecognizer recognizer = new MotionRecognizer(
 				_action: networkActions.TRAIN,
-				_inputData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\Input",
+				_inputData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\Input\",
 				_networkWeights: "modelforgesture1.h5",
 				_networkLayers: "model.json");
 
-			recognizer.Run();
+			recognizer.Run();*/
 			
 		}
 	}
