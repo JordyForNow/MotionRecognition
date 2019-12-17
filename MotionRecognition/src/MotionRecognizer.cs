@@ -35,18 +35,19 @@ namespace MotionRecognition
 		private int[,,] dataset;
 		private int[] trainingAnswers;
 
-		public MotionRecognizer(networkActions _action,
-								string _predictData = null,
-								string _correctTrainingData = null,
-								string _incorrectTrainingData = null,
-								string _outputDirectory = null,
-								string _outputName = null,
-								string _networkWeights = null,
-								string _networkLayers = null,
-								int _networkInputSize = 100,
-								int _CSVSize = 21,
-								int _epochs = 3,
-								int _batchSize = 32)
+		public MotionRecognizer(
+			networkActions _action,
+			string _predictData = null,
+			string _correctTrainingData = null,
+			string _incorrectTrainingData = null,
+			string _outputDirectory = null,
+			string _outputName = null,
+			string _networkWeights = null,
+			string _networkLayers = null,
+			int _networkInputSize = 100,
+			int _CSVSize = 21,
+			int _epochs = 3,
+			int _batchSize = 32)
 		{
 			action = _action;
 			predictData = _predictData;
