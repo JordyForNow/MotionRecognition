@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -222,29 +223,28 @@ namespace MotionRecognition
 
 		private void SetPathVariables()
 		{
-			string path = "";
+			StringBuilder pathBuilder = new StringBuilder();
 			
 			// Check if current platform is windows.
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 			{
 				// Get user directory.
-				path = Directory.GetParent(
+				var ApplicationData = Directory.GetParent(
 						Environment.GetFolderPath(
-						Environment.SpecialFolder.ApplicationData)
-					).FullName;
+						Environment.SpecialFolder.ApplicationData));
 
 				if (Environment.OSVersion.Version.Major >= 6)
-				{
-					path = Directory.GetParent(path).ToString();
-				}
-				
+					pathBuilder.Append(Directory.GetParent(ApplicationData.FullName));
+				else
+					pathBuilder.Append(ApplicationData.FullName);
+
 				// Add Python36 folder to path.
-				path += @"\AppData\Local\Programs\Python\Python36";
-				Environment.SetEnvironmentVariable("PATH", path, EnvironmentVariableTarget.Process);
+				pathBuilder.Append(@"\AppData\Local\Programs\Python\Python36");
+				Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
 
 				// Add python excecutable to path.
-				path += @"\python.exe";
-				Environment.SetEnvironmentVariable("PYTHONHOME", path, EnvironmentVariableTarget.Process);
+				pathBuilder.Append(@"\python.exe");
+				Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
 			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 			{
 				// Implement Linux.

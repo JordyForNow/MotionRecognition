@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using MotionRecognition;
 
 namespace Sandbox
@@ -10,25 +11,36 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-//			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-//			{
-//				string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
-//				if (Environment.OSVersion.Version.Major >= 6)
-//				{
-//					path = Directory.GetParent(path).ToString();
-//				}
-//
-//				path += "\\AppData\\Local\\Programs\\Python\\Python36";
-//				Environment.SetEnvironmentVariable("PATH", @path, EnvironmentVariableTarget.Process);
-//				path += "\\python.exe";
-//				Environment.SetEnvironmentVariable("PYTHONHOME", @path, EnvironmentVariableTarget.Process);
-//			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-//			{
-//				Console.WriteLine("Linux");
-//			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-//			{
-//				Console.WriteLine("OSX");
-//			}
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
+				StringBuilder pathBuilder = new StringBuilder();
+
+				// Get user directory.
+				var ApplicationData = Directory.GetParent(
+						Environment.GetFolderPath(
+						Environment.SpecialFolder.ApplicationData));
+
+				if (Environment.OSVersion.Version.Major >= 6)
+					pathBuilder.Append(Directory.GetParent(ApplicationData.FullName));
+				else
+					pathBuilder.Append(ApplicationData.FullName);
+
+				// Add Python36 folder to path.
+				pathBuilder.Append(@"\AppData\Local\Programs\Python\Python36");
+				Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
+
+				// Add python excecutable to path.
+				pathBuilder.Append(@"\python.exe");
+				Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
+			}
+			else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+			{
+				Console.WriteLine("Linux");
+			}
+			else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+			{
+				Console.WriteLine("OSX");
+			}
 
 			//// TODO: make relative
 			//Environment.SetEnvironmentVariable("PATH", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
@@ -47,17 +59,17 @@ namespace Sandbox
 			//neuralInput[0] = d;
 			//bool[] answers = new bool[1] { true };
 			//control.TrainNetwork(ref neuralInput, answers);
-//			Neural.Run2();
+			Neural.Run2();
 
 
-			MotionRecognizer recognizer = new MotionRecognizer(
-				_action: networkActions.TRAIN,
-				_correctTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\",
-				_incorrectTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\dataset\",
-				_outputDirectory: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\"
-			);
+			// MotionRecognizer recognizer = new MotionRecognizer(
+			// 	_action: networkActions.TRAIN,
+			// 	_correctTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\",
+			// 	_incorrectTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\dataset\",
+			// 	_outputDirectory: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\"
+			// );
 
-			recognizer.Run();
+			// recognizer.Run();
 			
 		}
 	}

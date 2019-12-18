@@ -43,7 +43,7 @@ namespace MotionRecognition
 		}
 		public static void Run2()
         {
-			int batch_size = 512;
+			int batch_size = 5;
 			int num_classes = 10;
 			int epochs = 1;
 
