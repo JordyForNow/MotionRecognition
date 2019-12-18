@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MotionRecognition
 {
-	class NoParameterGivenException : Exception
+	public class NoParameterGivenException : Exception
 	{
 
 		public NoParameterGivenException(String Message) : base(Message) { }

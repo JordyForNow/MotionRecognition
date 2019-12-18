@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MotionRecognition
 {
-	class DataCrossoverException : Exception
+	public class DataCrossoverException : Exception
 	{
 
 		public DataCrossoverException(String Message) : base(Message) { }

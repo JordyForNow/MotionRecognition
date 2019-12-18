@@ -2,7 +2,7 @@
 
 namespace MotionRecognition
 {
-	class DirectoryNotFoundException : Exception
+	public class DirectoryNotFoundException : Exception
 	{
 
 		public DirectoryNotFoundException(String Message) : base(Message) { }

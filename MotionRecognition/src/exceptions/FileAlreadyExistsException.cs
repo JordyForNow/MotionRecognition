@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MotionRecognition
 {
-	class FileAlreadyExistsException : Exception
+	public class FileAlreadyExistsException : Exception
 	{
 
 		public FileAlreadyExistsException(String Message) : base(Message) { }

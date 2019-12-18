@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MotionRecognition
 {
-	class WrongFileTypeException : Exception
+	public class WrongFileTypeException : Exception
 	{
 
 		public WrongFileTypeException(String Message) : base(Message) { }
