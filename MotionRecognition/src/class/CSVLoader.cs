@@ -18,7 +18,7 @@ namespace MotionRecognition
 			this.jointsCount = _jointsCount;
 		}
 
-		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true)
+		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true, bool skipFirstDataLine = true)
 		{
 			// Create a new Table.
 			var sampleList = new List<Sample<JointMeasurement>>();
@@ -28,6 +28,12 @@ namespace MotionRecognition
 			foreach (var row in rows)
 			{
 				if (string.IsNullOrEmpty(row[0])) continue;
+
+				if (skipFirstDataLine)
+				{
+					skipFirstDataLine = false;
+					continue;
+				}
 
 				Sample<JointMeasurement> sample = new Sample<JointMeasurement>();
 				sample.timestamp = float.Parse(row[0]);
