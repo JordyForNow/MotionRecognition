@@ -44,47 +44,6 @@ namespace MotionRecognition
 
 		public bool Run()
 		{
-			//Shape input_shape = null;
-			//if (Backend.ImageDataFormat() == "channels_first")
-			//{
-			//	input_shape = (9, inputSize * 2, inputSize);
-			//} else
-			//{
-			//	input_shape = (inputSize * 2, inputSize, 9);
-			//}
-
-			//Console.WriteLine(trainingData);
-
-			//Build sequential model
-			//var model = new Sequential();
-			//model.Add(new Dense(32, activation: "relu", input_shape: new Shape(2)));
-			//model.Add(new Dense(64, activation: "relu"));
-			//model.Add(new Dense(1, activation: "sigmoid"));
-
-			//var model = new Sequential();
-			//model.Add(new Conv2D(32, kernel_size: (3, 3).ToTuple(),
-			//						activation: "relu",
-			//						input_shape: input_shape));
-			//model.Add(new Conv2D(64, (3, 3).ToTuple(), activation: "relu"));
-			//model.Add(new MaxPooling2D(pool_size: (2, 2).ToTuple()));
-			//model.Add(new Dropout(0.25));
-			//model.Add(new Flatten());
-			//model.Add(new Dense(128, activation: "relu"));
-			//model.Add(new Dropout(0.5));
-			//model.Add(new Dense(2, activation: "softmax"));
-
-			////Compile and train
-			//model.Compile(optimizer: "sgd", loss: "binary_crossentropy", metrics: new string[] { "accuracy" });
-			//model.Fit(trainingData, trainingAnswers, batch_size: batchSize, epochs: epochs, verbose: 1);
-
-			////Save model and weights
-			//string json = model.ToJson();
-			//File.WriteAllText($"{outputDirectory}model.json", json);
-			//model.SaveWeight($"{outputDirectory}model.h5");
-
-			//			//Load model and weight
-			//			var loaded_model = Sequential.ModelFromJson(File.ReadAllText("model.json"));
-			//			loaded_model.LoadWeight("model.h5");
 
 			// input image dimensions
 			int img_rows = inputSize * 2, img_cols = inputSize;

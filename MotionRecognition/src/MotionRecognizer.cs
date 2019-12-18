@@ -90,17 +90,17 @@ namespace MotionRecognition
 			if (!Directory.Exists(incorrectTrainingData))
 				throw new DirectoryNotFoundException("Incorrect input data directory was not found.");
 
-			if (correctTrainingData == incorrectTrainingData && !allowFileOverride)
+			if (correctTrainingData == incorrectTrainingData)
 				throw new DataCrossoverException("Correct and incorrect data point to the same directory.");
 
 			if (!Directory.Exists(outputDirectory))
 				throw new DirectoryNotFoundException("Output directory was not found.");
 
-			if (File.Exists(outputDirectory + outputName + ".h5"))
+			if (File.Exists(outputDirectory + outputName + ".h5") && !allowFileOverride)
 				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".h5 already exists, set _allowFileOverride to 'TRUE' to skip this check.");
 
-			if (File.Exists(outputDirectory + outputName + ".json"))
-				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".json already exists.");
+			if (File.Exists(outputDirectory + outputName + ".json") && !allowFileOverride)
+				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".json already exists, set _allowFileOverride to 'TRUE' to skip this check.");
 
 			if (outputName == null)
 				throw new NoParameterGivenException("No output name was given.");
