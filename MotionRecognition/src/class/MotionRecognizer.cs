@@ -30,7 +30,6 @@ namespace MotionRecognition
 		private string networkLayers;
 		private int networkInputSize;
 		private bool allowFileOverride;
-		private int CSVSize;
 		private int epochs;
 		private int batchSize;
 
@@ -48,7 +47,6 @@ namespace MotionRecognition
 			string _networkLayers = null,
 			bool _allowFileOverride = false,
 			int _networkInputSize = 100,
-			int _CSVSize = 21,
 			int _epochs = 3,
 			int _batchSize = 32)
 		{
@@ -62,7 +60,6 @@ namespace MotionRecognition
 			networkLayers = _networkLayers;
 			networkInputSize = _networkInputSize;
 			allowFileOverride = _allowFileOverride;
-			CSVSize = _CSVSize;
 			epochs = _epochs;
 			batchSize = _batchSize;
 
