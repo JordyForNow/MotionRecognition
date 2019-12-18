@@ -67,7 +67,9 @@ namespace Sandbox
 				_action: networkActions.TRAIN,
 				_correctTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataCorrect\",
 				_incorrectTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataIncorrect\",
-				_outputDirectory: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\"
+				_outputDirectory: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
+				_outputName: @"movementOne",
+				_allowFileOverride: true
 			);
 
 			recognizer.Run();

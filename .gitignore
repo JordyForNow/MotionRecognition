@@ -10,3 +10,7 @@
 
 # Skip intermediates
 **/obj
+
+# Skip trained models
+**.h5
+**.json

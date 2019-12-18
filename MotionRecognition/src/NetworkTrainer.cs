@@ -148,8 +148,8 @@ namespace MotionRecognition
 
 			//Save model and weights
 			string json = model.ToJson();
-			File.WriteAllText($"model.json", json);
-			model.SaveWeight("model.h5");
+			File.WriteAllText(outputDirectory + outputName + ".json", json);
+			model.SaveWeight(outputDirectory + outputName + ".h5");
 
 
 			return false;

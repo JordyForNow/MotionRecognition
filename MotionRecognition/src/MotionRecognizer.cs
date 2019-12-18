@@ -29,6 +29,7 @@ namespace MotionRecognition
 		private string networkWeights;
 		private string networkLayers;
 		private int networkInputSize;
+		private bool allowFileOverride;
 		private int CSVSize;
 		private int epochs;
 		private int batchSize;
@@ -45,6 +46,7 @@ namespace MotionRecognition
 			string _outputName = null,
 			string _networkWeights = null,
 			string _networkLayers = null,
+			bool _allowFileOverride = false,
 			int _networkInputSize = 100,
 			int _CSVSize = 21,
 			int _epochs = 3,
@@ -59,6 +61,7 @@ namespace MotionRecognition
 			networkWeights = _networkWeights;
 			networkLayers = _networkLayers;
 			networkInputSize = _networkInputSize;
+			allowFileOverride = _allowFileOverride;
 			CSVSize = _CSVSize;
 			epochs = _epochs;
 			batchSize = _batchSize;
@@ -87,17 +90,20 @@ namespace MotionRecognition
 			if (!Directory.Exists(incorrectTrainingData))
 				throw new DirectoryNotFoundException("Incorrect input data directory was not found.");
 
-			if (correctTrainingData == incorrectTrainingData)
+			if (correctTrainingData == incorrectTrainingData && !allowFileOverride)
 				throw new DataCrossoverException("Correct and incorrect data point to the same directory.");
 
 			if (!Directory.Exists(outputDirectory))
 				throw new DirectoryNotFoundException("Output directory was not found.");
 
 			if (File.Exists(outputDirectory + outputName + ".h5"))
-				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".h5 already exists.");
+				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".h5 already exists, set _allowFileOverride to 'TRUE' to skip this check.");
 
 			if (File.Exists(outputDirectory + outputName + ".json"))
 				throw new FileAlreadyExistsException("The file: " + outputDirectory + outputName + ".json already exists.");
+
+			if (outputName == null)
+				throw new NoParameterGivenException("No output name was given.");
 
 			// Get total number of '.csv' files inside Directory.
 			int fileCount = Directory.GetFiles(
