@@ -54,6 +54,7 @@ namespace MotionRecognition
 
 			// the data, split between train and test sets
 			var ((x_train, y_train), (x_test, y_test)) = MNIST.LoadData();
+			Console.WriteLine(x_train);
 
 			if (Backend.ImageDataFormat() == "channels_first")
 			{
