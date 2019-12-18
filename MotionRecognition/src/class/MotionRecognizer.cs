@@ -255,12 +255,12 @@ namespace MotionRecognition
 			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
 			{
 				// Add Python36 folder to path.
-				path += @"\usr\local\bin\python3.6";
-				Environment.SetEnvironmentVariable("PATH", path, EnvironmentVariableTarget.Process);
+				pathBuilder.Append(@"\usr\local\bin\python3.6");
+				Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
 
 				// Add python excecutable to path.
-				path += @"\python3.6";
-				Environment.SetEnvironmentVariable("PYTHONHOME", path, EnvironmentVariableTarget.Process);
+				pathBuilder.Append(@"\python3.6");
+				Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
 			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 			{
 				// Implement MacOs.
