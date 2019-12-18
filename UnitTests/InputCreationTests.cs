@@ -11,7 +11,7 @@ namespace UnitTests
 		[SetUp]
 		public void Setup()
 		{
-			CSVLoader loader = new CSVLoader("./data.csv", 21);
+			CSVLoader loader = new CSVLoader("./data.csv");
 			table = loader.GetData();
 		}
 

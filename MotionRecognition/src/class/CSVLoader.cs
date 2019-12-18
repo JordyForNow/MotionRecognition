@@ -9,13 +9,10 @@ namespace MotionRecognition
 	{
 		// Path points to the CSV file that is to be loaded.
 		private string path;
-		// Holds the amount of joints in the data that is to be loaded.
-		private int jointsCount;
 
-		public CSVLoader(string _path, int _jointsCount)
+		public CSVLoader(string _path)
 		{
 			this.path = _path;
-			this.jointsCount = _jointsCount;
 		}
 
 		private List<Sample<JointMeasurement>> parseFile(bool hasHeader = true, bool skipFirstDataLine = true)
@@ -37,7 +34,7 @@ namespace MotionRecognition
 
 				Sample<JointMeasurement> sample = new Sample<JointMeasurement>();
 				sample.timestamp = float.Parse(row[0]);
-				sample.sampleData = new List<JointMeasurement>(jointsCount);
+				sample.sampleData = new List<JointMeasurement>(row.Count()/2);
 				for (uint i = 1; i < row.Count(); i += 2)
 				{
 					JointMeasurement measurement = new JointMeasurement();

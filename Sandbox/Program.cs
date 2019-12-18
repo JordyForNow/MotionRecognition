@@ -6,7 +6,7 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-			IDataLoader<JointMeasurement> loader = new CSVLoader("data.csv", 21);
+			IDataLoader<JointMeasurement> loader = new CSVLoader("data.csv");
 
 			var table = loader.GetData();
 
