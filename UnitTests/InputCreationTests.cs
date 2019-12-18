@@ -7,11 +7,15 @@ namespace UnitTests
 	public class Tests
 	{
 		List<Sample<JointMeasurement>> table;
+		string dataPath;
 
 		[SetUp]
 		public void Setup()
 		{
-			CSVLoader loader = new CSVLoader("./data.csv");
+			// Assuming your project is ran from /bin/debug/netcoreapp
+			string dataPath = @"../../../testdata/";
+
+			CSVLoader loader = new CSVLoader(dataPath + "data.csv");
 			table = loader.GetData();
 		}
 
@@ -78,8 +82,8 @@ namespace UnitTests
 		public void SerializeImage()
 		{
 			Motion3DImage image = new Motion3DImage(ref table), image2;
-			ImageSerializer.Serialize(image, "./testSerializedData");
-			image2 = ImageSerializer.DeSerialize("./testSerializedData");
+			ImageSerializer.Serialize(image, dataPath + "testSerializedData");
+			image2 = ImageSerializer.DeSerialize(dataPath+ "testSerializedData");
 			Assert.IsTrue(image.Equals(image2));
 		}
 

@@ -13,7 +13,8 @@ namespace UnitTests
 		[SetUp]
 		public void Setup()
 		{
-			string dataPath = "../testdata/";
+			// Assuming your project is ran from /bin/debug/netcoreapp
+			string dataPath = @"../../../testdata/";
 		
 			Table1 = new List<Sample<JointMeasurement>>();
 			Table2 = new List<Sample<JointMeasurement>>();
