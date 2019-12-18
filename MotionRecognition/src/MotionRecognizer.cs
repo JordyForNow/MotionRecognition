@@ -131,7 +131,7 @@ namespace MotionRecognition
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				loader = new CSVLoader(file.FullName, CSVSize);
+				loader = new CSVLoader(file.FullName);
 
 				table = loader.GetData();
 
@@ -149,7 +149,7 @@ namespace MotionRecognition
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				loader = new CSVLoader(file.FullName, CSVSize);
+				loader = new CSVLoader(file.FullName);
 
 				table = loader.GetData();
 
@@ -199,7 +199,7 @@ namespace MotionRecognition
 			List<Sample<JointMeasurement>> table;
 			Motion3DImage image;
 
-			loader = new CSVLoader(predictData, CSVSize);
+			loader = new CSVLoader(predictData);
 
 			table = loader.GetData();
 
