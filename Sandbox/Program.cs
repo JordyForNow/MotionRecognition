@@ -63,16 +63,23 @@ namespace Sandbox
 			//Console.WriteLine("---------------------");
 
 
+//			MotionRecognizer recognizer = new MotionRecognizer(
+//				_action: networkActions.TRAIN,
+//				_correctTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataCorrect\",
+//				_incorrectTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataIncorrect\",
+//				_outputDirectory: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
+//				_outputName: @"movementOne",
+//				_allowFileOverride: true
+//			);
+			
 			MotionRecognizer recognizer = new MotionRecognizer(
-				_action: networkActions.TRAIN,
-				_correctTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataCorrect\",
-				_incorrectTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataIncorrect\",
-				_outputDirectory: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
-				_outputName: @"movementOne",
-				_allowFileOverride: true
+				_action: networkActions.PREDICT,
+				_predictData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataCorrect\Move_26.csv",
+				_networkLayers: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\movementOne.json",
+				_networkWeights: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\movementOne.h5"
 			);
 
-			recognizer.Run();
+			Console.WriteLine("Run Result:" + recognizer.Run());
 
 		}
 	}

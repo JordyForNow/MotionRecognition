@@ -211,7 +211,8 @@ namespace MotionRecognition
 			predictor = new NetworkPredictor(
 				_networkWeights: networkWeights,
 				_networkLayers: networkLayers,
-				_inputData: data);
+				_inputData: data,
+				_networkInputSize : networkInputSize);
 
 			return predictor.Run();
 		}
