@@ -111,7 +111,7 @@ namespace MotionRecognition
 				SearchOption.TopDirectoryOnly
 				).Length;
 
-			dataset = new int[fileCount, networkInputSize, networkInputSize * 2];
+			dataset = new int[fileCount, networkInputSize * 2, networkInputSize];
 			trainingAnswers = new int[fileCount];
 
 			DirectoryInfo inputDirectory = new DirectoryInfo(correctTrainingData);
@@ -211,9 +211,9 @@ namespace MotionRecognition
 
 		public void Project2DInto3D(int[,] source, int index)
 		{
-			for (int i = 0; i < networkInputSize; i++)
+			for (int i = 0; i < networkInputSize * 2; i++)
 			{
-				for (int j = 0; j < networkInputSize * 2; j++)
+				for (int j = 0; j < networkInputSize; j++)
 				{
 					dataset[index, i, j] = source[i, j];
 				}

@@ -10,25 +10,25 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-			//if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-			//{
-			//	string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
-			//	if (Environment.OSVersion.Version.Major >= 6)
-			//	{
-			//		path = Directory.GetParent(path).ToString();
-			//	}
-
-			//	path += "\\AppData\\Local\\Programs\\Python\\Python36";
-			//	Environment.SetEnvironmentVariable("PATH", @path, EnvironmentVariableTarget.Process);
-			//	path += "\\python.exe";
-			//	Environment.SetEnvironmentVariable("PYTHONHOME", @path, EnvironmentVariableTarget.Process);
-			//} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-			//{
-			//	Console.WriteLine("Linux");
-			//} else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-			//{
-			//	Console.WriteLine("OSX");
-			//}
+//			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+//			{
+//				string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName;
+//				if (Environment.OSVersion.Version.Major >= 6)
+//				{
+//					path = Directory.GetParent(path).ToString();
+//				}
+//
+//				path += "\\AppData\\Local\\Programs\\Python\\Python36";
+//				Environment.SetEnvironmentVariable("PATH", @path, EnvironmentVariableTarget.Process);
+//				path += "\\python.exe";
+//				Environment.SetEnvironmentVariable("PYTHONHOME", @path, EnvironmentVariableTarget.Process);
+//			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+//			{
+//				Console.WriteLine("Linux");
+//			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+//			{
+//				Console.WriteLine("OSX");
+//			}
 
 			//// TODO: make relative
 			//Environment.SetEnvironmentVariable("PATH", @"C:\Users\Jordy\AppData\Local\Programs\Python\Python36", EnvironmentVariableTarget.Process);
@@ -47,16 +47,17 @@ namespace Sandbox
 			//neuralInput[0] = d;
 			//bool[] answers = new bool[1] { true };
 			//control.TrainNetwork(ref neuralInput, answers);
-			//Neural.Run2();
+//			Neural.Run2();
 
 
-			/*MotionRecognizer recognizer = new MotionRecognizer(
+			MotionRecognizer recognizer = new MotionRecognizer(
 				_action: networkActions.TRAIN,
-				_inputData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\Input\",
-				_networkWeights: "modelforgesture1.h5",
-				_networkLayers: "model.json");
+				_correctTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\",
+				_incorrectTrainingData: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\dataset\",
+				_outputDirectory: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\MotionRecognition\bin\Debug\netstandard2.1\"
+			);
 
-			recognizer.Run();*/
+			recognizer.Run();
 			
 		}
 	}
