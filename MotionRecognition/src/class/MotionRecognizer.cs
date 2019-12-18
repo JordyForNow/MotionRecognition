@@ -68,7 +68,7 @@ namespace MotionRecognition
 
 		public bool Run()
 		{
-			switch(action)
+			switch (action)
 			{
 				case networkActions.TRAIN:
 					return Train();
@@ -209,7 +209,7 @@ namespace MotionRecognition
 				_networkWeights: networkWeights,
 				_networkLayers: networkLayers,
 				_inputData: data,
-				_networkInputSize : networkInputSize);
+				_networkInputSize: networkInputSize);
 
 			return predictor.Run();
 		}
@@ -227,43 +227,23 @@ namespace MotionRecognition
 
 		private void SetPathVariables()
 		{
+
 			StringBuilder pathBuilder = new StringBuilder();
-			
-			// Check if current platform is windows.
-			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-			{
-				// Get user directory.
-				var ApplicationData = Directory.GetParent(
-						Environment.GetFolderPath(
-						Environment.SpecialFolder.ApplicationData));
 
-				if (Environment.OSVersion.Version.Major >= 6)
-					pathBuilder.Append(Directory.GetParent(ApplicationData.FullName));
-				else
-					pathBuilder.Append(ApplicationData.FullName);
+			pathBuilder.Append(System.IO.Path.GetDirectoryName(
+				System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
 
-				// Add Python36 folder to path.
-				pathBuilder.Append(@"\AppData\Local\Programs\Python\Python36");
-				Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
+			pathBuilder.Remove(0, 6);
+			pathBuilder.Append(@"\Python\");
 
-				// Add python excecutable to path.
-				pathBuilder.Append(@"\python.exe");
-				Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
-			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-			{
-				// Add Python36 folder to path.
-				pathBuilder.Append(@"\usr\local\bin\python3.6");
-				Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
+			// Set python 3.6.4 home directory.
+			Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString() + ";%PATH%", EnvironmentVariableTarget.Process);
 
-				// Add python excecutable to path.
-				pathBuilder.Append(@"\python3.6");
-				Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
-			} else if(RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-			{
-				// Implement MacOs.
-				Console.WriteLine("OSX");
-			}
+			pathBuilder.Append(@"\python.exe");
+
+			// Set python 3.6.4 excecutable.
+			Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
+
 		}
-
 	}
 }

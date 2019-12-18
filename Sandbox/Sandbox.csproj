@@ -21,4 +21,9 @@
     <Folder Include="DataIncorrect\" />
     <Folder Include="DataOut\" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Python.Runtime">
+      <HintPath>bin\Debug\netcoreapp3.0\Python.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
