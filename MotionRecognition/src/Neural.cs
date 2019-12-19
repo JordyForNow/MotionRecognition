@@ -13,10 +13,6 @@ namespace MotionRecognition
 {
 	public class Neural
 	{
-
-		/// <summary>
-		/// Input for the XOR function.
-		/// </summary>
 		public static double[][] XORInput = {
 			new[] {0.0, 0.0},
 			new[] {1.0, 0.0},
@@ -24,9 +20,6 @@ namespace MotionRecognition
 			new[] {1.0, 1.0}
 		};
 
-		/// <summary>
-		/// Ideal output for the XOR function.
-		/// </summary>
 		public static double[][] XORIdeal = {
 			new[] {0.0},
 			new[] {1.0},
@@ -34,12 +27,6 @@ namespace MotionRecognition
 			new[] {0.0}
 		};
 
-		#region IExample Members
-
-		/// <summary>
-		/// Program entry point.
-		/// </summary>
-		/// <param>Holds arguments and other info.</param>
 		public void Execute()
 		{
 			// create a neural network, without using a factory
@@ -63,6 +50,7 @@ namespace MotionRecognition
 				train.Iteration();
 				Console.WriteLine(@"Epoch # " + epoch + @" Error: " + train.Error);
 				epoch++;
+
 			} while (train.Error > 0.01);
 
 			// test the neural network
@@ -73,6 +61,5 @@ namespace MotionRecognition
 				Console.WriteLine(pair.Input[0] + @" , " + pair.Input[1] + @", actual= " + output[0] + @", ideal= " + pair.Ideal[0]);
 			}
 		}
-		#endregion
 	}
 }
