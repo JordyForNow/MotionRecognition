@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-
-namespace MotionRecognition
+﻿namespace MotionRecognition
 {
-	public struct Vec3 : CSVCell
+	public class Vec3
 	{
 		public float x, y, z;
 

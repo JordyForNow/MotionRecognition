@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace MotionRecognition
+﻿namespace MotionRecognition
 {
 	public interface IDataLoader<T>
 	{
-		bool LoadData();
+		T[] LoadData();
 	}
 }
