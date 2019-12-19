@@ -7,6 +7,7 @@ namespace Sandbox
 		static void Main(string[] args)
 		{
 			Neural n = new Neural();
+			n.Execute();
 		}
 	}
 }
