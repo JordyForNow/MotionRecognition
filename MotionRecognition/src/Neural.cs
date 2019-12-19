@@ -11,7 +11,7 @@ using Encog;
 
 namespace MotionRecognition
 {
-	class Neural
+	public class Neural
 	{
 
 		///<summary>
@@ -35,7 +35,7 @@ namespace MotionRecognition
 				new[]{1.0},
 				new[]{0.0}
 			};
-		private static void Main(string[] args)
+		public Neural()
 		{
 			//createaneuralnetwork,withoutusingafactory
 			var network = new BasicNetwork();
@@ -59,15 +59,14 @@ namespace MotionRecognition
 				epoch++;
 			} while (train.Error > 0.01);
 			train.FinishTraining();
-			
+
 			//test the neural network
 			Console.WriteLine(@"NeuralNetworkResults:");
-			foreach (IMLDataPair pairintrainingSet)
+			foreach (IMLDataPair pair in trainingSet)
 			{
 				IMLData output = network.Compute(pair.Input);
-				Console.WriteLine(pair.Input[0] +@","+pair.Input[1] + @", actual =" + output[0] + @”, ideal =”+pair.Ideal[0]);
+				Console.WriteLine(pair.Input[0] + @"," + pair.Input[1] + @", actual =" + output[0] + @", ideal =" + pair.Ideal[0]);
 			}
-			EncogFramework.Instance.Shutdown();
-
 		}
 	}
+}
