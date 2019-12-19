@@ -6,13 +6,16 @@
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\interfaces\" />
+    <Compile Remove="src\Neural.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="12.2.1" />
     <PackageReference Include="encog-dotnet-core" Version="3.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\DataLoader\" />
+    <Folder Include="src\DataMutation\" />
+    <Folder Include="src\StructureCreation\" />
   </ItemGroup>
 </Project>
