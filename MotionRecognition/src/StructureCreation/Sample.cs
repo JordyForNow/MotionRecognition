@@ -1,10 +1,17 @@
 ﻿using System;
-namespace MotionRecognition.src.StructureCreation
+namespace MotionRecognition
 {
-	public class Sample
+	public class Sample<T>
 	{
-		public Sample()
+		Single timestamp;
+		T[] vectorArr;
+		public Sample(Single _timestamp, T[] _vecArr)
 		{
+			this.timestamp = _timestamp;
+			this.vectorArr = _vecArr;
 		}
+		public Single GetTimeStamp() => timestamp;
+		public T[] GetVectorArr() => vectorArr;
+		public int GetVectorCount() => vectorArr.Length;
 	}
 }
