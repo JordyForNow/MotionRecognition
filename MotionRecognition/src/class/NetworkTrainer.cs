@@ -9,8 +9,8 @@
 		private int batchSize;
 
 		public NetworkTrainer(
-			ref int[,,] _inputData,
-			ref int[] _inputAnswers,
+			ref double[,] _inputData,
+			ref double[] _inputAnswers,
 			string _outputDirectory,
 			string _outputName,
 			int _inputSize,

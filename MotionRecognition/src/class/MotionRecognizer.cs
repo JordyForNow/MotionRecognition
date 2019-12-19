@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -33,8 +30,8 @@ namespace MotionRecognition
 		private int epochs;
 		private int batchSize;
 
-		private int[,,] dataset;
-		private int[] trainingAnswers;
+		private double[,] dataset;
+		private double[] trainingAnswers;
 
 		public MotionRecognizer(
 			networkActions _action,
@@ -62,8 +59,6 @@ namespace MotionRecognition
 			allowFileOverride = _allowFileOverride;
 			epochs = _epochs;
 			batchSize = _batchSize;
-
-			SetPathVariables();
 		}
 
 		public bool Run()
@@ -107,35 +102,35 @@ namespace MotionRecognition
 				correctTrainingData,
 				"*.csv*",
 				SearchOption.TopDirectoryOnly
-				).Length;
+			).Length;
 
 			fileCount += Directory.GetFiles(
 				incorrectTrainingData,
 				"*.csv*",
 				SearchOption.TopDirectoryOnly
-				).Length;
+			).Length;
 
-			dataset = new int[fileCount, networkInputSize * 2, networkInputSize];
-			trainingAnswers = new int[fileCount];
+			dataset = new double[fileCount, networkInputSize];
+			trainingAnswers = new double[fileCount];
 
 			DirectoryInfo inputDirectory = new DirectoryInfo(correctTrainingData);
 
-			CSVLoader loader;
-			List<Sample<JointMeasurement>> table;
-			Motion3DImage image;
+			//CSVLoader loader;
+			//List<Sample<JointMeasurement>> table;
+			//Motion3DImage image;
 			int index = 0;
 
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				loader = new CSVLoader(file.FullName);
+				//loader = new CSVLoader(file.FullName);
 
-				table = loader.GetData();
+				//table = loader.GetData();
 
-				image = new Motion3DImage(100);
-				image.CreateImageFromTable(ref table);
+				//image = new Motion3DImage(100);
+				//image.CreateImageFromTable(ref table);
 
-				Project2DInto3D(image.GetData(), index);
+				//Project2DInto3D(image.GetData(), index);
 				trainingAnswers[index] = 1;
 				index++;
 
@@ -146,29 +141,30 @@ namespace MotionRecognition
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				loader = new CSVLoader(file.FullName);
+				//loader = new CSVLoader(file.FullName);
 
-				table = loader.GetData();
+				//table = loader.GetData();
 
-				image = new Motion3DImage(100);
-				image.CreateImageFromTable(ref table);
+				//image = new Motion3DImage(100);
+				//image.CreateImageFromTable(ref table);
 
-				Project2DInto3D(image.GetData(), index);
+				//Project2DInto3D(image.GetData(), index);
 				trainingAnswers[index] = 0;
 				index++;
 
 			}
 
-			trainer = new NetworkTrainer(
-				_inputData: ref dataset,
-				_inputAnswers: ref trainingAnswers,
-				_outputDirectory: outputDirectory,
-				_outputName: outputName,
-				_inputSize: networkInputSize,
-				_epochs: epochs,
-				_batchSize: batchSize);
+			//trainer = new NetworkTrainer(
+			//	_inputData: ref dataset,
+			//	_inputAnswers: ref trainingAnswers,
+			//	_outputDirectory: outputDirectory,
+			//	_outputName: outputName,
+			//	_inputSize: networkInputSize,
+			//	_epochs: epochs,
+			//	_batchSize: batchSize);
 
-			return trainer.Run();
+			//return trainer.Run();
+			return false;
 		}
 
 		private bool Predict()
@@ -192,64 +188,38 @@ namespace MotionRecognition
 				throw new FileNotFoundException("Network input was not found.");
 
 			// load CSV file and create image
-			CSVLoader loader;
-			List<Sample<JointMeasurement>> table;
-			Motion3DImage image;
+			//CSVLoader loader;
+			//List<Sample<JointMeasurement>> table;
+			//Motion3DImage image;
 
-			loader = new CSVLoader(predictData);
+			//loader = new CSVLoader(predictData);
 
-			table = loader.GetData();
+			//table = loader.GetData();
 
-			image = new Motion3DImage(100);
-			image.CreateImageFromTable(ref table);
+			//image = new Motion3DImage(100);
+			//image.CreateImageFromTable(ref table);
 
-			int[,] data = image.GetData();
+			//int[,] data = image.GetData();
 
-			predictor = new NetworkPredictor(
-				_networkWeights: networkWeights,
-				_networkLayers: networkLayers,
-				_inputData: data,
-				_networkInputSize: networkInputSize);
+			//predictor = new NetworkPredictor(
+			//	_networkWeights: networkWeights,
+			//	_networkLayers: networkLayers,
+			//	_inputData: data,
+			//	_networkInputSize: networkInputSize);
 
-			return predictor.Run();
+			//return predictor.Run();
+			return false;
 		}
 
-		public void Project2DInto3D(int[,] source, int index)
+		public void Project2Into3D(int[,] source, int index)
 		{
 			for (int i = 0; i < networkInputSize * 2; i++)
 			{
 				for (int j = 0; j < networkInputSize; j++)
 				{
-					dataset[index, i, j] = source[i, j];
+					//dataset[index, i, j] = source[i, j];
 				}
 			}
-		}
-
-		private void SetPathVariables()
-		{
-
-			StringBuilder pathBuilder = new StringBuilder();
-
-			pathBuilder.Append(System.IO.Path.GetDirectoryName(
-				System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
-
-
-
-			pathBuilder.Remove(0, 6);
-			pathBuilder.Remove(64, 23);
-
-			Console.WriteLine(pathBuilder.ToString());
-			pathBuilder.Append(@"vendor\Python\");
-
-			// Set python 3.6.4 home directory.
-			Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString() + ";%PATH%", EnvironmentVariableTarget.Process);
-			Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString() + @"Lib\site-packages;%PATH%", EnvironmentVariableTarget.Process);
-
-			pathBuilder.Append(@"\python.exe");
-
-			// Set python 3.6.4 excecutable.
-			Environment.SetEnvironmentVariable("PYTHONHOME", pathBuilder.ToString(), EnvironmentVariableTarget.Process);
-
 		}
 	}
 }
