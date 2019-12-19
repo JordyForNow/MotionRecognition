@@ -233,11 +233,17 @@ namespace MotionRecognition
 			pathBuilder.Append(System.IO.Path.GetDirectoryName(
 				System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
 
+			
+
 			pathBuilder.Remove(0, 6);
-			pathBuilder.Append(@"\Python\");
+			pathBuilder.Remove(64, 23);
+			
+			Console.WriteLine(pathBuilder.ToString());
+			pathBuilder.Append(@"vendor\Python\");
 
 			// Set python 3.6.4 home directory.
 			Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString() + ";%PATH%", EnvironmentVariableTarget.Process);
+			Environment.SetEnvironmentVariable("PATH", pathBuilder.ToString() + @"Lib\site-packages;%PATH%", EnvironmentVariableTarget.Process);
 
 			pathBuilder.Append(@"\python.exe");
 

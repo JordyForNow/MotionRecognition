@@ -24,7 +24,7 @@ namespace Sandbox
 			//	_networkWeights: @"D:\GitProjects\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\movementOne.h5"
 			//);
 
-			Console.WriteLine("Run Result:" + recognizer.Run());
+			//Console.WriteLine("Run Result:" + recognizer.Run());
 
 		}
 	}
