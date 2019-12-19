@@ -1,13 +1,9 @@
-﻿using MotionRecognition;
-
-namespace Sandbox
+﻿namespace Sandbox
 {
 	class Program
 	{
 		static void Main(string[] args)
 		{
-			Neural n = new Neural();
-			n.Execute();
 		}
 	}
 }
