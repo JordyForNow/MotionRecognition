@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -30,8 +31,8 @@ namespace MotionRecognition
 		private int epochs;
 		private int batchSize;
 
-		private double[,] dataset;
-		private double[] trainingAnswers;
+		private double[][] dataset;
+		private double[][] trainingAnswers;
 
 		public MotionRecognizer(
 			networkActions _action,
@@ -43,9 +44,7 @@ namespace MotionRecognition
 			string _networkWeights = null,
 			string _networkLayers = null,
 			bool _allowFileOverride = false,
-			int _networkInputSize = 100,
-			int _epochs = 3,
-			int _batchSize = 32)
+			int _networkInputSize = 10)
 		{
 			action = _action;
 			predictData = _predictData;
@@ -57,8 +56,6 @@ namespace MotionRecognition
 			networkLayers = _networkLayers;
 			networkInputSize = _networkInputSize;
 			allowFileOverride = _allowFileOverride;
-			epochs = _epochs;
-			batchSize = _batchSize;
 		}
 
 		public bool Run()
@@ -110,28 +107,41 @@ namespace MotionRecognition
 				SearchOption.TopDirectoryOnly
 			).Length;
 
-			dataset = new double[fileCount, networkInputSize];
-			trainingAnswers = new double[fileCount];
+			dataset = new double[fileCount][];
+			trainingAnswers = new double[fileCount][];
 
 			DirectoryInfo inputDirectory = new DirectoryInfo(correctTrainingData);
 
 			//CSVLoader loader;
 			//List<Sample<JointMeasurement>> table;
 			//Motion3DImage image;
+
+			CSVLoaderSettings settings;
+			CSVLoader loader;
+			ArrayCreator creator;
+
 			int index = 0;
 
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				//loader = new CSVLoader(file.FullName);
+				// Declare loader settings.
+				settings = new CSVLoaderSettings
+				{
+					filepath = file.FullName,
+					TrimLeft = 1,
+					TrimRight = 0
+				};
 
-				//table = loader.GetData();
+				// Generate loader.
+				loader = new CSVLoader(settings);
 
-				//image = new Motion3DImage(100);
-				//image.CreateImageFromTable(ref table);
+				// Create array with the ArrayCreator from CSVloader.
+				creator = new ArrayCreator();
+				Project1DInto2D(creator.CreateArray(loader.LoadData(), networkInputSize), index);
 
-				//Project2DInto3D(image.GetData(), index);
-				trainingAnswers[index] = 1;
+				// Set answer to true.
+				trainingAnswers[index] = new[] { 1.0 };
 				index++;
 
 			}
@@ -141,30 +151,35 @@ namespace MotionRecognition
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				//loader = new CSVLoader(file.FullName);
+				// Declare loader settings.
+				settings = new CSVLoaderSettings
+				{
+					filepath = file.FullName,
+					TrimLeft = 1,
+					TrimRight = 0
+				};
 
-				//table = loader.GetData();
+				// Generate loader.
+				loader = new CSVLoader(settings);
 
-				//image = new Motion3DImage(100);
-				//image.CreateImageFromTable(ref table);
+				// Create array wit ArrayCreator from CSVloader.
+				creator = new ArrayCreator();
+				Project1DInto2D(creator.CreateArray(loader.LoadData(), networkInputSize), index);
 
-				//Project2DInto3D(image.GetData(), index);
-				trainingAnswers[index] = 0;
+				// Set answer to false.
+				trainingAnswers[index] = new[] { 0.0 };
 				index++;
 
 			}
 
-			//trainer = new NetworkTrainer(
-			//	_inputData: ref dataset,
-			//	_inputAnswers: ref trainingAnswers,
-			//	_outputDirectory: outputDirectory,
-			//	_outputName: outputName,
-			//	_inputSize: networkInputSize,
-			//	_epochs: epochs,
-			//	_batchSize: batchSize);
+			trainer = new NetworkTrainer(
+				_inputData: ref dataset,
+				_inputAnswers: ref trainingAnswers,
+				_outputDirectory: outputDirectory,
+				_outputName: outputName,
+				_inputSize: networkInputSize);
 
-			//return trainer.Run();
-			return false;
+			return trainer.Run();
 		}
 
 		private bool Predict()
@@ -211,15 +226,16 @@ namespace MotionRecognition
 			return false;
 		}
 
-		public void Project2Into3D(int[,] source, int index)
+		public void Project1DInto2D(double[] source, int index)
 		{
-			for (int i = 0; i < networkInputSize * 2; i++)
+			double[] temp = new double[source.Length];
+
+			for (int i = 0; i < source.Length; i++)
 			{
-				for (int j = 0; j < networkInputSize; j++)
-				{
-					//dataset[index, i, j] = source[i, j];
-				}
+				temp[i] = source[i];
 			}
+
+			dataset[index] = temp;
 		}
 	}
 }

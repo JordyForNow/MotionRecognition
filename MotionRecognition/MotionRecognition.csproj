@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Compile Remove="Class1.cs" />
-    <Compile Remove="src\Neural.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="12.2.1" />
