@@ -1,13 +1,4 @@
-﻿using Encog;
-using Encog.App.Analyst;
-using Encog.App.Analyst.CSV.Normalize;
-using Encog.App.Analyst.Script.Normalize;
-using Encog.App.Analyst.Wizard;
-using Encog.Util.CSV;
-using MotionRecognition;
-using System;
-using System.IO;
-using System.Text;
+﻿using MotionRecognition;
 
 namespace Sandbox
 {

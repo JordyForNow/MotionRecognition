@@ -11,42 +11,26 @@ namespace MotionRecognition
 	{
 		private BasicNetwork trainedNetwork;
 		private double[] inputData;
-		private int networkInputSize;
 
 		public NetworkPredictor(
 			string _trainedNetwork,
-			double[] _inputData,
-			int _networkInputSize)
+			double[] _inputData)
 		{
 			// Load trained network.
 			FileInfo trainedNetworkFile = new FileInfo(_trainedNetwork);
 			trainedNetwork = (BasicNetwork)EncogDirectoryPersistence.LoadObject(trainedNetworkFile);
 			inputData = _inputData;
-			networkInputSize = _networkInputSize;
 
 		}
 
 		public bool Run()
 		{
-			IMLData data = new BasicMLData(inputData);
-			IMLData output = trainedNetwork.Compute(data);
+			// Predict if a movement is correct.
+			IMLData output = trainedNetwork.Compute(new BasicMLData(inputData));
 			double prediction = output[0];
-			Console.WriteLine(prediction);
-			return false;
+
+			// Return prediction.
+			return (1 - prediction) > 0.5 ? true : false;
 		}
-
-		//public void loadAndEvaluate()
-		//{
-		//	System.out.println("Loading network");
-
-		//	BasicNetwork network = (BasicNetwork)EncogDirectoryPersistence.loadObject(new File(FILENAME));
-
-		//	MLDataSet trainingSet = new BasicMLDataSet(XOR_INPUT, XOR_IDEAL);
-		//	double e = network.calculateError(trainingSet);
-		//	System.out
-		//		.println("Loaded network's error is(should be same as above): "
-		//				+ e);
-		//}
-
 	}
 }

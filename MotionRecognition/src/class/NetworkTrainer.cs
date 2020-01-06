@@ -43,10 +43,10 @@ namespace MotionRecognition
 			network.Structure.FinalizeStructure();
 			network.Reset();
 
-			// create training data
+			// Create training data.
 			IMLDataSet trainingSet = new BasicMLDataSet(inputData, inputAnswers);
 
-			// train the neural network
+			// Train the neural network.
 			IMLTrain train = new ResilientPropagation(network, trainingSet);
 
 			int epoch = 1;
@@ -54,17 +54,16 @@ namespace MotionRecognition
 			do
 			{
 				train.Iteration();
-				Console.WriteLine(@"Epoch # " + epoch + @" Error: " + train.Error);
+				Console.WriteLine("Epoch # " + epoch + " Error: " + train.Error);
 				epoch++;
-
 			} while (train.Error > 0.01);
 
-			// test the neural network
-			Console.WriteLine(@"Neural Network Results: ");
+			// Test the neural network.
+			Console.WriteLine("Neural Network Results: ");
 			foreach (IMLDataPair pair in trainingSet)
 			{
 				IMLData output = network.Compute(pair.Input);
-				Console.WriteLine(pair.Input[0] + @" , " + pair.Input[1] + @", actual= " + output[0] + @", ideal= " + pair.Ideal[0]);
+				Console.WriteLine(pair.Input[0] + " , " + pair.Input[1] + ", actual= " + output[0] + ", ideal= " + pair.Ideal[0]);
 			}
 
 			// The neural network is saved to the specified directory.

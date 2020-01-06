@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -107,10 +105,6 @@ namespace MotionRecognition
 
 			DirectoryInfo inputDirectory = new DirectoryInfo(correctTrainingData);
 
-			//CSVLoader loader;
-			//List<Sample<JointMeasurement>> table;
-			//Motion3DImage image;
-
 			CSVLoaderSettings settings;
 			CSVLoader loader;
 			ArrayCreator creator;
@@ -205,20 +199,6 @@ namespace MotionRecognition
 			// Create array with the ArrayCreator from CSVloader.
 			ArrayCreator creator = new ArrayCreator();
 			double[] predictorInput = creator.CreateArray(loader.LoadData(), networkInputSize);
-
-			// load CSV file and create image
-			//CSVLoader loader;
-			//List<Sample<JointMeasurement>> table;
-			//Motion3DImage image;
-
-			//loader = new CSVLoader(predictData);
-
-			//table = loader.GetData();
-
-			//image = new Motion3DImage(100);
-			//image.CreateImageFromTable(ref table);
-
-			//int[,] data = image.GetData();
 
 			predictor = new NetworkPredictor(
 				_trainedNetwork: trainedNetwork,
