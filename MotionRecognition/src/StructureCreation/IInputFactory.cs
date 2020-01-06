@@ -1,4 +1,4 @@
-public namespace MotionRecognition
+namespace MotionRecognition
 {
 	public interface IInputFactory {
 	

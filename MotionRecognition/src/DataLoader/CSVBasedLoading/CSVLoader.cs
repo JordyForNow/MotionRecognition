@@ -9,16 +9,29 @@ namespace MotionRecognition
 	{
 		public string filepath;
 		public bool CSVHasHeader;
-		public int TrimLeft, TrimRight;
+		public int TrimUp, TrimRight;
 	}
+
 	public class CSVLoader<T> : IDataLoader<Sample<T>> where T : IParseable, new()
 	{
+		private List<CSVColumnFilter> filters;
 		// Path points to the CSV file that is to be loaded.
 		private CSVLoaderSettings settings;
 
-		public CSVLoader(CSVLoaderSettings _settings)
+		public CSVLoader(ref CSVLoaderSettings _settings, ref List<CSVColumnFilter> _filters)
 		{
 			this.settings = _settings;
+			this.filters = _filters;
+		}
+
+		private uint ColumnCount(ref string[] _row)
+		{
+			var row = _row;
+			uint count = 0;
+			for (uint i = 0; i < row.Length; i++)
+				if (filters.Exists(o => o.UseColumn(ref row, i)))
+					count++;
+			return count;
 		}
 
 		public Sample<T>[] LoadData()
@@ -27,22 +40,30 @@ namespace MotionRecognition
 			var sampleList = new List<Sample<T>>();
 			// If the file has a header then skip it.
 			var rows = (this.settings.CSVHasHeader ? File.ReadAllLines(this.settings.filepath).Skip(1) :
-				File.ReadAllLines(this.settings.filepath)).Select(line => line.Split(','));
-			rows = rows.Skip(this.settings.TrimLeft)
-				.Take(rows.Count() - this.settings.TrimLeft - this.settings.TrimRight);
+				File.ReadAllLines(this.settings.filepath)).Select(line => line.Split(',')).ToArray();
+			if (this.settings.TrimUp > 0 || this.settings.TrimRight > 0)
+				rows = rows.Skip(this.settings.TrimUp)
+					.Take(rows.Count() - this.settings.TrimUp - this.settings.TrimRight).ToArray();
+
+			if (rows.Count() == 0) return null;
+
+			uint columnCount = ColumnCount(ref rows[0]);
+
 			// For each row a sample is created.
-			foreach (var row in rows)
+			for (uint row_index = 0; row_index < rows.Count(); row_index++)
 			{
-				if (string.IsNullOrEmpty(row[0])) continue;
+				if (string.IsNullOrEmpty(rows[row_index][0])) continue;
 
 				Sample<T> sample = new Sample<T>();
-				sample.timestamp = float.Parse(row[0]);
-				sample.vectorArr = new T[row.Count() / 2];
+				sample.timestamp = float.Parse(rows[row_index][0]);
+				sample.vectorArr = new T[columnCount];
 				uint vectorArrIndex = 0;
-				for (uint i = 1; i < row.Count(); i += 2)
+				for (uint i = 0; i < rows[row_index].Count(); i++)
 				{
+					if (filters.Exists(o => !o.UseColumn(ref rows[row_index], i))) continue;
+
 					T vec = new T();
-					vec.parse(row[i]);
+					vec.parse(rows[row_index][i]);
 					sample.vectorArr[vectorArrIndex] = vec;
 					vectorArrIndex += 1;
 				}

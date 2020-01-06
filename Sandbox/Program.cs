@@ -1,5 +1,6 @@
 ﻿using MotionRecognition;
 using System;
+using System.Collections.Generic;
 
 namespace Sandbox
 {
@@ -12,21 +13,18 @@ namespace Sandbox
 			// Loader settings 
 			CSVLoaderSettings settings = new CSVLoaderSettings();
 			settings.filepath = dataPath + "data.csv";
-			settings.TrimLeft = 1;
+			settings.TrimUp = 1;
 			settings.TrimRight = 0;
 
-			CSVLoader<Vec3> loader = new CSVLoader<Vec3>(settings);
+			List<CSVColumnFilter> filters = new List<CSVColumnFilter>(1);
 
-			// Create array wit ArrayCreator from CSVloader 
-			ArrayCreator creator = new ArrayCreator();
-			double[] test = creator.CreateArray(loader.LoadData(), 10);
+			// This filter
+			CSVColumnFilter quaternions = new CSVEvenColumnsFilter();
+			filters.Add(quaternions);
 
+			CSVLoader<Vec3> loader = new CSVLoader<Vec3>(ref settings, ref filters);
 
-			// FF printen natuurlijk
-			foreach(double d in test)
-			{
-				Console.WriteLine(d);
-			}
+			var data = loader.LoadData();
 
 			Console.Read();
 
