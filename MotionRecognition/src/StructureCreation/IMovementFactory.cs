@@ -1,6 +1,6 @@
 namespace MotionRecognition
 {
-	public interface IMovementFactory : IInputFactory {
-
-	}
+    public interface IMovementFactory : IInputFactory
+    {
+    }
 }
