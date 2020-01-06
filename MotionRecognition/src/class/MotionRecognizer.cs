@@ -24,12 +24,9 @@ namespace MotionRecognition
 		private string incorrectTrainingData;
 		private string outputDirectory;
 		private string outputName;
-		private string networkWeights;
-		private string networkLayers;
+		private string trainedNetwork;
 		private int networkInputSize;
 		private bool allowFileOverride;
-		private int epochs;
-		private int batchSize;
 
 		private double[][] dataset;
 		private double[][] trainingAnswers;
@@ -41,8 +38,7 @@ namespace MotionRecognition
 			string _incorrectTrainingData = null,
 			string _outputDirectory = null,
 			string _outputName = null,
-			string _networkWeights = null,
-			string _networkLayers = null,
+			string _trainedNetwork = null,
 			bool _allowFileOverride = false,
 			int _networkInputSize = 10)
 		{
@@ -52,8 +48,7 @@ namespace MotionRecognition
 			incorrectTrainingData = _incorrectTrainingData;
 			outputDirectory = _outputDirectory;
 			outputName = _outputName;
-			networkWeights = _networkWeights;
-			networkLayers = _networkLayers;
+			trainedNetwork = _trainedNetwork;
 			networkInputSize = _networkInputSize;
 			allowFileOverride = _allowFileOverride;
 		}
@@ -162,7 +157,7 @@ namespace MotionRecognition
 				// Generate loader.
 				loader = new CSVLoader(settings);
 
-				// Create array wit ArrayCreator from CSVloader.
+				// Create array with ArrayCreator from CSVloader.
 				creator = new ArrayCreator();
 				Project1DInto2D(creator.CreateArray(loader.LoadData(), networkInputSize), index);
 
@@ -184,23 +179,32 @@ namespace MotionRecognition
 
 		private bool Predict()
 		{
-			if (!Regex.IsMatch(networkWeights, @"(\.h5$)"))
-				throw new WrongFileTypeException("Wrong network weights location given.");
+			if (!File.Exists(trainedNetwork))
+				throw new FileNotFoundException("Trained network was not found.");
 
-			if (!File.Exists(networkWeights))
-				throw new FileNotFoundException("Network weights were not found.");
+			if (!Regex.IsMatch(trainedNetwork, @"(\.eg$)"))
+				throw new WrongFileTypeException("Wrong network location given.");
 
-			if (!Regex.IsMatch(networkLayers, @"(\.json$)"))
-				throw new WrongFileTypeException("Wrong network layers location given.");
-
-			if (!File.Exists(networkLayers))
-				throw new FileNotFoundException("Network layers were not found.");
+			if (!File.Exists(predictData))
+				throw new FileNotFoundException("Network input was not found.");
 
 			if (!Regex.IsMatch(predictData, @"(\.csv$)"))
 				throw new WrongFileTypeException("Wrong network input given.");
 
-			if (!File.Exists(predictData))
-				throw new FileNotFoundException("Network input was not found.");
+			// Declare loader settings.
+			CSVLoaderSettings settings = new CSVLoaderSettings
+			{
+				filepath = predictData,
+				TrimLeft = 1,
+				TrimRight = 0
+			};
+
+			// Generate loader.
+			CSVLoader loader = new CSVLoader(settings);
+
+			// Create array with the ArrayCreator from CSVloader.
+			ArrayCreator creator = new ArrayCreator();
+			double[] predictorInput = creator.CreateArray(loader.LoadData(), networkInputSize);
 
 			// load CSV file and create image
 			//CSVLoader loader;
@@ -216,14 +220,13 @@ namespace MotionRecognition
 
 			//int[,] data = image.GetData();
 
-			//predictor = new NetworkPredictor(
-			//	_networkWeights: networkWeights,
-			//	_networkLayers: networkLayers,
-			//	_inputData: data,
-			//	_networkInputSize: networkInputSize);
+			predictor = new NetworkPredictor(
+				_trainedNetwork: trainedNetwork,
+				_inputData: predictorInput,
+				_networkInputSize: networkInputSize
+			);
 
-			//return predictor.Run();
-			return false;
+			return predictor.Run();
 		}
 
 		public void Project1DInto2D(double[] source, int index)
