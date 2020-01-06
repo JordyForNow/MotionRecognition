@@ -1,10 +1,7 @@
 namespace MotionRecognition
 {
-    public struct InputFactorySettings {
-
-    }
-    public interface IInputFactory
+    public interface IInputFactory<T> where T : notnull
     {
-        double[] GetNeuralInput(InputFactorySettings settings);
+        double[] GetNeuralInput(T settings);
     }
 }

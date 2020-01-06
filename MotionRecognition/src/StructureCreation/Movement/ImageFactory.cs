@@ -1,10 +1,14 @@
 namespace MotionRecognition
 {
-	public class ImageFactory : IMovementFactory {
-		public double[] GetNeuralInput(InputFactorySettings settings)
+	public struct ImageFactorySettings
+	{
+
+	}
+	public class ImageFactory : IMovementFactory<ImageFactorySettings>
+	{
+		public double[] GetNeuralInput(ImageFactorySettings settings)
 		{
 			return null;
 		}
-
 	}
 }
