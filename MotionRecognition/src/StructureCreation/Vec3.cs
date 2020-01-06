@@ -1,10 +1,10 @@
 ﻿namespace MotionRecognition
 {
-	public class Vec3
+	public class Vec3 : IParseable
 	{
 		public float x, y, z;
 
-		public bool parse(string input = "(0.0| 0.0| 0.0)")
+		public bool parse(string input)
 		{
 			// Check if the input is a CSVCell.
 			if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;

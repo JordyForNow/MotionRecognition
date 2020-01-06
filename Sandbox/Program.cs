@@ -1,7 +1,6 @@
 ﻿using MotionRecognition;
 using System;
 
-
 namespace Sandbox
 {
 	class Program
@@ -16,7 +15,7 @@ namespace Sandbox
 			settings.TrimLeft = 1;
 			settings.TrimRight = 0;
 
-			CSVLoader loader = new CSVLoader(settings);
+			CSVLoader<Vec3> loader = new CSVLoader<Vec3>(settings);
 
 			// Create array wit ArrayCreator from CSVloader 
 			ArrayCreator creator = new ArrayCreator();
