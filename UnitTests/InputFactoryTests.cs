@@ -18,7 +18,7 @@ namespace UnitTests
 			// Setup loader 
             CSVLoaderSettings settings = new CSVLoaderSettings();
             settings.filepath = dataPath + "data.csv";
-            settings.TrimUp = 1;
+            settings.TrimLeft = 1;
             settings.TrimRight = 0;
 
 			List<CSVColumnFilter> filters = new List<CSVColumnFilter>(1);

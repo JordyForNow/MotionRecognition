@@ -14,7 +14,7 @@ namespace Sandbox
 			CSVLoaderSettings settings = new CSVLoaderSettings();
 			settings.filepath = dataPath + "data.csv";
 			settings.CSVHasHeader = true;
-			settings.TrimUp = 0;
+			settings.TrimLeft = 0;
 			settings.TrimRight = 0;
 
 			List<CSVColumnFilter> filters = new List<CSVColumnFilter>(1);

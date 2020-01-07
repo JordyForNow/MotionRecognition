@@ -9,7 +9,7 @@ namespace MotionRecognition
 	{
 		public string filepath;
 		public bool CSVHasHeader;
-		public int TrimUp, TrimRight;
+		public int TrimLeft, TrimRight;
 	}
 
 	public class CSVLoader<T> : IDataLoader<Sample<T>> where T : IParseable, new()
@@ -43,9 +43,9 @@ namespace MotionRecognition
 				.Select(line => line.Split(',')).ToArray();
 			if (this.settings.CSVHasHeader)
 				rows = rows.Skip(1).ToArray();
-			if (this.settings.TrimUp > 0 || this.settings.TrimRight > 0)
-				rows = rows.Skip(this.settings.TrimUp)
-					.Take(rows.Count() - this.settings.TrimUp - this.settings.TrimRight).ToArray();
+			if (this.settings.TrimLeft > 0 || this.settings.TrimRight > 0)
+				rows = rows.Skip(this.settings.TrimLeft)
+					.Take(rows.Count() - this.settings.TrimLeft - this.settings.TrimRight).ToArray();
 
 			if (rows.Count() == 0) return null;
 
