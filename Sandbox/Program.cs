@@ -8,7 +8,7 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-			string dataPath = @"../../../Data/";
+			string dataPath = @"../Data/";
 
 			// Loader settings 
 			CSVLoaderSettings settings = new CSVLoaderSettings();
@@ -26,7 +26,21 @@ namespace Sandbox
 
 			var data = loader.LoadData();
 
-			Console.Read();
+			// Console.Read();
+
+			//Factory settings
+			IntervalBasedFactorySettings factorySettings = new IntervalBasedFactorySettings();
+			factorySettings.sampleList = data;
+			factorySettings.interval = 10;
+
+			IntervalBasedFactory factory = new IntervalBasedFactory();
+
+			double[] val = factory.GetNeuralInput(factorySettings);
+
+			foreach(double d in val) 
+			{
+				Console.WriteLine(d);
+			}
 
 
 		}

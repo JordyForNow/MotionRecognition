@@ -25,13 +25,18 @@ namespace MotionRecognition
         {
             List<double> values = new List<double>();
 
-			for (int i = 0; i < settings.sampleList.Length; i++) { }
-            //{
-            //    if (i % settings.interval == 0)
-            //        values.AddRange(settings.sampleList[i].GetFactoryValue());
-            //}
+			for (int i = 0; i < settings.sampleList.Length; i++)
+            {
+               if (i % settings.interval == 0)
+			   {
+				   foreach(Vec3 v in settings.sampleList[i].vectorArr){
+					   values.AddRange(v.GetFactoryValue());
 
-            return null;
+				   }
+			   }
+            }
+
+            return values.ToArray();
         }
     }
 }
