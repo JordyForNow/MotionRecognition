@@ -126,7 +126,6 @@ namespace MotionRecognition
 					settings = new CSVLoaderSettings
 					{
 						filepath = file.FullName,
-						CSVHasHeader = true,
 						TrimLeft = 1,
 						TrimRight = 0
 					};

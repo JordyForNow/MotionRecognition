@@ -41,10 +41,8 @@ namespace MotionRecognition
 			// create a neural network, without using a factory
 			var network = new BasicNetwork();
 			network.AddLayer(new BasicLayer(null, true, inputData[0].Length));
-			network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 100));
-			network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 100));
-			network.AddLayer(new BasicLayer(new ActivationReLU(), true, 100));
-			network.AddLayer(new BasicLayer(new ActivationSoftMax(), false, 1));
+			network.AddLayer(new BasicLayer(new ActivationElliott(), true, 100));
+			network.AddLayer(new BasicLayer(new ActivationElliott(), false, 1));
 			network.Structure.FinalizeStructure();
 			network.Reset();
 
