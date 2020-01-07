@@ -1,8 +1,9 @@
 using System;
+using System.Linq;
 
 namespace MotionRecognition
 {
-	public enum LeapMotionJoint : byte
+	public enum LeapMotionJoint : int
 	{
 		PALM = 0,
 		THUMB_0 = 1,
@@ -26,6 +27,7 @@ namespace MotionRecognition
 		BABY_2 = 19,
 		BABY_3 = 20
 	}
+
 	public struct ImageTransformerSettings
 	{
 		public int size;
@@ -42,12 +44,12 @@ namespace MotionRecognition
 		{
 			return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
 		}
-		private Sample<Vec3>[] RemapList(ref Sample<Vec3>[] samples, ref int size)
+		private Sample<Vec3>[] RemapList(ref ImageTransformerSettings settings)
 		{
-			Sample<Vec3>[] remapped_samples = new Sample<Vec3>[samples.Length];
+			Sample<Vec3>[] remapped_samples = new Sample<Vec3>[settings.samples.Length];
 			Vec3 vecMin = new Vec3();
 			Vec3 vecMax = new Vec3();
-			foreach (var s in samples)
+			foreach (var s in settings.samples)
 			{
 				foreach (var m in s.vectorArr)
 				{
@@ -62,22 +64,47 @@ namespace MotionRecognition
 			}
 
 			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
-			int x, y, z;
-			foreach (var sample in samples)
+			int sample_index = 0, col_index = 0;
+			foreach (var sample in settings.samples)
 			{
+				Sample<Vec3> new_sample = new Sample<Vec3>();
+				new_sample.vectorArr = new Vec3[settings.focus_joints.Length];
 				for (int i = 0; i < sample.vectorArr.Length; i++)
 				{
-					x = (int)Math.Round(Remap(sample.vectorArr[i].x, vecMin.x, vecMax.x, 0, size - 1));
-					y = (int)Math.Round(Remap(sample.vectorArr[i].y, vecMin.y, vecMax.y, 0, size - 1));
-					z = (int)Math.Round(Remap(sample.vectorArr[i].z, vecMin.z, vecMax.z, 0, size - 1));
+					if (settings.focus_joints.Count(o => (int)o == i) > 0)
+					{
+						var new_vec = new Vec3();
+						new_vec.x = (int)Math.Round(Remap(sample.vectorArr[i].x, vecMin.x, vecMax.x, 0, settings.size - 1));
+						new_vec.y = (int)Math.Round(Remap(sample.vectorArr[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
+						new_vec.z = (int)Math.Round(Remap(sample.vectorArr[i].z, vecMin.z, vecMax.z, 0, settings.size - 1));
+						new_sample.vectorArr[col_index] = new_vec;
+						col_index++;
+					}
 				}
+				remapped_samples[sample_index] = new_sample;
+				sample_index++;
+				col_index = 0;
 			}
-			return null;
+			return remapped_samples;
 		}
 		public double[] GetNeuralInput(ImageTransformerSettings settings)
 		{
-			var cp_list = settings.samples;
-			return null;
+			double[] arr = new double[settings.samples.Length * settings.focus_joints.Length * 3];
+			int index = 0;
+			foreach(var sample in RemapList(ref settings))
+			{
+				foreach(var vec in sample.vectorArr)
+				{
+					arr[index] = vec.x;
+					index++;
+					arr[index] = vec.y;
+					index++;
+					arr[index] = vec.z;
+					index++;
+				}
+			}
+
+			return arr;
 		}
 	}
 }

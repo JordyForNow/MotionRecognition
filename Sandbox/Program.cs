@@ -27,21 +27,17 @@ namespace Sandbox
 
 			var data = loader.LoadData();
 
+			ImageTransformerSettings transformerSettings = new ImageTransformerSettings();
+			transformerSettings.focus_joints = new LeapMotionJoint[] { LeapMotionJoint.PALM, LeapMotionJoint.BABY_0 };
+			transformerSettings.samples = data;
+			transformerSettings.size = 10;
+
 			//Transformer settings
-			IntervalBasedTransformerSettings TransformerSettings = new IntervalBasedTransformerSettings();
-			TransformerSettings.sampleList = data;
-			TransformerSettings.interval = 10;
-
-			IntervalBasedTransformer Transformer = new IntervalBasedTransformer();
-
-			double[] val = Transformer.GetNeuralInput(TransformerSettings);
-
-			foreach(double d in val) 
-			{
+			ImageTransformer transformer = new ImageTransformer();
+			var arr = transformer.GetNeuralInput(transformerSettings);
+			foreach (var d in arr)
 				Console.WriteLine(d);
-			}
 
-			Console.ReadLine();
 		}
 	}
 }
