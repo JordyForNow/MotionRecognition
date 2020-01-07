@@ -39,8 +39,10 @@ namespace MotionRecognition
 			// Create a new Table.
 			var sampleList = new List<Sample<T>>();
 			// If the file has a header then skip it.
-			var rows = (this.settings.CSVHasHeader ? File.ReadAllLines(this.settings.filepath).Skip(1) :
-				File.ReadAllLines(this.settings.filepath)).Select(line => line.Split(',')).ToArray();
+			string[][] rows = File.ReadAllLines(this.settings.filepath)
+				.Select(line => line.Split(',')).ToArray();
+			if (this.settings.CSVHasHeader)
+				rows = rows.Skip(1).ToArray();
 			if (this.settings.TrimUp > 0 || this.settings.TrimRight > 0)
 				rows = rows.Skip(this.settings.TrimUp)
 					.Take(rows.Count() - this.settings.TrimUp - this.settings.TrimRight).ToArray();
@@ -52,14 +54,19 @@ namespace MotionRecognition
 			// For each row a sample is created.
 			for (uint row_index = 0; row_index < rows.Count(); row_index++)
 			{
-				if (string.IsNullOrEmpty(rows[row_index][0])) continue;
+				// Check for unspecified end of file.
+				if (string.IsNullOrEmpty(rows[row_index][0]))
+					continue;
 
+				// Create new Sample.
 				Sample<T> sample = new Sample<T>();
+				// Parse rquired timestamp.
 				sample.timestamp = float.Parse(rows[row_index][0]);
 				sample.vectorArr = new T[columnCount];
 				uint vectorArrIndex = 0;
 				for (uint i = 0; i < rows[row_index].Count(); i++)
 				{
+					// Check if a filter is blocking the column.
 					if (filters.Exists(o => !o.UseColumn(ref rows[row_index], i))) continue;
 
 					T vec = new T();

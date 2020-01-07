@@ -13,7 +13,8 @@ namespace Sandbox
 			// Loader settings 
 			CSVLoaderSettings settings = new CSVLoaderSettings();
 			settings.filepath = dataPath + "data.csv";
-			settings.TrimUp = 1;
+			settings.CSVHasHeader = true;
+			settings.TrimUp = 0;
 			settings.TrimRight = 0;
 
 			List<CSVColumnFilter> filters = new List<CSVColumnFilter>(1);
