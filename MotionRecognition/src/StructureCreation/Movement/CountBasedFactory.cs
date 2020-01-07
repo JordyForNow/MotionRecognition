@@ -1,14 +1,10 @@
 namespace MotionRecognition
 {
-	public struct CountBasedFactorySettings {
-
-	}
-	
-    public class CountBasedFactory : IntervalBasedFactory
-    {
-        public override double[] GetNeuralInput(CountBasedFactorySettings settings)
+	public class CountBasedFactory : IntervalBasedFactory
+	{
+		public override double[] GetNeuralInput(IntervalBasedFactorySettings settings)
 		{
-			return base.GetNeuralInput(null);
+			return base.GetNeuralInput(settings);
 		}
-    }
+	}
 }

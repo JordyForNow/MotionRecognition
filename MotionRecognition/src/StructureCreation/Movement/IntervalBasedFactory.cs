@@ -1,11 +1,22 @@
 using System.Collections.Generic;
-
 namespace MotionRecognition
 {
-    public struct IntervalBasedFactorySettings
+	public struct IntervalBasedFactorySettings
     {
         public Sample<Vec3>[] sampleList;
-        public int interval;
+
+        public int interval { get; set; }
+        public int count
+		{
+			get
+			{
+				return this.interval;
+			}
+			set
+			{
+				this.interval = value;
+			}
+		}
     }
 
     public class IntervalBasedFactory : IMovementFactory<IntervalBasedFactorySettings>
