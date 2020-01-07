@@ -25,12 +25,14 @@ namespace MotionRecognition
 		{
 			// Create a new Table.
 			var sampleList = new List<Sample<Vec3>>();
+			
 			// If the file has a header then skip it.
-			var rows = (this.settings.CSVHasHeader ? File.ReadAllLines(this.settings.filepath).Skip(1) :
-				File.ReadAllLines(this.settings.filepath)).Select(line => line.Split(','));
-			rows = rows.Skip(this.settings.TrimLeft)
-				.Take(rows.Count() - this.settings.TrimLeft - this.settings.TrimRight);
+			var rows = (this.settings.CSVHasHeader ? File.ReadAllLines(this.settings.filepath).Skip(1) : File.ReadAllLines(this.settings.filepath)).Select(line => line.Split(','));
+
+			rows = rows.Skip(this.settings.TrimLeft).Take(rows.Count() - this.settings.TrimLeft - this.settings.TrimRight);
+
 			// For each row a sample is created.
+			int j = 0;
 			foreach (var row in rows)
 			{
 				if (string.IsNullOrEmpty(row[0])) continue;
@@ -47,6 +49,7 @@ namespace MotionRecognition
 					vectorArrIndex += 1;
 				}
 				sampleList.Add(sample);
+				j++;
 			}
 			return sampleList.ToArray();
 		}

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -120,26 +121,33 @@ namespace MotionRecognition
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
 
-				// Declare loader settings.
-				settings = new CSVLoaderSettings
-				{
-					filepath = file.FullName,
-					TrimLeft = 1,
-					TrimRight = 0
-				};
+				try
+				{// Declare loader settings.
+					settings = new CSVLoaderSettings
+					{
+						filepath = file.FullName,
+						CSVHasHeader = true,
+						TrimLeft = 1,
+						TrimRight = 0
+					};
 
-				// Generate loader.
-				loader = new CSVLoader(settings);
+					// Generate loader.
+					loader = new CSVLoader(settings);
 
-				// Create array with the ArrayCreator from CSVloader.
-				creator = new ArrayCreator();
-				Project1DInto2D(creator.CreateArray(loader.LoadData(), networkInputSize), index);
+					// Create array with the ArrayCreator from CSVloader.
+					creator = new ArrayCreator();
+					Project1DInto2D(creator.CreateArray(loader.LoadData(), networkInputSize), index);
 
-				// Set answer to true.
-				trainingAnswers[index] = new[] { 1.0 };
-				index++;
-
+					// Set answer to true.
+					trainingAnswers[index] = new[] { 1.0 };
+					index++;
+				} catch (Exception)
+			{
+				Console.WriteLine(file.FullName);
+				Console.ReadLine();
 			}
+
+		}
 
 			inputDirectory = new DirectoryInfo(incorrectTrainingData);
 
