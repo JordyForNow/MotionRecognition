@@ -1,6 +1,11 @@
 ﻿namespace MotionRecognition
 {
-    public class Vec3 : IParseable, IFactoryValue
+	/* 
+	* Vec3 contains an x, y and z coordinate which are used to display a 3d position.
+	* It inherits IParseable because the object is can be parsed from a CSV file value,
+	* ITransformerValue is also inherited so the factories can read the coordinates.
+	*/
+    public class Vec3 : IParseable, ITransformerValue
     {
         public float x, y, z;
 
@@ -19,7 +24,7 @@
             return true;
         }
 
-        public double[] GetFactoryValue()
+        public double[] GetTransformerValue()
         {
             var returnArray = new double[3];
 

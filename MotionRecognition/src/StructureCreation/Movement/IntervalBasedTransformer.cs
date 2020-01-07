@@ -2,7 +2,8 @@ using System.Collections.Generic;
 
 namespace MotionRecognition
 {
-	public struct IntervalBasedFactorySettings
+	// Settings struct with properties needed for the functions in the transformer
+	public struct IntervalBasedTransformerSettings
     {
         public Sample<Vec3>[] sampleList;
 
@@ -20,9 +21,13 @@ namespace MotionRecognition
 		}
     }
 
-    public class IntervalBasedFactory : IMovementFactory<IntervalBasedFactorySettings>
+	/*
+	* Transformer which transforms sample list to downsized list based on given count.
+	*/
+    public class IntervalBasedTransformer : IMovementTransformer<IntervalBasedTransformerSettings>
     {
-        public virtual double[] GetNeuralInput(IntervalBasedFactorySettings settings)
+		// Returns list of doubles filtered from original sample list on specific interval
+        public virtual double[] GetNeuralInput(IntervalBasedTransformerSettings settings)
         {
             List<double> values = new List<double>();
 
@@ -31,7 +36,7 @@ namespace MotionRecognition
                if (i % settings.interval == 0)
 			   {
 				   foreach(Vec3 v in settings.sampleList[i].vectorArr){
-					   values.AddRange(v.GetFactoryValue());
+					   values.AddRange(v.GetTransformerValue());
 
 				   }
 			   }

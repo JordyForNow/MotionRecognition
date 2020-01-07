@@ -1,5 +1,9 @@
 ﻿namespace MotionRecognition
 {
+	/* 
+	* Quaternion is a vector which displays a direction, it inherits IParseable because it can be parsed
+	* from a CSV value.
+	*/
 	public class Quaternion : IParseable
 	{
 		public float x, y, z, w;

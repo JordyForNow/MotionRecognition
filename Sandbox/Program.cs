@@ -27,14 +27,14 @@ namespace Sandbox
 
 			var data = loader.LoadData();
 
-			//Factory settings
-			IntervalBasedFactorySettings factorySettings = new IntervalBasedFactorySettings();
-			factorySettings.sampleList = data;
-			factorySettings.interval = 10;
+			//Transformer settings
+			IntervalBasedTransformerSettings TransformerSettings = new IntervalBasedTransformerSettings();
+			TransformerSettings.sampleList = data;
+			TransformerSettings.interval = 10;
 
-			IntervalBasedFactory factory = new IntervalBasedFactory();
+			IntervalBasedTransformer Transformer = new IntervalBasedTransformer();
 
-			double[] val = factory.GetNeuralInput(factorySettings);
+			double[] val = Transformer.GetNeuralInput(TransformerSettings);
 
 			foreach(double d in val) 
 			{

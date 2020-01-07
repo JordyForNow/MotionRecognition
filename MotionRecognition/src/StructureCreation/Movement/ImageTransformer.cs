@@ -26,13 +26,17 @@ namespace MotionRecognition
 		BABY_2 = 19,
 		BABY_3 = 20
 	}
-	public struct ImageFactorySettings
+	public struct ImageTransformerSettings
 	{
 		public int size;
 		public Sample<Vec3>[] samples;
 		public LeapMotionJoint[] focus_joints;
 	}
-	public class ImageFactory : IMovementFactory<ImageFactorySettings>
+
+	/*
+	* Transforms sample list to 3d-matrix.
+	*/
+	public class ImageTransformer : IMovementTransformer<ImageTransformerSettings>
 	{
 		private float Remap(float value, float from1, float to1, float from2, float to2)
 		{
@@ -70,7 +74,7 @@ namespace MotionRecognition
 			}
 			return null;
 		}
-		public double[] GetNeuralInput(ImageFactorySettings settings)
+		public double[] GetNeuralInput(ImageTransformerSettings settings)
 		{
 			var cp_list = settings.samples;
 			return null;
