@@ -9,8 +9,8 @@ namespace Sandbox
 
 			MotionRecognizer recognizer = new MotionRecognizer(
 				_action: networkActions.TRAIN,
-				_correctTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\CorrectData\",
-				_incorrectTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectData\",
+				_correctTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\CorrectTestData\",
+				_incorrectTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectTestData\",
 				_outputDirectory: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
 				_outputName: @"modelOne",
 				_allowFileOverride: true,
@@ -19,14 +19,14 @@ namespace Sandbox
 
 			recognizer.Run();
 
-			recognizer = new MotionRecognizer(
-				_action: networkActions.PREDICT,
-				_trainedNetwork: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\modelOne.eg",
-				_predictData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectData\Move_13.csv",
-				_verbose: true
-			);
+			//recognizer = new MotionRecognizer(
+			//	_action: networkActions.PREDICT,
+			//	_trainedNetwork: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\modelOne.eg",
+			//	_predictData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectData\Move_13.csv",
+			//	_verbose: true
+			//);
 
-			recognizer.Run();
+			//recognizer.Run();
 
 		}
 	}

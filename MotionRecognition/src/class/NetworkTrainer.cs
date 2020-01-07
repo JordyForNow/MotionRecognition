@@ -42,7 +42,9 @@ namespace MotionRecognition
 			var network = new BasicNetwork();
 			network.AddLayer(new BasicLayer(null, true, inputData[0].Length));
 			network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 100));
-			network.AddLayer(new BasicLayer(new ActivationSigmoid(), false, 1));
+			network.AddLayer(new BasicLayer(new ActivationSigmoid(), true, 100));
+			network.AddLayer(new BasicLayer(new ActivationReLU(), true, 100));
+			network.AddLayer(new BasicLayer(new ActivationSoftMax(), false, 1));
 			network.Structure.FinalizeStructure();
 			network.Reset();
 
