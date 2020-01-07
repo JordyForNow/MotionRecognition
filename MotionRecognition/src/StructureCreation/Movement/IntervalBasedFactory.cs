@@ -14,13 +14,13 @@ namespace MotionRecognition
         {
             List<double> values = new List<double>();
 
-            for (int i = 0; i < settings.sampleList.Length; i++)
+			for (int i = 0; i < settings.sampleList.Length; i++) { }
             //{
             //    if (i % settings.interval == 0)
             //        values.AddRange(settings.sampleList[i].GetFactoryValue());
             //}
 
-            return values;
+            return null;
         }
     }
 }

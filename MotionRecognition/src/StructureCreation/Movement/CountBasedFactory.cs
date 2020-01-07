@@ -4,11 +4,11 @@ namespace MotionRecognition
 
 	}
 	
-    public class CountBasedFactory : IMovementFactory
+    public class CountBasedFactory : IntervalBasedFactory
     {
         public override double[] GetNeuralInput(CountBasedFactorySettings settings)
 		{
-			return base.GetNeuralInput(settings);
+			return base.GetNeuralInput(null);
 		}
     }
 }
