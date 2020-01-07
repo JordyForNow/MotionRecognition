@@ -13,7 +13,8 @@ namespace Sandbox
 				_incorrectTrainingData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectData\",
 				_outputDirectory: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
 				_outputName: @"modelOne",
-				_allowFileOverride: true
+				_allowFileOverride: true,
+				_verbose: true
 			);
 
 			recognizer.Run();
@@ -21,7 +22,8 @@ namespace Sandbox
 			recognizer = new MotionRecognizer(
 				_action: networkActions.PREDICT,
 				_trainedNetwork: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\modelOne.eg",
-				_predictData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectData\Move_13.csv"
+				_predictData: @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectData\Move_13.csv",
+				_verbose: true
 			);
 
 			recognizer.Run();

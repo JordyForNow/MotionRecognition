@@ -17,20 +17,23 @@ namespace MotionRecognition
 		private double[][] inputAnswers;
 		private string outputDirectory;
 		private string outputName;
-		private int inputSize;
+		private double maxTrainingError;
+		private bool verbose;
 
 		public NetworkTrainer(
 			ref double[][] _inputData,
 			ref double[][] _inputAnswers,
 			string _outputDirectory,
 			string _outputName,
-			int _inputSize)
+			double _maxTrainingError,
+			bool _verbose)
 		{
 			inputData = _inputData;
 			inputAnswers = _inputAnswers;
 			outputDirectory = _outputDirectory;
 			outputName = _outputName;
-			inputSize = _inputSize;
+			maxTrainingError = _maxTrainingError;
+			verbose = _verbose;
 		}
 
 		public bool Run()
@@ -54,24 +57,24 @@ namespace MotionRecognition
 			do
 			{
 				train.Iteration();
-				Console.WriteLine("Epoch # " + epoch + " Error: " + train.Error);
+				Console.Write(verbose ? "Epoch # " + epoch + " Error: " + train.Error + "\n": "");
 				epoch++;
-			} while (train.Error > 0.01);
+			} while (train.Error > maxTrainingError);
 
 			// Test the neural network.
-			Console.WriteLine("Neural Network Results: ");
+			Console.Write(verbose ? "Neural Network Results: \n" : "");
 			foreach (IMLDataPair pair in trainingSet)
 			{
 				IMLData output = network.Compute(pair.Input);
-				Console.WriteLine(pair.Input[0] + " , " + pair.Input[1] + ", actual= " + output[0] + ", ideal= " + pair.Ideal[0]);
+				Console.Write(verbose ? pair.Input[0] + " , " + pair.Input[1] + ", actual= " + output[0] + ", ideal= " + pair.Ideal[0] + "\n": "");
 			}
 
 			// The neural network is saved to the specified directory.
-			Console.WriteLine("Saving neural network.");
+			Console.Write(verbose ? "Saving neural network to: " + outputDirectory + "/" + outputName + ".eg" + "\n" : "");
 			FileInfo networkFile = new FileInfo(outputDirectory + "/" + outputName + ".eg");
 			EncogDirectoryPersistence.SaveObject(networkFile, (BasicNetwork)network);
 
-			return false;
+			return true;
 		}
 
 	}

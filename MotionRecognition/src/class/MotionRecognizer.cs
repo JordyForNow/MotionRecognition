@@ -23,8 +23,10 @@ namespace MotionRecognition
 		private string outputDirectory;
 		private string outputName;
 		private string trainedNetwork;
-		private int networkInputSize;
 		private bool allowFileOverride;
+		private double maxTrainingError;
+		private int networkInputSize;
+		private bool verbose;
 
 		private double[][] dataset;
 		private double[][] trainingAnswers;
@@ -37,8 +39,10 @@ namespace MotionRecognition
 			string _outputDirectory = null,
 			string _outputName = null,
 			string _trainedNetwork = null,
+			double _maxTrainingError = 0.01,
 			bool _allowFileOverride = false,
-			int _networkInputSize = 10)
+			int _networkInputSize = 10,
+			bool _verbose = true)
 		{
 			action = _action;
 			predictData = _predictData;
@@ -47,8 +51,10 @@ namespace MotionRecognition
 			outputDirectory = _outputDirectory;
 			outputName = _outputName;
 			trainedNetwork = _trainedNetwork;
-			networkInputSize = _networkInputSize;
 			allowFileOverride = _allowFileOverride;
+			maxTrainingError = _maxTrainingError;
+			networkInputSize = _networkInputSize;
+			verbose = _verbose;
 		}
 
 		public bool Run()
@@ -166,7 +172,8 @@ namespace MotionRecognition
 				_inputAnswers: ref trainingAnswers,
 				_outputDirectory: outputDirectory,
 				_outputName: outputName,
-				_inputSize: networkInputSize);
+				_maxTrainingError: maxTrainingError,
+				_verbose: verbose);
 
 			return trainer.Run();
 		}
@@ -203,7 +210,7 @@ namespace MotionRecognition
 			predictor = new NetworkPredictor(
 				_trainedNetwork: trainedNetwork,
 				_inputData: predictorInput,
-				_networkInputSize: networkInputSize
+				_verbose: verbose
 			);
 
 			return predictor.Run();
