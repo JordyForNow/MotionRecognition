@@ -20,7 +20,7 @@ namespace Sandbox
 			List<ICSVFilter> filters = new List<ICSVFilter>(1);
 
 			// This filter
-			ICSVFilter quaternions = new CSVEvenColumnsFilter();
+			ICSVFilter quaternions = new CSVEvenColumnFilter();
 			filters.Add(quaternions);
 
 			CSVLoader<Vec3> loader = new CSVLoader<Vec3>(ref settings, ref filters);
