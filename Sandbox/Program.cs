@@ -38,6 +38,7 @@ namespace Sandbox
 			foreach (var d in arr)
 				Console.WriteLine(d);
 
+			ImageCreator.WriteBitmapToFS(ImageCreator.CreateNeuralImageFromDoubleArray(ref arr, transformerSettings.size, true));
 		}
 	}
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 
 namespace MotionRecognition
@@ -54,16 +54,20 @@ namespace MotionRecognition
 			Vec3 vecMax = new Vec3();
 			foreach (var s in settings.samples)
 			{
-				foreach (var m in s.values)
+				for (int i = 0; i < s.values.Length; i++)
 				{
-					vecMin.x = m.x < vecMin.x ? m.x : vecMin.x;
-					vecMin.y = m.y < vecMin.y ? m.y : vecMin.y;
-					vecMin.z = m.z < vecMin.z ? m.z : vecMin.z;
+					if (settings.focus_joints.Count(o => (int)o == i) > 0)
+					{
+						vecMin.x = s.values[i].x < vecMin.x ? s.values[i].x : vecMin.x;
+						vecMin.y = s.values[i].y < vecMin.y ? s.values[i].y : vecMin.y;
+						vecMin.z = s.values[i].z < vecMin.z ? s.values[i].z : vecMin.z;
 
-					vecMax.y = m.y > vecMax.y ? m.y : vecMax.y;
-					vecMax.x = m.x > vecMax.x ? m.x : vecMax.x;
-					vecMax.z = m.z > vecMax.z ? m.z : vecMax.z;
+						vecMax.y = s.values[i].y > vecMax.y ? s.values[i].y : vecMax.y;
+						vecMax.x = s.values[i].x > vecMax.x ? s.values[i].x : vecMax.x;
+						vecMax.z = s.values[i].z > vecMax.z ? s.values[i].z : vecMax.z;
+					}
 				}
+
 			}
 
 			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
