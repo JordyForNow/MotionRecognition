@@ -28,7 +28,7 @@ namespace Sandbox
 			var data = loader.LoadData();
 
 			ImageTransformerSettings transformerSettings = new ImageTransformerSettings();
-			transformerSettings.focus_joints = new LeapMotionJoint[] { LeapMotionJoint.PALM, LeapMotionJoint.BABY_0 };
+			transformerSettings.focus_joints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
 			transformerSettings.samples = data;
 			transformerSettings.size = 10;
 
