@@ -15,7 +15,6 @@ namespace MotionRecognition
 	public class CSVLoader<T> : IDataLoader<Sample<T>> where T : IParseable, new()
 	{
 		private List<ICSVFilter> filters;
-		// Path points to the CSV file that is to be loaded.
 		private CSVLoaderSettings settings;
 
 		public CSVLoader(ref CSVLoaderSettings _settings, ref List<ICSVFilter> _filters)
@@ -29,7 +28,7 @@ namespace MotionRecognition
 			var row = _row;
 			uint count = 0;
 			for (uint i = 0; i < row.Length; i++)
-			if (filters.Exists(o => o.UseColumn(ref row, i)))
+			if (filters.Exists(o => o.UseColumn(i)))
 					count++;
 			return count;
 		}
@@ -67,7 +66,7 @@ namespace MotionRecognition
 				for (uint i = 0; i < rows[row_index].Count(); i++)
 				{
 					// Check if a filter is blocking the column.
-					if (filters.Exists(o => !o.UseColumn(ref rows[row_index], i))) continue;
+					if (filters.Exists(o => !o.UseColumn(i))) continue;
 
 					T vec = new T();
 					vec.parse(rows[row_index][i]);
