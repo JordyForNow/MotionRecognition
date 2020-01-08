@@ -1,6 +1,6 @@
 namespace MotionRecognition
 {
-    public class CSVEvenColumnsFilter : ICSVFilter
+    public class CSVEvenColumnFilter : ICSVFilter
     {
         public bool UseColumn(ref string[] row, uint index)
         {
