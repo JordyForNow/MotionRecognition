@@ -35,7 +35,7 @@ namespace MotionRecognition
             {
                if (i % settings.interval == 0)
 			   {
-				   foreach(Vec3 v in settings.sampleList[i].vectorArr){
+				   foreach(Vec3 v in settings.sampleList[i].values){
 					   values.AddRange(v.GetTransformerValue());
 
 				   }

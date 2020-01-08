@@ -62,8 +62,8 @@ namespace MotionRecognition
 				Sample<T> sample = new Sample<T>();
 				// Parse rquired timestamp.
 				sample.timestamp = float.Parse(rows[row_index][0]);
-				sample.vectorArr = new T[columnCount];
-				uint vectorArrIndex = 0;
+				sample.values = new T[columnCount];
+				uint valuesIndex = 0;
 				for (uint i = 0; i < rows[row_index].Count(); i++)
 				{
 					// Check if a filter is blocking the column.
@@ -71,8 +71,8 @@ namespace MotionRecognition
 
 					T vec = new T();
 					vec.parse(rows[row_index][i]);
-					sample.vectorArr[vectorArrIndex] = vec;
-					vectorArrIndex += 1;
+					sample.values[valuesIndex] = vec;
+					valuesIndex += 1;
 				}
 				sampleList.Add(sample);
 			}

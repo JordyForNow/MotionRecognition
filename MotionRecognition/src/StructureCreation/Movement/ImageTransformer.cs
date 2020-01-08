@@ -54,7 +54,7 @@ namespace MotionRecognition
 			Vec3 vecMax = new Vec3();
 			foreach (var s in settings.samples)
 			{
-				foreach (var m in s.vectorArr)
+				foreach (var m in s.values)
 				{
 					vecMin.x = m.x < vecMin.x ? m.x : vecMin.x;
 					vecMin.y = m.y < vecMin.y ? m.y : vecMin.y;
@@ -69,13 +69,13 @@ namespace MotionRecognition
 			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
 			foreach (var sample in settings.samples)
 			{
-				for (int i = 0; i < sample.vectorArr.Length; i++)
+				for (int i = 0; i < sample.values.Length; i++)
 				{
 					if (settings.focus_joints.Count(o => (int)o == i) > 0)
 					{
-						int x = (int)Math.Round(Remap(sample.vectorArr[i].x, vecMin.x, vecMax.x, 0, settings.size - 1));
-						int y = (int)Math.Round(Remap(sample.vectorArr[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
-						int z = (int)Math.Round(Remap(sample.vectorArr[i].z, vecMin.z, vecMax.z, 0, settings.size - 1));
+						int x = (int)Math.Round(Remap(sample.values[i].x, vecMin.x, vecMax.x, 0, settings.size - 1));
+						int y = (int)Math.Round(Remap(sample.values[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
+						int z = (int)Math.Round(Remap(sample.values[i].z, vecMin.z, vecMax.z, 0, settings.size - 1));
 
 						dField[(settings.size * y) + x] += incr;
 						dField[(settings.size * settings.size) + (settings.size * z) + x] += incr;
