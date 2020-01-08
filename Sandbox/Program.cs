@@ -17,10 +17,10 @@ namespace Sandbox
 			settings.trimLeft = 0;
 			settings.trimRight = 0;
 
-			List<CSVColumnFilter> filters = new List<CSVColumnFilter>(1);
+			List<ICSVFilter> filters = new List<ICSVFilter>(1);
 
 			// This filter
-			CSVColumnFilter quaternions = new CSVEvenColumnsFilter();
+			ICSVFilter quaternions = new CSVEvenColumnsFilter();
 			filters.Add(quaternions);
 
 			CSVLoader<Vec3> loader = new CSVLoader<Vec3>(ref settings, ref filters);

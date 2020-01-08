@@ -14,11 +14,11 @@ namespace MotionRecognition
 
 	public class CSVLoader<T> : IDataLoader<Sample<T>> where T : IParseable, new()
 	{
-		private List<CSVColumnFilter> filters;
+		private List<ICSVFilter> filters;
 		// Path points to the CSV file that is to be loaded.
 		private CSVLoaderSettings settings;
 
-		public CSVLoader(ref CSVLoaderSettings _settings, ref List<CSVColumnFilter> _filters)
+		public CSVLoader(ref CSVLoaderSettings _settings, ref List<ICSVFilter> _filters)
 		{
 			this.settings = _settings;
 			this.filters = _filters;

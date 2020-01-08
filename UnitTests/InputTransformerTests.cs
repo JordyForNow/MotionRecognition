@@ -21,8 +21,8 @@ namespace UnitTests
             settings.trimLeft = 1;
             settings.trimRight = 0;
 
-			List<CSVColumnFilter> filters = new List<CSVColumnFilter>(1);
-			CSVColumnFilter quaternions = new CSVEvenColumnsFilter();
+			List<ICSVFilter> filters = new List<ICSVFilter>(1);
+			ICSVFilter quaternions = new CSVEvenColumnsFilter();
 			filters.Add(quaternions);
 
             CSVLoader<Vec3> loader = new CSVLoader<Vec3>(ref settings, ref filters);
