@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MotionRecognition
 {
-	public enum LeapMotionJoint : int
+	public enum LeapMotionJoint
 	{
 		PALM = 0,
 		THUMB_0 = 1,
@@ -44,9 +44,12 @@ namespace MotionRecognition
 		{
 			return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
 		}
-		private Sample<Vec3>[] RemapList(ref ImageTransformerSettings settings)
+		public double[] GetNeuralInput(ImageTransformerSettings settings)
 		{
-			Sample<Vec3>[] remapped_samples = new Sample<Vec3>[settings.samples.Length];
+			double[] dField = new double[settings.size * settings.size * 2];
+
+			int incr = (int)Math.Floor((decimal)int.MaxValue / settings.focus_joints.Length);
+
 			Vec3 vecMin = new Vec3();
 			Vec3 vecMax = new Vec3();
 			foreach (var s in settings.samples)
@@ -64,47 +67,22 @@ namespace MotionRecognition
 			}
 
 			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
-			int sample_index = 0, col_index = 0;
 			foreach (var sample in settings.samples)
 			{
-				Sample<Vec3> new_sample = new Sample<Vec3>();
-				new_sample.vectorArr = new Vec3[settings.focus_joints.Length];
 				for (int i = 0; i < sample.vectorArr.Length; i++)
 				{
 					if (settings.focus_joints.Count(o => (int)o == i) > 0)
 					{
-						var new_vec = new Vec3();
-						new_vec.x = (int)Math.Round(Remap(sample.vectorArr[i].x, vecMin.x, vecMax.x, 0, settings.size - 1));
-						new_vec.y = (int)Math.Round(Remap(sample.vectorArr[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
-						new_vec.z = (int)Math.Round(Remap(sample.vectorArr[i].z, vecMin.z, vecMax.z, 0, settings.size - 1));
-						new_sample.vectorArr[col_index] = new_vec;
-						col_index++;
+						int x = (int)Math.Round(Remap(sample.vectorArr[i].x, vecMin.x, vecMax.x, 0, settings.size - 1));
+						int y = (int)Math.Round(Remap(sample.vectorArr[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
+						int z = (int)Math.Round(Remap(sample.vectorArr[i].z, vecMin.z, vecMax.z, 0, settings.size - 1));
+
+						dField[(settings.size * y) + x] += incr;
+						dField[(settings.size * settings.size) + (settings.size * z) + x] += incr;
 					}
 				}
-				remapped_samples[sample_index] = new_sample;
-				sample_index++;
-				col_index = 0;
 			}
-			return remapped_samples;
-		}
-		public double[] GetNeuralInput(ImageTransformerSettings settings)
-		{
-			double[] arr = new double[settings.samples.Length * settings.focus_joints.Length * 3];
-			int index = 0;
-			foreach(var sample in RemapList(ref settings))
-			{
-				foreach(var vec in sample.vectorArr)
-				{
-					arr[index] = vec.x;
-					index++;
-					arr[index] = vec.y;
-					index++;
-					arr[index] = vec.z;
-					index++;
-				}
-			}
-
-			return arr;
+			return dField;
 		}
 	}
 }
