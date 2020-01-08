@@ -30,8 +30,11 @@ namespace MotionRecognition
 
 	public struct ImageTransformerSettings
 	{
+		// Map size x,y = sizeˆ2;
 		public int size;
+		// Samples
 		public Sample<Vec3>[] samples;
+		// Which items are used of the sample column list.
 		public LeapMotionJoint[] focus_joints;
 	}
 
@@ -40,16 +43,20 @@ namespace MotionRecognition
 	*/
 	public class ImageTransformer : IMovementTransformer<ImageTransformerSettings>
 	{
+		// Remap a value to another range.
 		private float Remap(float value, float from1, float to1, float from2, float to2)
 		{
 			return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
 		}
 		public double[] GetNeuralInput(ImageTransformerSettings settings)
 		{
+			// Create a double[] which contains two images the front view and a base x,y top view.
 			double[] dField = new double[settings.size * settings.size * 2];
 
+			// Find the differential value for the neural network to make out a difference.
 			int incr = (int)Math.Floor((decimal)int.MaxValue / settings.focus_joints.Length);
 
+			// Find the min and the max-imum value this forms the base range.
 			Vec3 vecMin = new Vec3();
 			Vec3 vecMax = new Vec3();
 			foreach (var s in settings.samples)
@@ -70,7 +77,7 @@ namespace MotionRecognition
 
 			}
 
-			// Remap all sample vectors to a map in a range from 0 -> 499 (500).
+			// Remap all sample vectors to a map in a range from 0 to the specified (settings size).
 			foreach (var sample in settings.samples)
 			{
 				for (int i = 0; i < sample.values.Length; i++)
@@ -81,6 +88,7 @@ namespace MotionRecognition
 						int y = (int)Math.Round(Remap(sample.values[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
 						int z = (int)Math.Round(Remap(sample.values[i].z, vecMin.z, vecMax.z, 0, settings.size - 1));
 
+						// Assign to the map.
 						dField[(settings.size * y) + x] += incr;
 						dField[(settings.size * settings.size) + (settings.size * z) + x] += incr;
 					}
