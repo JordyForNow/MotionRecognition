@@ -5,7 +5,7 @@ using System.Text;
 namespace MotionRecognition
 {
 
-	public class NetworkContainer
+	public class dsNetworkContainer
 	{
 		public bool allowFileOverride { get; set; } = false;
 

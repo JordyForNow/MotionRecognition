@@ -15,5 +15,6 @@
   <ItemGroup>
     <Folder Include="src\DataLoader\" />
     <Folder Include="src\DataMutation\" />
+    <Folder Include="src\Recognizer\" />
   </ItemGroup>
 </Project>

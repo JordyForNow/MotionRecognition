@@ -8,14 +8,18 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-			TrainController.Train(
-				new NetworkContainer(),
-				new BaseTrainContainer(),
-				new NetworkTrainer(),
-				@"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\testCor\",
-				@"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\testIncor\",
-				@"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
-				"testOut");
+			NetworkContainer network = new NetworkContainer();
+			EncogWrapper.Instantiate(ref network);
+
+
+			//TrainController.Train(
+			//	new NetworkContainer(),
+			//	new BaseTrainContainer(),
+			//	new NetworkTrainer(),
+			//	@"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\testCor\",
+			//	@"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\testIncor\",
+			//	@"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
+			//	"testOut");
 
 
 			//MotionRecognizer recognizer = new MotionRecognizer(
