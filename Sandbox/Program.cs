@@ -1,4 +1,6 @@
 ﻿using MotionRecognition;
+using System;
+using System.Collections.Generic;
 
 namespace Sandbox
 {
@@ -6,14 +8,35 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-			CSVLoader loader = new CSVLoader("data.csv", 21);
+			string dataPath = @"../../../Data/";
 
-			var table = loader.GetData();
+			// Loader settings 
+			CSVLoaderSettings settings = new CSVLoaderSettings();
+			settings.filePath = dataPath + "data.csv";
+			settings.CSVHasHeader = true;
+			settings.trimUp = 0;
+			settings.trimDown = 0;
 
-			Motion3DImage image = new Motion3DImage(ref table);
-			ImageSerializer.Serialize(image);
-			Motion3DImage image2 = ImageSerializer.DeSerialize();
-			ImageSerializer.Serialize(image2, "./data2");
+			List<ICSVFilter> filters = new List<ICSVFilter>(1);
+
+			// This filter
+			ICSVFilter quaternions = new CSVEvenColumnFilter();
+			filters.Add(quaternions);
+			settings.filters = filters;
+
+			var data = CSVLoader<Vector3>.LoadData(ref settings);
+
+			ImageTransformerSettings transformerSettings = new ImageTransformerSettings();
+			transformerSettings.focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
+			transformerSettings.samples = data;
+			transformerSettings.size = 10;
+
+			//Transformer settings
+			ImageTransformer transformer = new ImageTransformer();
+			var arr = transformer.GetNeuralInput(transformerSettings);
+			foreach (var d in arr)
+				Console.WriteLine(d);
+
 		}
 	}
 }
