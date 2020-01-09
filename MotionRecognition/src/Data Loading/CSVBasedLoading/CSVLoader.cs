@@ -38,6 +38,8 @@ namespace MotionRecognition
 				.Select(line => line.Split(',')).ToArray();
 			if (settings.CSVHasHeader)
 				rows = rows.Skip(1).ToArray();
+
+			// Trim top or bottom rows if needed
 			if (settings.trimUp > 0 || settings.trimDown > 0)
 				rows = rows.Skip(settings.trimUp)
 					.Take(rows.Count() - settings.trimUp - settings.trimDown).ToArray();
