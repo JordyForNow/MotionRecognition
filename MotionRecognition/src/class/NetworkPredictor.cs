@@ -34,7 +34,7 @@ namespace MotionRecognition
 			Console.Write(verbose ? "Prediction: " + prediction + "\n": "");
 
 			// Return prediction.
-			return (1 - prediction) > 0.5 ? true : false;
+			return (1 - prediction) > 0.5;
 		}
 	}
 }
