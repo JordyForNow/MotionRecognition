@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MotionRecognition;
 using NUnit.Framework;
 
@@ -62,9 +63,21 @@ namespace UnitTests
 		}
 
 		[Test]
-		public void TrimTest()
+		public void Trim()
 		{
+			var data = CSVLoader<Vector3>.LoadData(ref settings);
+			settings.trimUp = 1;
 
+			var trimmedData = CSVLoader<Vector3>.LoadData(ref settings);
+
+			Assert.IsTrue(data.Skip(1).Count() == trimmedData.Count());
+		} 
+
+		[Test]
+		public void Vector3Parse()
+		{
+			Vector3 vec3 = Vector3.Parse("(1.0| 1.0| 1.0)");
+			Assert.IsTrue(vec3.x == 1.0 && vec3.y == 1.0 && vec3.z == 1.0);
 		}
 	}
 }

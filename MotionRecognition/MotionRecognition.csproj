@@ -10,6 +10,5 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="src\Structures\Vec3.cs" />
-    <Compile Remove="src\Data Loading\IDataLoader.cs" />
   </ItemGroup>
 </Project>

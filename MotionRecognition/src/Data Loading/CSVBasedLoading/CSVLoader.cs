@@ -13,7 +13,7 @@ namespace MotionRecognition
 		public List<ICSVFilter> filters;
 	}
 
-	public class CSVLoader<T> : IDataLoader<Sample<T>, CSVLoaderSettings> where T : IParseable, new()
+	public class CSVLoader<T> : IDataLoader<Sample<T>, CSVLoaderSettings> where T : IParseable<Vector3>, new()
 	{
 		private static int ColumnCount(ref CSVLoaderSettings settings, ref string[] _row)
 		{
@@ -67,7 +67,7 @@ namespace MotionRecognition
 					if (settings.filters.Exists(o => !o.Use(ref rows[rowIndex], i))) continue;
 
 					T vector = new T();
-					vector.Parse(rows[rowIndex][i]);
+					vector.parse(rows[rowIndex][i]);
 					sample.values[valuesIndex] = vector;
 					valuesIndex += 1;
 				}
