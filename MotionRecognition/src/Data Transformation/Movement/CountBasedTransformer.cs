@@ -5,7 +5,7 @@ namespace MotionRecognition
     {
         /*
         * Returns a specific count of values from the original sample list,
-        * count is used to calculate an interval which is used to retrieve samples from the original list
+        * count is used to calculate an interval which is used to retrieve samples from the original list.
         */
         public override double[] GetNeuralInput(IntervalBasedTransformerSettings settings)
         {

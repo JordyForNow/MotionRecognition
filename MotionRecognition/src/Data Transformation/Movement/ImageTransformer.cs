@@ -28,7 +28,7 @@ namespace MotionRecognition
         LITTLE_3 = 20
     }
 
-    // Settings struct with properties needed for the functions in the transformer
+    // Settings struct with properties needed for the functions in the transformer.
     public struct ImageTransformerSettings
     {
         public int size;
