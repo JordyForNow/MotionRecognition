@@ -22,10 +22,9 @@ namespace Sandbox
 			// This filter
 			ICSVFilter quaternions = new CSVEvenColumnFilter();
 			filters.Add(quaternions);
+			settings.filters = filters;
 
-			CSVLoader<Vec3> loader = new CSVLoader<Vec3>(ref settings, ref filters);
-
-			var data = loader.LoadData();
+			var data = CSVLoader<Vector3>.LoadData(ref settings);
 
 			ImageTransformerSettings transformerSettings = new ImageTransformerSettings();
 			transformerSettings.focus_joints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
@@ -38,7 +37,6 @@ namespace Sandbox
 			foreach (var d in arr)
 				Console.WriteLine(d);
 
-			ImageCreator.WriteBitmapToFS(ImageCreator.CreateNeuralImageFromDoubleArray(ref arr, transformerSettings.size, true));
 		}
 	}
 }

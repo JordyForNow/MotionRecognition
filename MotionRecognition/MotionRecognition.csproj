@@ -8,4 +8,8 @@
     <PackageReference Include="encog-dotnet-core" Version="3.4.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="src\Structures\Vec3.cs" />
+    <Compile Remove="src\Data Loading\IDataLoader.cs" />
+  </ItemGroup>
 </Project>

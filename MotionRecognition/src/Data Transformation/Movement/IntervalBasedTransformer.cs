@@ -5,7 +5,7 @@ namespace MotionRecognition
     // Settings struct with properties needed for the functions in the transformer
     public struct IntervalBasedTransformerSettings
     {
-        public Sample<Vec3>[] sampleList;
+        public Sample<Vector3>[] sampleList;
 
         public int interval { get; set; }
         public int count
@@ -35,7 +35,7 @@ namespace MotionRecognition
             {
                 if (i % settings.interval == 0)
                 {
-                    foreach (Vec3 v in settings.sampleList[i].values)
+                    foreach (Vector3 v in settings.sampleList[i].values)
                     {
                         values.AddRange(v.GetTransformerValue());
 

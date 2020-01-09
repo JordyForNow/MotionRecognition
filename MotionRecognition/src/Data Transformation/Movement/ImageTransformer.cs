@@ -33,7 +33,7 @@ namespace MotionRecognition
         // Map size x,y = sizeˆ2;
         public int size;
         // Samples
-        public Sample<Vec3>[] samples;
+        public Sample<Vector3>[] samples;
         // Which items are used of the sample column list.
         public LeapMotionJoint[] focus_joints;
     }
@@ -57,8 +57,8 @@ namespace MotionRecognition
             int incr = (int)Math.Floor((decimal)int.MaxValue / settings.focus_joints.Length);
 
             // Find the min and the max-imum value this forms the base range.
-            Vec3 vecMin = new Vec3();
-            Vec3 vecMax = new Vec3();
+            Vector3 vecMin = new Vector3();
+            Vector3 vecMax = new Vector3();
             foreach (var s in settings.samples)
             {
                 for (int i = 0; i < s.values.Length; i++)

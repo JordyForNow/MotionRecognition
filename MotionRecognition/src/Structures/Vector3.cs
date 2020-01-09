@@ -5,7 +5,7 @@
 	* It inherits IParseable because the object is can be parsed from a CSV file value,
 	* ITransformerValue is also inherited so the factories can read the coordinates.
 	*/
-    public class Vec3 : IParseable, ITransformerValue
+    public class Vector3 : IParseable, ITransformerValue
     {
         public float x, y, z;
 
