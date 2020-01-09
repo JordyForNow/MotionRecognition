@@ -2,6 +2,6 @@
 {
 	public interface IParseable
 	{
-		bool parse(string input);
+		bool Parse(string input);
 	}
 }

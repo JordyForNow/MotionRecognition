@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace MotionRecognition
 {
-    // Settings struct with properties needed for the functions in the transformer
+    // Settings struct with properties needed for the functions in the transformer.
     public struct IntervalBasedTransformerSettings
     {
         public Sample<Vector3>[] sampleList;
@@ -21,12 +21,10 @@ namespace MotionRecognition
         }
     }
 
-    /*
-	* Transformer which transforms sample list to downsized list based on given count.
-	*/
+	// Transformer which transforms sample list to downsized list based on given count.
     public class IntervalBasedTransformer : IMovementTransformer<IntervalBasedTransformerSettings>
     {
-        // Returns list of doubles filtered from original sample list on specific interval
+        // Returns list of doubles filtered from original sample list on a specific interval.
         public virtual double[] GetNeuralInput(IntervalBasedTransformerSettings settings)
         {
             List<double> values = new List<double>();

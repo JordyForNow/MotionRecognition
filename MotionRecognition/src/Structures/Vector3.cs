@@ -1,20 +1,22 @@
 ﻿namespace MotionRecognition
 {
 	/* 
-	* Vec3 contains an x, y and z coordinate which are used to display a 3d position.
-	* It inherits IParseable because the object is can be parsed from a CSV file value,
+	* Vector3 contains an x, y and z coordinate which are used to display a 3D position.
+	* It inherits IParseable because the object can be parsed from a CSV value,
 	* ITransformerValue is also inherited so the factories can read the coordinates.
 	*/
     public class Vector3 : IParseable, ITransformerValue
     {
         public float x, y, z;
 
-        public bool parse(string input)
+        public bool Parse(string input)
         {
             // Check if the input is a CSVCell.
-            if (!(input[0] == '(' && input[input.Length - 1] == ')')) return false;
+            if (!(input[0] == '(' && input[input.Length - 1] == ')')) throw new System.Exception();
+
             // Split the string into the subvalues.
             var points = input.Substring(1, input.Length - 2).Split("| ");
+            
             // Check if points has 3 values.
             if (points.Length > 3) return false;
 

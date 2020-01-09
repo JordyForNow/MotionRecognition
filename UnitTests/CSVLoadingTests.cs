@@ -12,13 +12,14 @@ namespace UnitTests
 		[SetUp]
 		public void Setup()
 		{
-			// Setup loader 
+			// Setup loader.
 			settings = new CSVLoaderSettings();
-			settings.filepath = dataPath + "data.csv";
+			settings.filePath = dataPath + "data.csv";
 			settings.CSVHasHeader = true;
-			settings.trimLeft = 0;
-			settings.trimRight = 0;
+			settings.trimUp = 0;
+			settings.trimDown = 0;
 
+			// Setup filters for loader.
 			filters = new List<ICSVFilter>(1);
 			ICSVFilter quaternions = new CSVEvenColumnFilter();
 			filters.Add(quaternions);

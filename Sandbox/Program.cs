@@ -12,10 +12,10 @@ namespace Sandbox
 
 			// Loader settings 
 			CSVLoaderSettings settings = new CSVLoaderSettings();
-			settings.filepath = dataPath + "data.csv";
+			settings.filePath = dataPath + "data.csv";
 			settings.CSVHasHeader = true;
-			settings.trimLeft = 0;
-			settings.trimRight = 0;
+			settings.trimUp = 0;
+			settings.trimDown = 0;
 
 			List<ICSVFilter> filters = new List<ICSVFilter>(1);
 
@@ -27,7 +27,7 @@ namespace Sandbox
 			var data = CSVLoader<Vector3>.LoadData(ref settings);
 
 			ImageTransformerSettings transformerSettings = new ImageTransformerSettings();
-			transformerSettings.focus_joints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
+			transformerSettings.focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
 			transformerSettings.samples = data;
 			transformerSettings.size = 10;
 

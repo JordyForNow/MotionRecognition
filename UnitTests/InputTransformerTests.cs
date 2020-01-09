@@ -17,11 +17,11 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            // Setup loader 
+            // Setup loader.
             CSVLoaderSettings settings = new CSVLoaderSettings();
-            settings.filepath = dataPath + "data.csv";
-            settings.trimLeft = 1;
-            settings.trimRight = 0;
+            settings.filePath = dataPath + "data.csv";
+            settings.trimUp = 1;
+            settings.trimDown = 0;
 
 			List<ICSVFilter> filters = new List<ICSVFilter>(1);
 			ICSVFilter quaternions = new CSVEvenColumnFilter();
@@ -30,21 +30,21 @@ namespace UnitTests
 
 			var data = CSVLoader<Vector3>.LoadData(ref settings);
 
-			// Init IntervalBased Transformer settings
+			// Initialize IntervalBased Transformer settings.
 			intervalSettings = new IntervalBasedTransformerSettings();
 			intervalSettings.sampleList = data;
 			intervalSettings.interval = 4;
 			intervalTransformer = new IntervalBasedTransformer();
 
-			// Init CountBased Transformer settings
+			// Initialize CountBased Transformer settings.
 			countSettings = new IntervalBasedTransformerSettings();
 			countSettings.sampleList = data;
 			countSettings.count = 10;
 			countTransformer = new CountBasedTransformer();
 
-			// Init Image Transformer
+			// Initialize Image Transformer.
 			imageSettings = new ImageTransformerSettings();
-			imageSettings.focus_joints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
+			imageSettings.focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
 			imageSettings.samples = data;
 			imageSettings.size = 10;
 			imageTransformer = new ImageTransformer();

@@ -22,25 +22,23 @@ namespace MotionRecognition
         RING_1 = 14,
         RING_2 = 15,
         RING_3 = 16,
-        BABY_0 = 17,
-        BABY_1 = 18,
-        BABY_2 = 19,
-        BABY_3 = 20
+        LITTLE_0 = 17,
+        LITTLE_1 = 18,
+        LITTLE_2 = 19,
+        LITTLE_3 = 20
     }
 
+    // Settings struct with properties needed for the functions in the transformer
     public struct ImageTransformerSettings
     {
-        // Map size x,y = sizeˆ2;
         public int size;
-        // Samples
         public Sample<Vector3>[] samples;
+
         // Which items are used of the sample column list.
-        public LeapMotionJoint[] focus_joints;
+        public LeapMotionJoint[] focusJoints;
     }
 
-    /*
-	* Transforms sample list to 3d-matrix.
-	*/
+	// Transforms sample list to a 3D-matrix.
     public class ImageTransformer : IMovementTransformer<ImageTransformerSettings>
     {
         // Remap a value to another range.
@@ -48,22 +46,23 @@ namespace MotionRecognition
         {
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
+
         public double[] GetNeuralInput(ImageTransformerSettings settings)
         {
-            // Create a double[] which contains two images the front view and a base x,y top view.
+            // Create a double[] which contains two images, the front view and a base x,y top view.
             double[] dField = new double[settings.size * settings.size * 2];
 
             // Find the differential value for the neural network to make out a difference.
-            int incr = (int)Math.Floor((decimal)int.MaxValue / settings.focus_joints.Length);
+            int incr = (int)Math.Floor((decimal)int.MaxValue / settings.focusJoints.Length);
 
-            // Find the min and the max-imum value this forms the base range.
+            // Find the min and the maximum value this forms the base range.
             Vector3 vecMin = new Vector3();
             Vector3 vecMax = new Vector3();
             foreach (var s in settings.samples)
             {
                 for (int i = 0; i < s.values.Length; i++)
                 {
-                    if (settings.focus_joints.Count(o => (int)o == i) > 0)
+                    if (settings.focusJoints.Count(o => (int)o == i) > 0)
                     {
                         vecMin.x = s.values[i].x < vecMin.x ? s.values[i].x : vecMin.x;
                         vecMin.y = s.values[i].y < vecMin.y ? s.values[i].y : vecMin.y;
@@ -82,7 +81,7 @@ namespace MotionRecognition
             {
                 for (int i = 0; i < sample.values.Length; i++)
                 {
-                    if (settings.focus_joints.Count(o => (int)o == i) > 0)
+                    if (settings.focusJoints.Count(o => (int)o == i) > 0)
                     {
                         int x = (int)Math.Round(Remap(sample.values[i].x, vecMin.x, vecMax.x, 0, settings.size - 1));
                         int y = (int)Math.Round(Remap(sample.values[i].y, vecMin.y, vecMax.y, 0, settings.size - 1));
@@ -94,6 +93,7 @@ namespace MotionRecognition
                     }
                 }
             }
+
             return dField;
         }
     }
