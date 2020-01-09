@@ -11,11 +11,12 @@ using Encog.Persist;
 
 namespace MotionRecognition
 {
-	public class NetworkTrainer : IEncogTrainer
+	public static class BaseNetworkTrainer
 	{
-		public bool Run(ITrainContainer iTrainContainer)
+		public static void Run(ITrainContainer itrainContainer)
 		{
-			BaseTrainContainer trainContainer = (BaseTrainContainer)iTrainContainer;
+			IntervalTrainContainer trainContainer = (IntervalTrainContainer)itrainContainer;
+
 			// create a neural network, without using a factory
 			var network = new BasicNetwork();
 			network.AddLayer(new BasicLayer(null, true, trainContainer.dataset[0].Length));
@@ -51,8 +52,6 @@ namespace MotionRecognition
 			Console.Write(trainContainer.netContainer.verbose ? "Saving neural network to: " + trainContainer.outputDirectory + "/" + trainContainer.outputName + ".eg" + "\n" : "");
 			FileInfo networkFile = new FileInfo(trainContainer.outputDirectory + "/" + trainContainer.outputName + ".eg");
 			EncogDirectoryPersistence.SaveObject(networkFile, (BasicNetwork)network);
-
-			return true;
 		}
 	}
 }

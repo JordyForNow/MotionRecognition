@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MotionRecognition
+﻿namespace MotionRecognition
 {
 
 	public interface IEncogTrainer
 	{
 
-		public bool Run(ITrainContainer trainContainer);
+		public static void Run(ITrainContainer trainContainer) { }
 
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace MotionRecognition
 {
-	public class BaseTrainContainer : ITrainContainer
+	public class IntervalTrainContainer : ITrainContainer
 	{
 		public NetworkContainer netContainer;
 		public double[][] dataset;

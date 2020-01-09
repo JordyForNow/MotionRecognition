@@ -1,13 +1,12 @@
 ﻿namespace MotionRecognition
 {
 
-	public static class TrainController
+	public static class TrainController<T> where T : IEncogTrainer
 	{
 
-		public static bool Train(
+		public static bool Train<T>(
 			NetworkContainer NetContainer,
 			ITrainContainer trainContainer,
-			IEncogTrainer trainer,
 			string correctInputDirectory,
 			string incorrectInputDirectory,
 			string outputDirectory,
@@ -21,7 +20,7 @@
 				outputDirectory,
 				outputName);
 
-			trainer.Run(trainContainer);
+			T.Run(trainContainer);
 
 			return false;
 		}
