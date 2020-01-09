@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Encog.Engine.Network.Activation;
 using MotionRecognition;
 using MotionRecognition.src.Recognizer;
 
@@ -9,17 +10,29 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
+			EncogLayerSettings inputLayerSettings = new EncogLayerSettings();
+			inputLayerSettings.activationFunction = null;
+			inputLayerSettings.hasBias = true;
+			inputLayerSettings.neuronCount = 100;
+
 			NetworkContainer network = new NetworkContainer();
 			EncogWrapper.Instantiate(ref network);
-			
-			
-			// create a neural network, without using a factory
-			var network = new BasicNetwork();
-			network.AddLayer(new BasicLayer(null, true, trainContainer.dataset[0].Length));
-			network.AddLayer(new BasicLayer(new ActivationElliott(), true, 100));
-			network.AddLayer(new BasicLayer(new ActivationElliott(), false, 1));
-			network.Structure.FinalizeStructure();
-			network.Reset();
+			EncogWrapper.AddLayer(ref network, ref inputLayerSettings);
+
+			EncogLayerSettings hiddenLayerOneSettings = new EncogLayerSettings();
+			hiddenLayerOneSettings.activationFunction = new ActivationElliott();
+			hiddenLayerOneSettings.hasBias = true;
+			hiddenLayerOneSettings.neuronCount = 100;
+
+			EncogWrapper.AddLayer(ref network, ref hiddenLayerOneSettings);
+
+			EncogLayerSettings outputLayerSettings = new EncogLayerSettings();
+			outputLayerSettings.activationFunction = new ActivationElliott();
+			outputLayerSettings.hasBias = false;
+			outputLayerSettings.neuronCount = 1;
+
+			EncogWrapper.AddLayer(ref network, ref outputLayerSettings);
+			EncogWrapper.finalizeNetwork(ref network);
 
 
 			//TrainController.Train(
