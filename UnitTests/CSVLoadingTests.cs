@@ -77,13 +77,13 @@ namespace UnitTests
         [Test]
         public void Vector3ParseThrowsExceptionWithWrongFormat()
         {
-            Assert.Throws<System.Exception>(() => { Vector3 vec3 = Vector3.Parse("abc | 1.0| 1.0)"); });
+            Assert.Throws<FormatIncorrectException>(() => { Vector3 vec3 = Vector3.Parse("abc | 1.0| 1.0)"); });
         }
 
 		[Test]
         public void Vector3ParseThrowsExceptionWhenTooMuchPointsGiven()
         {
-            Assert.Throws<System.Exception>(() => { Vector3 vec3 = Vector3.Parse("( 1.0 | 1.0| 1.0| 1.0)"); });
+            Assert.Throws<InputTooLargeException>(() => { Vector3 vec3 = Vector3.Parse("( 1.0 | 1.0| 1.0| 1.0)"); });
         }
 
         [Test]

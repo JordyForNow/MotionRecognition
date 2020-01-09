@@ -14,7 +14,7 @@
             Vector3 vec3 = new Vector3();
             // Check if the input is a CSVCell.
             if (!(input[0] == '(' && input[input.Length - 1] == ')'))
-                throw new FormatIncorrectException("The given int has an incorrect  format");
+                throw new FormatIncorrectException("The given input has an incorrect format.");
 
             // Split the string into the subvalues.
             var points = input.Substring(1, input.Length - 2).Split("| ");
