@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MotionRecognition;
 using NUnit.Framework;
+using System;
 
 namespace UnitTests
 {
@@ -49,17 +50,9 @@ namespace UnitTests
 		[Test]
 		public void CSVLoaderFailWhenFileHasHeader()
 		{
-			bool bFailed = false;
 			settings.CSVHasHeader = false;
-			try
-			{
-				CSVLoader<Vector3>.LoadData(ref settings);
-			}
-			catch
-			{
-				bFailed = true;
-			}
-			Assert.IsTrue(bFailed);
+
+			Assert.Throws<System.FormatException>(() => {CSVLoader<Vector3>.LoadData(ref settings);});
 		}
 
 		[Test]
@@ -78,6 +71,15 @@ namespace UnitTests
 		{
 			Vector3 vec3 = Vector3.Parse("(1.0| 1.0| 1.0)");
 			Assert.IsTrue(vec3.x == 1.0 && vec3.y == 1.0 && vec3.z == 1.0);
+		}
+
+		[Test]
+		public void LoaderThrowsExceptionWhenNoFileGiven()
+		{
+			settings.filePath = "";
+
+			Assert.Throws<System.IO.FileNotFoundException>(() => {CSVLoader<Vector3>.LoadData(ref settings);});
+			
 		}
 	}
 }
