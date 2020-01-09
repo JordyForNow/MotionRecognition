@@ -14,7 +14,7 @@ namespace MotionRecognition
 	public class MotionRecognizer
 	{
 
-		private NetworkTrainer trainer;
+		private BaseNetworkTrainer trainer;
 		private NetworkPredictor predictor;
 
 		private networkActions action;
@@ -174,7 +174,7 @@ namespace MotionRecognition
 
 			}
 
-			trainer = new NetworkTrainer(
+			trainer = new BaseNetworkTrainer(
 				_inputData: ref dataset,
 				_inputAnswers: ref trainingAnswers,
 				_outputDirectory: outputDirectory,

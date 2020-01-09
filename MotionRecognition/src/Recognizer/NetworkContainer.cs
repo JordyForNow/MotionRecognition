@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MotionRecognition.src.Recognizer
+namespace MotionRecognition
 {
 	public class NetworkContainer
 	{
