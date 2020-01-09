@@ -1,6 +1,6 @@
 ﻿namespace MotionRecognition
 {
-	/* 
+    /* 
 	* Vector3 contains an x, y and z coordinate which are used to display a 3D position.
 	* It inherits IParseable because the object can be parsed from a CSV value,
 	* ITransformerValue is also inherited so the factories can read the coordinates.
@@ -11,16 +11,17 @@
 
         public static Vector3 Parse(string input)
         {
-			Vector3 vec3 = new Vector3();
+            Vector3 vec3 = new Vector3();
             // Check if the input is a CSVCell.
-            if (!(input[0] == '(' && input[input.Length - 1] == ')')) throw new System.Exception();
+            if (!(input[0] == '(' && input[input.Length - 1] == ')'))
+                throw new FormatIncorrectException("The given int has an incorrect  format");
 
             // Split the string into the subvalues.
             var points = input.Substring(1, input.Length - 2).Split("| ");
 
-			// Check if points has 3 values.
-			if (points.Length > 3)
-				throw new System.Exception("too many arguments at parsing Vector3.");
+            // Check if points has 3 values.
+            if (points.Length > 3)
+                throw new InputTooLargeException("Too many arguments at parsing Vector3.");
 
             vec3.x = float.Parse(points[0]);
             vec3.y = float.Parse(points[1]);
@@ -28,13 +29,13 @@
             return vec3;
         }
 
-		public void parse(string input)
-		{
-			var vec3 = Vector3.Parse(input);
-			this.x = vec3.x;
-			this.y = vec3.y;
-			this.z = vec3.z;
-		}
+        public void parse(string input)
+        {
+            var vec3 = Vector3.Parse(input);
+            this.x = vec3.x;
+            this.y = vec3.y;
+            this.z = vec3.z;
+        }
 
         public double[] GetTransformerValue()
         {
