@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.IO;
 
 namespace MotionRecognition
 {
@@ -26,9 +27,15 @@ namespace MotionRecognition
             return g;
         }
 
-        public static void WriteBitmapToFS(Bitmap bitmap, string filename = "Image.bmp")
+        public static void WriteBitmapToFS(Bitmap bitmap, string filePath = "Image.bmp")
         {
-            bitmap.Save(filename, System.Drawing.Imaging.ImageFormat.Bmp);
+			var a = Path.GetDirectoryName(filePath);
+			var b = Path.GetFileName(filePath);
+			if (!Directory.Exists(a)) {
+				throw new System.Exception(); // TODO: create folder
+			}
+			
+			bitmap.Save($"{a}/{Path.GetFileNameWithoutExtension(filePath)}.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
         }
     }
 }
