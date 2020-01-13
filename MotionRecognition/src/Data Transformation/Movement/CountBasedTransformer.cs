@@ -1,4 +1,4 @@
-namespace MotionRecognition
+﻿namespace MotionRecognition
 {
 	// Transformer which transforms sample list to downsized sample list based on specific interval.
     public class CountBasedTransformer : IntervalBasedTransformer
@@ -9,7 +9,7 @@ namespace MotionRecognition
         */
         public override double[] GetNeuralInput(IntervalBasedTransformerSettings settings)
         {
-            settings.interval = settings.sampleList.Length / settings.count;
+            settings.interval = (uint)settings.sampleList.Length / settings.count;
             return base.GetNeuralInput(settings);
         }
     }

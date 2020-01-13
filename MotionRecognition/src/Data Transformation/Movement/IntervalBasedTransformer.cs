@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MotionRecognition
 {
@@ -7,8 +7,8 @@ namespace MotionRecognition
     {
         public Sample<Vector3>[] sampleList;
 
-        public int interval { get; set; }
-        public int count
+        public uint interval { get; set; }
+        public uint count
         {
             get
             {

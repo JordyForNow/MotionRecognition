@@ -19,13 +19,13 @@ namespace MotionRecognition
 	}
 	public struct EncogTrainSettings
 	{
-		public uint maxTrainingError;
+		public double maxTrainingError;
 		public double[][] dataset;
 		public double[][] answers;
 	}
 	public struct EncogPredictSettings
 	{
-		public double differgenceCo;
+		public double threshold;
 		public double[] data;
 	}
 	public static class EncogWrapper
@@ -38,6 +38,7 @@ namespace MotionRecognition
 
 			return true;
 		}
+
 		public static bool AddLayer(ref NetworkContainer container, ref EncogLayerSettings settings)
 		{
 			if (settings.neuronCount <= 0) return false;
@@ -120,7 +121,10 @@ namespace MotionRecognition
 		public static bool Predict(ref NetworkContainer container, ref EncogPredictSettings settings)
 		{
 			IMLData output = container.network.Compute(new BasicMLData(settings.data));
-			return (1 - output[0] > settings.differgenceCo);
+
+			if (container.verbose) Console.WriteLine("Raw output: " + output[0]);
+
+			return (1 - output[0] < settings.threshold);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MotionRecognition;
 using NUnit.Framework;
 
@@ -30,24 +30,30 @@ namespace UnitTests
 
             var data = CSVLoader<Vector3>.LoadData(ref settings);
 
-            // Initialize IntervalBased Transformer settings.
-            intervalSettings = new IntervalBasedTransformerSettings();
-            intervalSettings.sampleList = data;
-            intervalSettings.interval = 4;
-            intervalTransformer = new IntervalBasedTransformer();
+			// Initialize IntervalBased Transformer settings.
+			intervalSettings = new IntervalBasedTransformerSettings
+			{
+				sampleList = data,
+				interval = 4
+			};
+			intervalTransformer = new IntervalBasedTransformer();
 
-            // Initialize CountBased Transformer settings.
-            countSettings = new IntervalBasedTransformerSettings();
-            countSettings.sampleList = data;
-            countSettings.count = 10;
-            countTransformer = new CountBasedTransformer();
+			// Initialize CountBased Transformer settings.
+			countSettings = new IntervalBasedTransformerSettings
+			{
+				sampleList = data,
+				count = 10
+			};
+			countTransformer = new CountBasedTransformer();
 
-            // Initialize Image Transformer.
-            imageSettings = new ImageTransformerSettings();
-            imageSettings.focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
-            imageSettings.samples = data;
-            imageSettings.size = 10;
-            imageTransformer = new ImageTransformer();
+			// Initialize Image Transformer.
+			imageSettings = new ImageTransformerSettings
+			{
+				focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM },
+				samples = data,
+				size = 10
+			};
+			imageTransformer = new ImageTransformer();
         }
 
         [Test]
