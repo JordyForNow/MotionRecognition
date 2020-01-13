@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using Encog.Engine.Network.Activation;
 using MotionRecognition;
-using MotionRecognition.src.Recognizer;
 
 namespace Sandbox
 {
@@ -14,7 +13,7 @@ namespace Sandbox
 			EncogLayerSettings inputLayerSettings = new EncogLayerSettings();
 			inputLayerSettings.activationFunction = null;
 			inputLayerSettings.hasBias = true;
-			inputLayerSettings.neuronCount = 100;
+			inputLayerSettings.neuronCount = 100;			
 
 			NetworkContainer network = new NetworkContainer();
 			EncogWrapper.Instantiate(ref network);
@@ -35,6 +34,105 @@ namespace Sandbox
 			EncogWrapper.AddLayer(ref network, ref outputLayerSettings);
 			EncogWrapper.finalizeNetwork(ref network);
 
+			EncogTrainSettings trainSettings = new EncogTrainSettings();
+
+			int correctFileCount = getFileCount(_correctTrainingData);
+			int incorrectFileCount = getFileCount(_incorrectTrainingData);
+
+			dataset = new double[correctFileCount + incorrectFileCount][];
+			trainingAnswers = new double[correctFileCount + incorrectFileCount][];
+
+			// Compute correct training data.
+			computeData(
+				netContainer.networkInputSize,
+				_correctTrainingData,
+				ref dataset,
+				ref trainingAnswers,
+				1.0,
+				0);
+
+			// Compute incorrect training data.
+			computeData(
+				netContainer.networkInputSize,
+				_incorrectTrainingData,
+				ref dataset,
+				ref trainingAnswers,
+				0.0,
+				correctFileCount);
+
+			private static int getFileCount(string dataDirectory)
+			{
+				// Get total number of '.csv' files inside Directory.
+				return Directory.GetFiles(
+					dataDirectory,
+					"*.csv*",
+					SearchOption.TopDirectoryOnly
+				).Length;
+			}
+
+			static void computeData(
+				int networkInputSize,
+				string inputData,
+				ref double[][] outputData,
+				ref double[][] outputAnswers,
+				double outputValue,
+				int index)
+			{
+				DirectoryInfo inputDirectory = new DirectoryInfo(inputData);
+
+				CSVLoaderSettings settings;
+				CSVLoader loader<>;
+				ArrayCreator creator;
+
+				//// Initialize CountBased Transformer settings.
+				//IntervalBasedTransformerSettings countSettings = new IntervalBasedTransformerSettings
+				//{
+				//	sampleList = data,
+				//	count = 10
+				//};
+				//CountBasedTransformer countTransformer = new CountBasedTransformer();
+				//countTransformer.GetNeuralInput(countSettings);
+
+				//// Setup loader.
+				//CSVLoaderSettings settings = new CSVLoaderSettings();
+				//settings.filePath = dataPath + "data.csv";
+				//settings.trimUp = 1;
+				//settings.trimDown = 0;
+
+				//var data = CSVLoader<Vector3>.LoadData(ref settings);
+
+				//List<ICSVFilter> filters = new List<ICSVFilter>(1);
+				//ICSVFilter quaternions = new CSVEvenColumnFilter();
+				//filters.Add(quaternions);
+				//settings.filters = filters;
+
+				foreach (var file in inputDirectory.GetFiles("*.csv"))
+				{
+
+					// Declare loader settings.
+					settings = new CSVLoaderSettings
+					{
+						filepath = file.FullName,
+						TrimLeft = 1,
+						TrimRight = 0
+					};
+
+					// Generate loader.
+					loader = new CSVLoader(settings);
+
+					// Create array with ArrayCreator from CSVloader.
+					creator = new ArrayCreator();
+					Project1DInto2D(creator.CreateArray(
+						loader.LoadData(), networkInputSize),
+						ref outputData,
+						index);
+
+					// Set answer to given value.
+					outputAnswers[index] = new[] { outputValue };
+					index++;
+
+				}
+			}
 
 			//TrainController.Train(
 			//	new NetworkContainer(),
@@ -113,7 +211,7 @@ namespace Sandbox
 			//);
 
 			//recognizer.Run();
-			
+
 			// Loader settings 
 			// CSVLoaderSettings settings = new CSVLoaderSettings();
 			// settings.filePath = dataPath + "data.csv";
