@@ -9,25 +9,23 @@ namespace InputManipulation
 	{
 		public static void Main(string[] args)
 		{
-			CsvManipulatorSettings manipulatorSettings = new CsvManipulatorSettings
+			CsvManipulatorSettings manipulatorSettings = new CsvManipulatorSettings // Create manipulation settings
 			{
 				CopyLines = 1,
 				RemoveLines = 1,
 				MutationCount = 10,
 				DeviationPercentage = 0.05f,
 				InnerDeviationPercentage = 0.01f,
-
 				DataFile = "",
 				DataFolder = "./CSV/",
-
 				OutputFolder = "./mutated/",
-
 				AlterInput = true
 			};
 
 			CsvManipulator.RunManipulator(ref manipulatorSettings);
 
-			FileInfo[] di = new DirectoryInfo(manipulatorSettings.OutputFolder).GetFiles();
+			#region Image creation related calls
+			FileInfo[] FileInfo = new DirectoryInfo(manipulatorSettings.OutputFolder).GetFiles();
 
 			CSVLoaderSettings settings = new CSVLoaderSettings
 			{
@@ -38,7 +36,6 @@ namespace InputManipulation
 
 			List<ICSVFilter> filters = new List<ICSVFilter>(1);
 
-			// This filter
 			ICSVFilter quaternions = new CSVEvenColumnFilter();
 			filters.Add(quaternions);
 			settings.filters = filters;
@@ -49,7 +46,7 @@ namespace InputManipulation
 				size = 100
 			};
 
-			foreach (var file in di)
+			foreach (var file in FileInfo) 
 			{
 				settings.filePath = file.FullName;
 
@@ -62,6 +59,7 @@ namespace InputManipulation
 
 				ImageCreator.WriteBitmapToFS(ImageCreator.CreateNeuralImageFromDoubleArray(ref arr, transformerSettings.size, true), "./IMG/" + file.Name);
 			}
+			#endregion
 		}
 	}
 }
