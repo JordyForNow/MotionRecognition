@@ -9,11 +9,25 @@ namespace InputManipulation
 	{
 		public static void Main(string[] args)
 		{
-			CsvManipulator manipulator = new CsvManipulator();
+			CsvManipulatorSettings manipulatorSettings = new CsvManipulatorSettings
+			{
+				CopyLines = 1,
+				RemoveLines = 1,
+				MutationCount = 10,
+				DeviationPercentage = 0.05f,
+				InnerDeviationPercentage = 0.01f,
 
-			//manipulator.Run();
+				DataFile = "",
+				DataFolder = "./CSV/",
 
-			FileInfo[] di = new DirectoryInfo(manipulator.outputFolder).GetFiles();
+				OutputFolder = "./mutated/",
+
+				AlterInput = true
+			};
+
+			CsvManipulator.RunManipulator(ref manipulatorSettings);
+
+			FileInfo[] di = new DirectoryInfo(manipulatorSettings.OutputFolder).GetFiles();
 
 			CSVLoaderSettings settings = new CSVLoaderSettings
 			{

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace MotionRecognition
@@ -8,7 +9,7 @@ namespace MotionRecognition
         public static Bitmap CreateNeuralImageFromDoubleArray(ref double[] arr, int size, bool Is3DImage = false)
         {
             int width = size;
-            int height = (Is3DImage) ? size * 2 : size;
+            int height = Is3DImage ? size * 2 : size;
 
             Bitmap g = new Bitmap(width, height);
 
@@ -16,7 +17,7 @@ namespace MotionRecognition
             {
                 for (int x = 0; x < width; x++)
                 {
-                    g.SetPixel(x, y, (y < size) ? Color.Red : Color.White); // Use different background color for both halves of the image
+                    g.SetPixel(x, y, (y < size) ? Color.Red : Color.White); // Use different background color for either halve of the image
 
                     if (arr[x + y * width] != 0) // y * width equates to the offset within the array
                     {
@@ -29,13 +30,12 @@ namespace MotionRecognition
 
         public static void WriteBitmapToFS(Bitmap bitmap, string filePath = "Image.bmp")
         {
-			var a = Path.GetDirectoryName(filePath);
-			var b = Path.GetFileName(filePath);
-			if (!Directory.Exists(a)) {
-				throw new System.Exception(); // TODO: create folder
+			var outputDirectory = Path.GetDirectoryName(filePath);
+			if (!Directory.Exists(outputDirectory)) {
+				Directory.CreateDirectory(outputDirectory);
 			}
 			
-			bitmap.Save($"{a}/{Path.GetFileNameWithoutExtension(filePath)}.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+			bitmap.Save($"{outputDirectory}/{Path.GetFileNameWithoutExtension(filePath)}.bmp", ImageFormat.Bmp);
         }
     }
 }
