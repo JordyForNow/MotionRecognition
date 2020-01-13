@@ -9,19 +9,19 @@ namespace InputManipulation
 {
 	public struct CsvManipulatorSettings
 	{
-		public int CopyLines; // how many lines to just copy over
-		public int RemoveLines; // how many lines to skip and forget
-		public int MutationCount; // amount of mutations
-		public float DeviationPercentage; // int 0 - 100
-		public float InnerDeviationPercentage; // int 0 - 100 / innerdeviation means the random deviation after the total deviation
+		public int CopyLines; // how many lines to just copy over.
+		public int RemoveLines; // how many lines to skip and forget.
+		public int MutationCount; // amount of mutations.
+		public float DeviationPercentage; // int 0 - 100.
+		public float InnerDeviationPercentage; // int 0 - 100 / innerdeviation means the random deviation after the total deviation.
 
-		// only one of these needs to be filled, if both are filled then the file will take precedence
-		public string DataFile; // csv movement file to copy and mutate
-		public string DataFolder; // folder with csv movement files to use and mutate, please end with /
+		// only one of these needs to be filled, if both are filled then the file will take precedence.
+		public string DataFile; // csv movement file to copy and mutate.
+		public string DataFolder; // folder with csv movement files to use and mutate, please end with /.
 
 		public string OutputFolder;
 
-		public bool AlterInput; // Alter the input files to have dots instead of commas in the timestamp value
+		public bool AlterInput; // Alter the input files to have dots instead of commas in the timestamp value.
 	}
 
 	public static class CsvManipulator
@@ -32,11 +32,11 @@ namespace InputManipulation
 		{
 			if (!Directory.Exists(settings.OutputFolder))
 			{
-				Directory.CreateDirectory(settings.OutputFolder); // Create output directory if necesary
+				Directory.CreateDirectory(settings.OutputFolder); // Create output directory if necesary.
 			}
 			else
 			{
-				ClearOutputFolder(settings.OutputFolder); // Clear otherwise
+				ClearOutputFolder(settings.OutputFolder); // Clear otherwise.
 			}
 
 			Stopwatch stopwatch = new Stopwatch();
@@ -51,14 +51,14 @@ namespace InputManipulation
 			}
 			else if (!string.IsNullOrEmpty(settings.DataFolder))
 			{
-				// Mutate a foldler with csv files
+				// Mutate a folder with csv files
 				Console.WriteLine($"From: {settings.DataFolder} to {settings.OutputFolder}");
 				ChangeOriginalBatch(ref settings);
 				MutateFolder(ref settings);
 			}
 			else
 			{
-				Console.WriteLine("You didnt select any input!");
+				Console.WriteLine("You didn't select any input!");
 			}
 
 			stopwatch.Stop();
