@@ -109,27 +109,27 @@ namespace Sandbox
 				foreach (var file in inputDirectory.GetFiles("*.csv"))
 				{
 
-					// Declare loader settings.
-					settings = new CSVLoaderSettings
-					{
-						filepath = file.FullName,
-						TrimLeft = 1,
-						TrimRight = 0
-					};
+					//// Declare loader settings.
+					//settings = new CSVLoaderSettings
+					//{
+					//	filepath = file.FullName,
+					//	TrimLeft = 1,
+					//	TrimRight = 0
+					//};
 
-					// Generate loader.
-					loader = new CSVLoader(settings);
+					//// Generate loader.
+					//loader = new CSVLoader(settings);
 
-					// Create array with ArrayCreator from CSVloader.
-					creator = new ArrayCreator();
-					Project1DInto2D(creator.CreateArray(
-						loader.LoadData(), networkInputSize),
-						ref outputData,
-						index);
+					//// Create array with ArrayCreator from CSVloader.
+					//creator = new ArrayCreator();
+					//Project1DInto2D(creator.CreateArray(
+					//	loader.LoadData(), networkInputSize),
+					//	ref outputData,
+					//	index);
 
-					// Set answer to given value.
-					outputAnswers[index] = new[] { outputValue };
-					index++;
+					//// Set answer to given value.
+					//outputAnswers[index] = new[] { outputValue };
+					//index++;
 
 				}
 			}
