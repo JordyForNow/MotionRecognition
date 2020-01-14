@@ -49,7 +49,7 @@ namespace MotionRecognition
 				settings.correctInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
-				1.0,
+				1.0d,
 				0);
 
 			// Compute incorrect training data.
