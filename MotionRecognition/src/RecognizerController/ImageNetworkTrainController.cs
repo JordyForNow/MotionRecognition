@@ -119,13 +119,13 @@ namespace MotionRecognition
 		// Convert data from a CSV file to the actual input array for the network.
 		private static void ComputeData(
 			uint sampleCount,
-			string inputData,
+			string inputDataDirectory,
 			ref double[][] outputData,
 			ref double[][] outputAnswers,
 			double outputValue,
 			int index)
 		{
-			DirectoryInfo inputDirectory = new DirectoryInfo(inputData);
+			DirectoryInfo inputDirectory = new DirectoryInfo(inputDataDirectory);
 
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{

@@ -113,13 +113,13 @@ namespace MotionRecognition
 
 		private static void ComputeData(
 			uint networkInputSize,
-			string inputData,
+			string inputDataDirectory,
 			ref double[][] outputData,
 			ref double[][] outputAnswers,
 			double outputValue,
 			int index)
 		{
-			DirectoryInfo inputDirectory = new DirectoryInfo(inputData);
+			DirectoryInfo inputDirectory = new DirectoryInfo(inputDataDirectory);
 
 			foreach (var file in inputDirectory.GetFiles("*.csv"))
 			{
