@@ -46,7 +46,7 @@ namespace UnitTests
 
             EncogWrapper.AddLayer(ref container, ref outputLayerSettings);
 
-            EncogWrapper.finalizeNetwork(ref container);
+            EncogWrapper.FinalizeNetwork(ref container);
 
             var Layers = container.network.Structure.Flat.LayerCounts;
 
