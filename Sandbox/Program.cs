@@ -1,5 +1,12 @@
+﻿<<<<<<< HEAD
 ﻿using System;
 using MotionRecognition;
+=======
+﻿using MotionRecognition;
+using MotionRecognitionHelper;
+using System;
+using System.Collections.Generic;
+>>>>>>> dev
 
 namespace Sandbox
 {
