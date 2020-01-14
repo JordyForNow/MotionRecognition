@@ -14,8 +14,7 @@ on:
           
 
 jobs:
-  build:
-
+  build-1:
     runs-on: windows-latest
 
     steps:
@@ -26,3 +25,28 @@ jobs:
         dotnet-version: 3.1.100
     - name: Build with dotnet
       run: dotnet build
+      
+  build-2:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.100
+    - name: Build with dotnet
+      run: dotnet build
+    
+  build-3:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.103
+    - name: Build with dotnet
+      run: dotnet build
+    
