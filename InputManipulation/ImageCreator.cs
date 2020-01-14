@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace MotionRecognition
+namespace MotionRecognitionHelper
 {
     public static class ImageCreator
     {
