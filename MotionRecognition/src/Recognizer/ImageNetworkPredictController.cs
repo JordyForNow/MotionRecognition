@@ -18,6 +18,7 @@ namespace MotionRecognition
 	public class ImageNetworkPredictController : INetworkPredictController<ImageNetworkPredictSettings>
 	{
 
+		// Prepare input data for prediction.
 		public static void preparePredictor(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 			verifyData(ref settings);
@@ -56,6 +57,7 @@ namespace MotionRecognition
 
 		}
 
+		// Predict output for a given input.
 		public static bool predict(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 			if (settings.predictSettings.data == null)
@@ -64,9 +66,9 @@ namespace MotionRecognition
 			return EncogWrapper.Predict(ref container, ref settings.predictSettings);
 		}
 
+		// Verify if input data is valid.
 		private static void verifyData(ref ImageNetworkPredictSettings settings)
 		{
-
 			if (!File.Exists(settings.trainedNetwork))
 				throw new FileNotFoundException("Trained network was not found.");
 
