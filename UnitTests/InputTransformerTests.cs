@@ -98,7 +98,7 @@ namespace UnitTests
         public void ImageFactoryReturns3DImage()
         {
             var image = imageTransformer.GetNeuralInput(imageSettings);
-            int expectedLength = 0;
+            uint expectedLength = 0;
             // One dimensional Image.
             expectedLength += imageSettings.size * imageSettings.size
                 // Top and Front View.
