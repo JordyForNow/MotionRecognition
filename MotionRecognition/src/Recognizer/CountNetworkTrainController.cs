@@ -16,6 +16,8 @@ namespace MotionRecognition
 		public string outputName;
 
 		public uint sampleCount;
+
+		public int prev;
 	}
 
 	public class CountNetworkTrainController : INetworkTrainController<CountNetworkTrainSettings>
