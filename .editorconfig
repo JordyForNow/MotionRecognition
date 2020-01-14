@@ -107,6 +107,10 @@ csharp_space_after_dot = false
 # Wrapping preferences
 csharp_preserve_single_line_statements = true
 csharp_preserve_single_line_blocks = true
+
+# IDE0060: Remove unused parameter
+dotnet_code_quality_unused_parameters = all:suggestion
+
 [*.cs]
 
 # CS0659: Type overrides Object.Equals(object o) but does not override Object.GetHashCode()

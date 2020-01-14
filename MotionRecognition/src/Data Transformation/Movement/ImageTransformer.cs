@@ -31,7 +31,7 @@ namespace MotionRecognition
     // Settings struct with properties needed for the functions in the transformer.
     public struct ImageTransformerSettings
     {
-        public int size;
+        public uint size;
         public Sample<Vector3>[] samples;
 
         // Which items are used of the sample column list.

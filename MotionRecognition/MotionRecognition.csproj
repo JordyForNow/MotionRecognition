@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="src\DataLoader\**" />
+    <Compile Remove="src\DataMutation\**" />
+    <EmbeddedResource Remove="src\DataLoader\**" />
+    <EmbeddedResource Remove="src\DataMutation\**" />
+    <None Remove="src\DataLoader\**" />
+    <None Remove="src\DataMutation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="encog-dotnet-core" Version="3.4.0" />
   </ItemGroup>
 </Project>

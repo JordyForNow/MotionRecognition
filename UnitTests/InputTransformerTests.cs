@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MotionRecognition;
 using NUnit.Framework;
 
@@ -30,24 +30,30 @@ namespace UnitTests
 
             var data = CSVLoader<Vector3>.LoadData(ref settings);
 
-            // Initialize IntervalBased Transformer settings.
-            intervalSettings = new IntervalBasedTransformerSettings();
-            intervalSettings.sampleList = data;
-            intervalSettings.interval = 4;
-            intervalTransformer = new IntervalBasedTransformer();
+			// Initialize IntervalBased Transformer settings.
+			intervalSettings = new IntervalBasedTransformerSettings
+			{
+				sampleList = data,
+				interval = 4
+			};
+			intervalTransformer = new IntervalBasedTransformer();
 
-            // Initialize CountBased Transformer settings.
-            countSettings = new IntervalBasedTransformerSettings();
-            countSettings.sampleList = data;
-            countSettings.count = 10;
-            countTransformer = new CountBasedTransformer();
+			// Initialize CountBased Transformer settings.
+			countSettings = new IntervalBasedTransformerSettings
+			{
+				sampleList = data,
+				count = 10
+			};
+			countTransformer = new CountBasedTransformer();
 
-            // Initialize Image Transformer.
-            imageSettings = new ImageTransformerSettings();
-            imageSettings.focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM };
-            imageSettings.samples = data;
-            imageSettings.size = 10;
-            imageTransformer = new ImageTransformer();
+			// Initialize Image Transformer.
+			imageSettings = new ImageTransformerSettings
+			{
+				focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM },
+				samples = data,
+				size = 10
+			};
+			imageTransformer = new ImageTransformer();
         }
 
         [Test]
@@ -69,19 +75,19 @@ namespace UnitTests
         }
 
         [Test]
-        public void FactoriesReturnDifferentResults()
+        public void TransformerReturnDifferentResults()
         {
             Assert.AreNotEqual(intervalTransformer.GetNeuralInput(intervalSettings), countTransformer.GetNeuralInput(countSettings));
         }
 
         [Test]
-        public void FactoriesReturnEqualResults()
+        public void TransformerReturnEqualResults()
         {
-            // 59 rows in data file, a run with count 5 should equal a run with an interval of 11 (59 / 5 = 11)
+            // 59 rows in data file, a run with count 5 should equal a run with an interval of 11.8 (59 / 5 = 11.8)
             countSettings.count = 5;
             double[] countTransformerResult = countTransformer.GetNeuralInput(countSettings);
 
-            intervalSettings.interval = 11;
+            intervalSettings.interval = 59d / 5d;
             double[] intervalTransformerResult = intervalTransformer.GetNeuralInput(intervalSettings);
 
             Assert.AreEqual(countTransformerResult, intervalTransformerResult);
@@ -89,10 +95,10 @@ namespace UnitTests
 
         // ImageFactory
         [Test]
-        public void ImageFactoryReturns3DImage()
+        public void ImageTransformerReturns3DImage()
         {
             var image = imageTransformer.GetNeuralInput(imageSettings);
-            int expectedLength = 0;
+            uint expectedLength = 0;
             // One dimensional Image.
             expectedLength += imageSettings.size * imageSettings.size
                 // Top and Front View.
