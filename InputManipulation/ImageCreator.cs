@@ -19,7 +19,7 @@ namespace MotionRecognition
             {
                 for (int x = 0; x < width; x++)
                 {
-                    bitmap.SetPixel(x, y, (y < size) ? Color.Red : Color.White); // Use different background color for either halve of the image.
+                    bitmap.SetPixel(x, y, (y < size) ? Color.Gray : Color.White); // Use different background color for either halve of the image.
 
                     if (arr[x + y * width] != 0) // y * width equates to the offset within the array.
                     {
