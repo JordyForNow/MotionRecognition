@@ -11,21 +11,21 @@ namespace InputManipulation
 		{
 			CsvManipulatorSettings manipulatorSettings = new CsvManipulatorSettings // Create manipulation settings
 			{
-				CopyLines = 1,
-				RemoveLines = 1,
-				MutationCount = 10,
-				DeviationPercentage = 0.05f,
-				InnerDeviationPercentage = 0.01f,
-				DataFile = "",
-				DataFolder = "./CSV/",
-				OutputFolder = "./mutated/",
-				AlterInput = true
+				copyLines = 1,
+				removeLines = 1,
+				mutationCount = 10,
+				deviationPercentage = 0.05f,
+				innerDeviationPercentage = 0.01f,
+				dataFile = "",
+				dataFolder = "./CSV/",
+				outputFolder = "./mutated/",
+				alterInput = true
 			};
 
 			CsvManipulator.RunManipulator(ref manipulatorSettings);
 
 			#region Image creation related calls
-			FileInfo[] FileInfo = new DirectoryInfo(manipulatorSettings.OutputFolder).GetFiles();
+			FileInfo[] FileInfo = new DirectoryInfo(manipulatorSettings.outputFolder).GetFiles();
 
 			CSVLoaderSettings settings = new CSVLoaderSettings
 			{

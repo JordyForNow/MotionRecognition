@@ -9,19 +9,19 @@ namespace InputManipulation
 {
 	public struct CsvManipulatorSettings
 	{
-		public int CopyLines; // how many lines to just copy over.
-		public int RemoveLines; // how many lines to skip and forget.
-		public int MutationCount; // amount of mutations.
-		public float DeviationPercentage; // int 0 - 100.
-		public float InnerDeviationPercentage; // int 0 - 100 / innerdeviation means the random deviation after the total deviation.
+		public int copyLines; // How many lines to just copy over.
+		public int removeLines; // How many lines to skip and forget.
+		public int mutationCount; // Amount of mutations.
+		public float deviationPercentage; // Float 0 - 1.
+		public float innerDeviationPercentage; // Float 0 - 1 / Innerdeviation means the random deviation after the total deviation.
 
-		// only one of these needs to be filled, if both are filled then the file will take precedence.
-		public string DataFile; // csv movement file to copy and mutate.
-		public string DataFolder; // folder with csv movement files to use and mutate, please end with /.
+		// Only one of these needs to be filled, if both are filled then the file will take precedence.
+		public string dataFile; // Csv movement file to copy and mutate.
+		public string dataFolder; // Folder with csv movement files to use and mutate, please end with /.
 
-		public string OutputFolder;
+		public string outputFolder;
 
-		public bool AlterInput; // Alter the input files to have dots instead of commas in the timestamp value.
+		public bool alterInput; // Alter the input files to have dots instead of commas in the timestamp value.
 	}
 
 	public static class CsvManipulator
@@ -30,29 +30,29 @@ namespace InputManipulation
 
 		public static void RunManipulator(ref CsvManipulatorSettings settings)
 		{
-			if (!Directory.Exists(settings.OutputFolder))
+			if (!Directory.Exists(settings.outputFolder))
 			{
-				Directory.CreateDirectory(settings.OutputFolder); // Create output directory if necesary.
+				Directory.CreateDirectory(settings.outputFolder); // Create output directory if necesary.
 			}
 			else
 			{
-				ClearOutputFolder(settings.OutputFolder); // Clear otherwise.
+				ClearOutputFolder(settings.outputFolder); // Clear otherwise.
 			}
 
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 
-			if (!string.IsNullOrEmpty(settings.DataFile))
+			if (!string.IsNullOrEmpty(settings.dataFile))
 			{
-				// Mutate a single csv file
-				Console.WriteLine($"From: {settings.DataFile} to {settings.OutputFolder}");
+				// Mutate a single csv file.
+				Console.WriteLine($"From: {settings.dataFile} to {settings.outputFolder}");
 				ChangeOriginalFile(ref settings);
 				MutateFile(ref settings);
 			}
-			else if (!string.IsNullOrEmpty(settings.DataFolder))
+			else if (!string.IsNullOrEmpty(settings.dataFolder))
 			{
-				// Mutate a folder with csv files
-				Console.WriteLine($"From: {settings.DataFolder} to {settings.OutputFolder}");
+				// Mutate a folder with csv files.
+				Console.WriteLine($"From: {settings.dataFolder} to {settings.outputFolder}");
 				ChangeOriginalBatch(ref settings);
 				MutateFolder(ref settings);
 			}
@@ -67,13 +67,13 @@ namespace InputManipulation
 		}
 
 		// Method to make sleight changes to the original file,
-		// Currently only checks if the second character in the line is a comma and changes it to .
-		// This is to make sure the CSV file doesnt break because the comma is the splitter
+		// Currently only checks if the second character in the line is a comma and changes it to '.'
+		// This is to make sure the CSV file doesnt break because the comma is the splitter.
 		private static void ChangeOriginalFile(ref CsvManipulatorSettings settings)
 		{
-			if (!settings.AlterInput) return;
+			if (!settings.alterInput) return;
 
-			var lines = File.ReadAllText(settings.DataFile).Split(Environment.NewLine);
+			var lines = File.ReadAllText(settings.dataFile).Split(Environment.NewLine);
 
 			for (int i = 0; i < lines.Length; i++)
 			{
@@ -87,34 +87,34 @@ namespace InputManipulation
 				}
 			}
 
-			File.WriteAllText(settings.DataFile, string.Join(Environment.NewLine, lines));
+			File.WriteAllText(settings.dataFile, string.Join(Environment.NewLine, lines));
 		}
 
-		// Gets all files in input directory and does the change function
+		// Gets all files in input directory and does the change function.
 		private static void ChangeOriginalBatch(ref CsvManipulatorSettings settings)
 		{
-			FileInfo[] fileInfo = new DirectoryInfo(settings.DataFolder).GetFiles();
+			FileInfo[] fileInfo = new DirectoryInfo(settings.dataFolder).GetFiles();
 
 			for (int i = 0; i < fileInfo.Length; i++)
 			{
-				settings.DataFile = fileInfo[i].FullName;
+				settings.dataFile = fileInfo[i].FullName;
 				ChangeOriginalFile(ref settings);
 			}
 		}
 
-		// fileNamePrefix is only used in batch mutate
+		// FileNamePrefix is only used in batch mutate.
 		private static void MutateFile(ref CsvManipulatorSettings settings, string fileNamePrefix = "")
 		{
 			// This variable stores the general deviation of each joint per mutated file (i.e. [OutputFile1][Joint1])
 			Dictionary<string, List<double>> deviations = new Dictionary<string, List<double>>();
 
-			// Local variable to store the amount of lines to copy over
-			int CPL = settings.CopyLines;
+			// Local variable to store the amount of lines to copy over.
+			int CPL = settings.copyLines;
 
-			// Local variable to store the amount of lines to remove
-			int RML = settings.RemoveLines;
+			// Local variable to store the amount of lines to remove.
+			int RML = settings.removeLines;
 
-			StreamReader reader = new StreamReader(settings.DataFile);
+			StreamReader reader = new StreamReader(settings.dataFile);
 			string line;
 			while ((line = reader.ReadLine()) != null)
 			{
@@ -124,12 +124,12 @@ namespace InputManipulation
 				}
 
 
-				// Copy line to new mutated files
+				// Copy line to new mutated files.
 				if (CPL > 0)
 				{
-					for (int i = 0; i < settings.MutationCount; i++)
+					for (int i = 0; i < settings.mutationCount; i++)
 					{
-						using StreamWriter sw = File.AppendText(settings.OutputFolder + fileNamePrefix + "-" + i.ToString() + ".csv");
+						using StreamWriter sw = File.AppendText(settings.outputFolder + fileNamePrefix + "-" + i.ToString() + ".csv");
 						sw.WriteLine(line);
 						sw.Close();
 					}
@@ -137,7 +137,7 @@ namespace InputManipulation
 					continue;
 				}
 
-				// Remove line
+				// Remove line.
 				if (RML > 0)
 				{
 					RML--;
@@ -147,16 +147,16 @@ namespace InputManipulation
 				string[] data = line.Split(',');
 				if (data.Length > 1)
 				{
-					for (int i = 0; i < settings.MutationCount; i++)
+					for (int i = 0; i < settings.mutationCount; i++)
 					{
 						StringBuilder sb = new StringBuilder(data[0]);
 
 						for (int j = 1; j < data.Length; j += 2)
-						{ // for each pair of Vector3 and Quarternion edit only Vector3 - data[j] = Vector3, data[j + 1] = Quaternion
+						{ // For each pair of Vector3 and Quarternion edit only Vector3 - data[j] = Vector3, data[j + 1] = Quaternion.
 							sb.Append($",{MutateVector(ref settings, data[j], j / 2, fileNamePrefix + i, ref deviations)},{data[j + 1]}");
 						}
 
-						File.AppendAllText(settings.OutputFolder + fileNamePrefix + "-" + i.ToString() + ".csv", sb.ToString() + Environment.NewLine);
+						File.AppendAllText(settings.outputFolder + fileNamePrefix + "-" + i.ToString() + ".csv", sb.ToString() + Environment.NewLine);
 					}
 				}
 			}
@@ -164,17 +164,17 @@ namespace InputManipulation
 
 		private static void MutateFolder(ref CsvManipulatorSettings settings)
 		{
-			FileInfo[] fileInfo = new DirectoryInfo(settings.DataFolder).GetFiles();
+			FileInfo[] fileInfo = new DirectoryInfo(settings.dataFolder).GetFiles();
 
-			for (int i = 0; i < fileInfo.Length; i++) // For each input do settings.MutationCount mutations
+			for (int i = 0; i < fileInfo.Length; i++) // For each input do settings.MutationCount mutations.
 			{
 				Console.WriteLine($"Working on {fileInfo[i].Name}");
-				settings.DataFile = fileInfo[i].FullName;
+				settings.dataFile = fileInfo[i].FullName;
 				MutateFile(ref settings, i.ToString());
 			}
 		}
 
-		// Extra method to change a char at specified position
+		// Extra method to change a char at specified position.
 		private static void ReplaceInString(ref string original, int pos, char replacement)
 		{
 			StringBuilder sb = new StringBuilder(original);
@@ -194,24 +194,25 @@ namespace InputManipulation
 
 		private static string MutateVector(ref CsvManipulatorSettings settings, string vector, int col, string name, ref Dictionary<string, List<double>> deviations)
 		{
-			if (!deviations.ContainsKey(name)) // Creates a new List for the joint deviations
+			if (!deviations.ContainsKey(name)) // Creates a new List for the joint deviations.
 			{
 				deviations.Add(name, new List<double>());
 			}
 
-			if (deviations[name].Count - 1 <= col) // Create new deviation for the joint
+			if (deviations[name].Count - 1 <= col) // Create new deviation for the joint.
 			{
-				deviations[name].Add(CalculateDeviation(settings.DeviationPercentage));
+				deviations[name].Add(CalculateDeviation(settings.deviationPercentage));
 			}
 
-			var innerdeviation = CalculateDeviation(settings.InnerDeviationPercentage); // Inner deviation is the deviation after the general deviation of the whole joint path
+			var innerdeviation = CalculateDeviation(settings.innerDeviationPercentage); // Inner deviation is the deviation after the general deviation of the whole joint path.
 
 			var points = vector.Substring(1, vector.Length - 2).Split("| ");
 
-			// Method for doing the calculation and rewriting it to the proper string length
+			// Method for doing the calculation and rewriting it to the proper string length.
 			string DoDeviation(string data, ref Dictionary<string, List<double>> deviations)
 			{
-				return (float.Parse(data, CultureInfo.InvariantCulture) * deviations[name][col] * innerdeviation).ToString("0.000000", CultureInfo.InvariantCulture); // InvariantCulture is used to properly read and write the float data
+				// InvariantCulture is used to properly read and write the float data.
+				return (float.Parse(data, CultureInfo.InvariantCulture) * deviations[name][col] * innerdeviation).ToString("0.000000", CultureInfo.InvariantCulture);
 			}
 
 			points[0] = DoDeviation(points[0], ref deviations);
@@ -221,7 +222,7 @@ namespace InputManipulation
 			return $"({string.Join("| ", points)})";
 		}
 
-		// Calculates a random deviation depending on the 
+		// Calculates a random deviation depending on the.
 		private static double CalculateDeviation(double percentage)
 		{
 			double positive = random.NextDouble() * percentage;
