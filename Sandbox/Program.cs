@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using Encog.Engine.Network.Activation;
 using MotionRecognition;
 
 namespace Sandbox
@@ -10,7 +8,6 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-
 			NetworkContainer container = new NetworkContainer
 			{
 				verbose = true
@@ -18,10 +15,10 @@ namespace Sandbox
 
 			CountNetworkTrainSettings trainSettings = new CountNetworkTrainSettings
 			{
-				correctInputDirectory = @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\CorrectTestData\",
-				incorrectInputDirectory = @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\IncorrectTestData\",
+				correctInputDirectory = @"../../../CorrectTestData",
+				incorrectInputDirectory = @"../../../IncorrectTestData",
 
-				outputDirectory = @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
+				outputDirectory = @"../../../DataOut",
 				outputName = "ModelOne",
 				
 				sampleCount = 10
@@ -33,15 +30,14 @@ namespace Sandbox
 
 			CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
 			{
-				trainedNetwork = @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\ModelOne.eg",
-				predictData = @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\testCor\0-2.csv",
+				trainedNetwork = @"../../../DataOut\ModelOne.eg",
+				predictData = @"../../../testCor\0-2.csv",
 
 				networkInputSize = 10
 			};
 
 			CountNetworkPredictController.preparePredictor(ref predictSettings, ref container);
 			Console.WriteLine(CountNetworkPredictController.predict(ref predictSettings, ref container));
-
 		}
 	}
 }

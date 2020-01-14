@@ -34,6 +34,12 @@ namespace MotionRecognition
 			int correctFileCount = getFileCount(settings.correctInputDirectory);
 			int incorrectFileCount = getFileCount(settings.incorrectInputDirectory);
 
+			if (correctFileCount <= 0)
+				throw new FileNotFoundException("correctFiles not found.");
+
+			if (incorrectFileCount <= 0)
+				throw new FileNotFoundException("incorretFiles not found.");
+
 			settings.trainSettings.dataset = new double[correctFileCount + incorrectFileCount][];
 			settings.trainSettings.answers = new double[correctFileCount + incorrectFileCount][];
 
@@ -108,7 +114,7 @@ namespace MotionRecognition
 			// Get total number of '.csv' files inside Directory.
 			return Directory.GetFiles(
 				dataDirectory,
-				"*.csv*",
+				"*.csv",
 				SearchOption.TopDirectoryOnly
 			).Length;
 		}
