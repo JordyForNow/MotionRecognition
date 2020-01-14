@@ -40,6 +40,9 @@ namespace MotionRecognition
 		// Setup a new network.
 		public static void Instantiate(ref NetworkContainer container)
 		{
+			if (container == null)
+				container = new NetworkContainer();
+
 			if (container.network != null)
 				throw new IncorrectActionOrderException("Network has already been instantiated.");
 
