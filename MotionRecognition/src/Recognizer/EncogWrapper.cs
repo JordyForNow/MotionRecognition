@@ -32,7 +32,8 @@ namespace MotionRecognition
 	{
 		public static bool Instantiate(ref NetworkContainer container)
 		{
-			if (container.network != null) return false;
+			if (container.network != null)
+				throw new IncorrectActionOrderException("Network has already been instantiated.");
 
 			container.network = new BasicNetwork();
 
@@ -87,7 +88,7 @@ namespace MotionRecognition
 		{
 			try
 			{
-				container.network = (BasicNetwork) EncogDirectoryPersistence.LoadObject(new FileInfo(fileName));
+				container.network = (BasicNetwork)EncogDirectoryPersistence.LoadObject(new FileInfo(fileName));
 			}
 			catch
 			{
