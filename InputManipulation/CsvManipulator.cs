@@ -7,7 +7,7 @@ using System.Text;
 
 namespace InputManipulation
 {
-	public struct CsvManipulatorSettings
+	public struct CSVManipulatorSettings
 	{
 		public int copyLines; // How many lines to just copy over.
 		public int removeLines; // How many lines to skip and forget.
@@ -24,15 +24,15 @@ namespace InputManipulation
 		public bool alterInput; // Alter the input files to have dots instead of commas in the timestamp value.
 	}
 
-	public static class CsvManipulator
+	public static class CSVManipulator
 	{
 		private static readonly Random random = new Random();
 
-		public static void RunManipulator(ref CsvManipulatorSettings settings)
+		public static void RunManipulator(ref CSVManipulatorSettings settings)
 		{
 			if (!Directory.Exists(settings.outputFolder))
 			{
-				Directory.CreateDirectory(settings.outputFolder); // Create output directory if necesary.
+				Directory.CreateDirectory(settings.outputFolder); // Create output directory if necessary.
 			}
 			else
 			{
@@ -69,7 +69,7 @@ namespace InputManipulation
 		// Method to make sleight changes to the original file,
 		// Currently only checks if the second character in the line is a comma and changes it to '.'
 		// This is to make sure the CSV file doesnt break because the comma is the splitter.
-		private static void ChangeOriginalFile(ref CsvManipulatorSettings settings)
+		private static void ChangeOriginalFile(ref CSVManipulatorSettings settings)
 		{
 			if (!settings.alterInput) return;
 
@@ -91,7 +91,7 @@ namespace InputManipulation
 		}
 
 		// Gets all files in input directory and does the change function.
-		private static void ChangeOriginalBatch(ref CsvManipulatorSettings settings)
+		private static void ChangeOriginalBatch(ref CSVManipulatorSettings settings)
 		{
 			FileInfo[] fileInfo = new DirectoryInfo(settings.dataFolder).GetFiles();
 
@@ -103,7 +103,7 @@ namespace InputManipulation
 		}
 
 		// FileNamePrefix is only used in batch mutate.
-		private static void MutateFile(ref CsvManipulatorSettings settings, string fileNamePrefix = "")
+		private static void MutateFile(ref CSVManipulatorSettings settings, string fileNamePrefix = "")
 		{
 			// This variable stores the general deviation of each joint per mutated file (i.e. [OutputFile1][Joint1])
 			Dictionary<string, List<double>> deviations = new Dictionary<string, List<double>>();
@@ -162,7 +162,7 @@ namespace InputManipulation
 			}
 		}
 
-		private static void MutateFolder(ref CsvManipulatorSettings settings)
+		private static void MutateFolder(ref CSVManipulatorSettings settings)
 		{
 			FileInfo[] fileInfo = new DirectoryInfo(settings.dataFolder).GetFiles();
 
@@ -192,7 +192,7 @@ namespace InputManipulation
 			}
 		}
 
-		private static string MutateVector(ref CsvManipulatorSettings settings, string vector, int col, string name, ref Dictionary<string, List<double>> deviations)
+		private static string MutateVector(ref CSVManipulatorSettings settings, string vector, int col, string name, ref Dictionary<string, List<double>> deviations)
 		{
 			if (!deviations.ContainsKey(name)) // Creates a new List for the joint deviations.
 			{
@@ -222,7 +222,7 @@ namespace InputManipulation
 			return $"({string.Join("| ", points)})";
 		}
 
-		// Calculates a random deviation depending on the.
+		// Calculates a random deviation depending on the input percentage.
 		private static double CalculateDeviation(double percentage)
 		{
 			double positive = random.NextDouble() * percentage;

@@ -6,8 +6,8 @@ namespace MotionRecognition
 {
     public static class ImageCreator
     {
-		// Creates a Bitmap from a double array,
-		// If Is3DImage = true then it creates an image that is double the height
+		// Creates a Bitmap from a double array.
+		// If Is3DImage = true then it creates an image that is double the height.
         public static Bitmap CreateNeuralImageFromDoubleArray(ref double[] arr, int size, bool Is3DImage = false)
         {
             int width = size;
@@ -19,11 +19,11 @@ namespace MotionRecognition
             {
                 for (int x = 0; x < width; x++)
                 {
-                    bitmap.SetPixel(x, y, (y < size) ? Color.Red : Color.White); // Use different background color for either halve of the image
+                    bitmap.SetPixel(x, y, (y < size) ? Color.Red : Color.White); // Use different background color for either halve of the image.
 
-                    if (arr[x + y * width] != 0) // y * width equates to the offset within the array
+                    if (arr[x + y * width] != 0) // y * width equates to the offset within the array.
                     {
-                        bitmap.SetPixel(x, y, (y >= size) ? Color.Blue : Color.Black); // Different foreground pixel color
+                        bitmap.SetPixel(x, y, (y >= size) ? Color.Blue : Color.Black); // Different foreground pixel color.
                     }
                 }
             }

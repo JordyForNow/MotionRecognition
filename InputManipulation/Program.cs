@@ -9,7 +9,7 @@ namespace InputManipulation
 	{
 		public static void Main(string[] args)
 		{
-			CsvManipulatorSettings manipulatorSettings = new CsvManipulatorSettings // Create manipulation settings
+			CSVManipulatorSettings manipulatorSettings = new CSVManipulatorSettings // Create manipulation settings
 			{
 				copyLines = 1,
 				removeLines = 1,
@@ -22,7 +22,7 @@ namespace InputManipulation
 				alterInput = true
 			};
 
-			CsvManipulator.RunManipulator(ref manipulatorSettings);
+			CSVManipulator.RunManipulator(ref manipulatorSettings);
 
 			#region Image creation related calls
 			FileInfo[] FileInfo = new DirectoryInfo(manipulatorSettings.outputFolder).GetFiles();
