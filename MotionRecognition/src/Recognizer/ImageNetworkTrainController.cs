@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Encog.Engine.Network.Activation;
 
@@ -99,7 +100,13 @@ namespace MotionRecognition
 				throw new IncorrectActionOrderException("Prepare network before training network.");
 
 			EncogWrapper.Train(ref container, ref settings.trainSettings);
-			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
+			if (settings.outputDirectory[settings.outputDirectory.Length - 1].Equals("/"))
+			{
+				EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
+				return;
+			}
+
+			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + "/" + settings.outputName + ".eg");
 		}
 
 		private static int getFileCount(string dataDirectory)
@@ -113,7 +120,7 @@ namespace MotionRecognition
 		}
 
 		private static void computeData(
-			uint networkInputSize,
+			uint sampleCount,
 			string inputData,
 			ref double[][] outputData,
 			ref double[][] outputAnswers,
@@ -142,9 +149,9 @@ namespace MotionRecognition
 				// Initialize image Transformer.
 				ImageTransformerSettings imageSettings = new ImageTransformerSettings
 				{
-					focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM },
+					focusJoints = (LeapMotionJoint[])Enum.GetValues(typeof(LeapMotionJoint)),
 					samples = data,
-					size = 10
+					size = sampleCount
 				};
 				ImageTransformer imageTransformer = new ImageTransformer();
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -41,7 +42,7 @@ namespace MotionRecognition
 			// Initialize image Transformer.
 			ImageTransformerSettings imageSettings = new ImageTransformerSettings
 			{
-				focusJoints = new LeapMotionJoint[] { LeapMotionJoint.PALM },
+				focusJoints = (LeapMotionJoint[])Enum.GetValues(typeof(LeapMotionJoint)),
 				samples = data,
 				size = 10
 			};

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using MotionRecognition;
 
 namespace Sandbox
@@ -19,7 +18,7 @@ namespace Sandbox
 				incorrectInputDirectory = @"../../../IncorrectTestData",
 
 				outputDirectory = @"../../../DataOut",
-				outputName = "ModelOne",
+				outputName = "ModelTwo",
 
 				sampleCount = 10
 			};
@@ -30,8 +29,8 @@ namespace Sandbox
 
 			ImageNetworkPredictSettings predictSettings = new ImageNetworkPredictSettings
 			{
-				trainedNetwork = @"../../../DataOut\ModelOne.eg",
-				predictData = @"../../../testCor\0-2.csv",
+				trainedNetwork = @"../../../DataOut/ModelTwo.eg",
+				predictData = @"../../../testCor/0-2.csv",
 
 				networkInputSize = 10
 			};
