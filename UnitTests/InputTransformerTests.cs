@@ -75,19 +75,19 @@ namespace UnitTests
         }
 
         [Test]
-        public void FactoriesReturnDifferentResults()
+        public void TransformerReturnDifferentResults()
         {
             Assert.AreNotEqual(intervalTransformer.GetNeuralInput(intervalSettings), countTransformer.GetNeuralInput(countSettings));
         }
 
         [Test]
-        public void FactoriesReturnEqualResults()
+        public void TransformerReturnEqualResults()
         {
-            // 59 rows in data file, a run with count 5 should equal a run with an interval of 11 (59 / 5 = 11)
+            // 59 rows in data file, a run with count 5 should equal a run with an interval of 11.8 (59 / 5 = 11.8)
             countSettings.count = 5;
             double[] countTransformerResult = countTransformer.GetNeuralInput(countSettings);
 
-            intervalSettings.interval = 11;
+            intervalSettings.interval = 59d / 5d;
             double[] intervalTransformerResult = intervalTransformer.GetNeuralInput(intervalSettings);
 
             Assert.AreEqual(countTransformerResult, intervalTransformerResult);
@@ -95,7 +95,7 @@ namespace UnitTests
 
         // ImageFactory
         [Test]
-        public void ImageFactoryReturns3DImage()
+        public void ImageTransformerReturns3DImage()
         {
             var image = imageTransformer.GetNeuralInput(imageSettings);
             uint expectedLength = 0;
