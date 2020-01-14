@@ -24,9 +24,9 @@ namespace Sandbox
 				sampleCount = 10
 			};
 
-			ImageNetworkTrainController.prepareData(ref trainSettings, ref container);
-			ImageNetworkTrainController.prepareNetwork(ref trainSettings, ref container);
-			ImageNetworkTrainController.train(ref trainSettings, ref container);
+			ImageNetworkTrainController.PrepareData(ref trainSettings, ref container);
+			ImageNetworkTrainController.PrepareNetwork(ref trainSettings, ref container);
+			ImageNetworkTrainController.Train(ref trainSettings, ref container);
 
 			ImageNetworkPredictSettings predictSettings = new ImageNetworkPredictSettings
 			{
@@ -36,8 +36,8 @@ namespace Sandbox
 				networkInputSize = 10
 			};
 
-			ImageNetworkPredictController.preparePredictor(ref predictSettings, ref container);
-			Console.WriteLine(ImageNetworkPredictController.predict(ref predictSettings, ref container));
+			ImageNetworkPredictController.PreparePredictor(ref predictSettings, ref container);
+			Console.WriteLine(ImageNetworkPredictController.Predict(ref predictSettings, ref container));
 		}
 	}
 }

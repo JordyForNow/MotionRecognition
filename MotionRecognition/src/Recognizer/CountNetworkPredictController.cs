@@ -21,7 +21,7 @@ namespace MotionRecognition
 	{
 
 		// Prepare network predictor to predict the output of a dataset.
-		public static void preparePredictor(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
+		public static void PreparePredictor(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 			verifyData(ref settings);
 
@@ -58,7 +58,7 @@ namespace MotionRecognition
 		}
 
 		// Predict the output of a dataset using an existing network.
-		public static bool predict(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
+		public static bool Predict(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 
 			if (settings.predictSettings.data == null)
@@ -69,7 +69,7 @@ namespace MotionRecognition
 		}
 
 		// Verify that all inputs are valid.
-		private static void verifyData(ref CountNetworkPredictSettings settings)
+		private static void VerifyData(ref CountNetworkPredictSettings settings)
 		{
 
 			if (!File.Exists(settings.trainedNetwork))

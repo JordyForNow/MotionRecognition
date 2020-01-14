@@ -36,7 +36,7 @@ namespace UnitTests
 
 			EncogWrapper.AddLayer(ref container, ref outputLayerSettings);
 
-			EncogWrapper.finalizeNetwork(ref container);
+			EncogWrapper.FinalizeNetwork(ref container);
 		}
 
 		[Test]

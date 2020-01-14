@@ -22,12 +22,12 @@ namespace MotionRecognition
 	{
 
 		// Prepare data which is used to train the network.
-		public static void prepareData(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void PrepareData(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
 		{
 			if (settings.trainSettings.dataset != null)
 				throw new IncorrectActionOrderException("This action has already been completed.");
 
-			verifyData(ref settings);
+			VerifyData(ref settings);
 
 			settings.trainSettings = new EncogTrainSettings
 			{
@@ -35,14 +35,14 @@ namespace MotionRecognition
 				maxEpochCount = 200
 			};
 
-			int correctFileCount = BaseTrainHelper.getFileCount(settings.correctInputDirectory);
-			int incorrectFileCount = BaseTrainHelper.getFileCount(settings.incorrectInputDirectory);
+			int correctFileCount = BaseTrainHelper.GetFileCount(settings.correctInputDirectory);
+			int incorrectFileCount = BaseTrainHelper.GetFileCount(settings.incorrectInputDirectory);
 
 			settings.trainSettings.dataset = new double[correctFileCount + incorrectFileCount][];
 			settings.trainSettings.answers = new double[correctFileCount + incorrectFileCount][];
 
 			// Compute correct training data.
-			computeData(
+			ComputeData(
 				settings.sampleCount,
 				settings.correctInputDirectory,
 				ref settings.trainSettings.dataset,
@@ -51,7 +51,7 @@ namespace MotionRecognition
 				0);
 
 			// Compute incorrect training data.
-			computeData(
+			ComputeData(
 				settings.sampleCount,
 				settings.incorrectInputDirectory,
 				ref settings.trainSettings.dataset,
@@ -61,7 +61,7 @@ namespace MotionRecognition
 		}
 
 		// Prepare network for training, this is mainly setting up the layers and activation functions.
-		public static void prepareNetwork(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void PrepareNetwork(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
 		{
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before preparing network.");
@@ -94,11 +94,11 @@ namespace MotionRecognition
 			};
 
 			EncogWrapper.AddLayer(ref container, ref outputLayerSettings);
-			EncogWrapper.finalizeNetwork(ref container);
+			EncogWrapper.FinalizeNetwork(ref container);
 		}
 
 		// Start actual training of the network.
-		public static void train(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void Train(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
 		{
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before training network.");
@@ -117,7 +117,7 @@ namespace MotionRecognition
 		}
 
 		// Convert data from a CSV file to the actual input array for the network.
-		public static void computeData(
+		public static void ComputeData(
 			uint sampleCount,
 			string inputData,
 			ref double[][] outputData,
@@ -164,7 +164,7 @@ namespace MotionRecognition
 			}
 		}
 
-		public static void verifyData(ref ImageNetworkTrainSettings settings)
+		public static void VerifyData(ref ImageNetworkTrainSettings settings)
 		{
 			if (!Directory.Exists(settings.correctInputDirectory))
 				throw new DirectoryNotFoundException("Correct data directory was not found.");

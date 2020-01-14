@@ -67,7 +67,7 @@ namespace MotionRecognition
 			}
 		}
 
-		public static void finalizeNetwork(ref NetworkContainer container)
+		public static void FinalizeNetwork(ref NetworkContainer container)
 		{
 			try
 			{
