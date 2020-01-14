@@ -128,10 +128,10 @@ namespace UnitTests
 			}
 			catch
 			{
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		[Test, Order(8)]
@@ -155,10 +155,10 @@ namespace UnitTests
 			}
 			catch
 			{
-				Assert.IsTrue(false);
+				Assert.Fail();
 			}
 
-			Assert.IsTrue(true);
+			Assert.Pass();
 		}
 
 		[Test, Order(11)]
