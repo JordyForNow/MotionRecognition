@@ -117,7 +117,7 @@ namespace MotionRecognition
 		}
 
 		// Convert data from a CSV file to the actual input array for the network.
-		public static void ComputeData(
+		private static void ComputeData(
 			uint sampleCount,
 			string inputData,
 			ref double[][] outputData,
