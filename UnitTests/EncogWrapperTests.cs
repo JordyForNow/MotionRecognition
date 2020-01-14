@@ -4,67 +4,67 @@ using Encog.Engine.Network.Activation;
 
 namespace UnitTests
 {
-	public class EncogWrapperTests
-	{
+    public class EncogWrapperTests
+    {
 
-		NetworkContainer container;
+        NetworkContainer container;
 
-		[SetUp]
-		public void Setup()
-		{
-			container = new NetworkContainer();
-			EncogWrapper.Instantiate(ref container);
 
-			EncogLayerSettings inputLayerSettings = new EncogLayerSettings();
-			inputLayerSettings.activationFunction = null;
-			inputLayerSettings.hasBias = true;
-			inputLayerSettings.neuronCount = 100;
+        [SetUp]
+        public void Setup() { }
 
-			EncogLayerSettings hiddenLayerOneSettings = new EncogLayerSettings();
-			hiddenLayerOneSettings.activationFunction = new ActivationElliott();
-			hiddenLayerOneSettings.hasBias = true;
-			hiddenLayerOneSettings.neuronCount = 100;
+        [Test, Order(1)]
+        public void InstantiationTest()
+        {
+            container = new NetworkContainer();
+            EncogWrapper.Instantiate(ref container);
 
-			EncogLayerSettings outputLayerSettings = new EncogLayerSettings();
-			outputLayerSettings.activationFunction = new ActivationElliott();
-			outputLayerSettings.hasBias = false;
-			outputLayerSettings.neuronCount = 1;
+            Assert.IsNotNull(container.network);
+        }
 
-			EncogWrapper.AddLayer(ref container, ref inputLayerSettings);
+        [Test, Order(2)]
+        public void AddLayer()
+        {
+            EncogLayerSettings inputLayerSettings = new EncogLayerSettings();
+            inputLayerSettings.activationFunction = null;
+            inputLayerSettings.hasBias = true;
+            inputLayerSettings.neuronCount = 100;
 
-			EncogWrapper.AddLayer(ref container, ref hiddenLayerOneSettings);
+            EncogLayerSettings hiddenLayerOneSettings = new EncogLayerSettings();
+            hiddenLayerOneSettings.activationFunction = new ActivationElliott();
+            hiddenLayerOneSettings.hasBias = true;
+            hiddenLayerOneSettings.neuronCount = 100;
 
-			EncogWrapper.AddLayer(ref container, ref outputLayerSettings);
+            EncogLayerSettings outputLayerSettings = new EncogLayerSettings();
+            outputLayerSettings.activationFunction = new ActivationElliott();
+            outputLayerSettings.hasBias = false;
+            outputLayerSettings.neuronCount = 1;
 
-			EncogWrapper.finalizeNetwork(ref container);
-		}
+            EncogWrapper.AddLayer(ref container, ref inputLayerSettings);
 
-		[Test]
-		public void InstantiationTest()
-		{
-			Assert.IsNotNull(container.network);
-		}
+            EncogWrapper.AddLayer(ref container, ref hiddenLayerOneSettings);
 
-		[Test]
-		public void AddLayer()
-		{
-			var Layers = container.network.Structure.Flat.LayerCounts;
-			
-			Assert.IsTrue(Layers.Length == 3);
-		}
+            EncogWrapper.AddLayer(ref container, ref outputLayerSettings);
 
-		[Test]
-		public void SaveAndRestoreModelFS()
-		{
-			NetworkContainer container2 = new NetworkContainer();
-			EncogWrapper.SaveNetworkToFS(ref container, "./unittest.bin");
-			EncogWrapper.LoadNetworkFromFS(ref container2, "./unittest.bin");
+            EncogWrapper.finalizeNetwork(ref container);
 
-			var Layers = container.network.Structure.Flat.LayerCounts;
+            var Layers = container.network.Structure.Flat.LayerCounts;
 
-			var Layers2 = container2.network.Structure.Flat.LayerCounts;
-			
-			Assert.AreEqual(Layers, Layers2);
-		}
-	}
+            Assert.IsTrue(Layers.Length == 3);
+        }
+
+        [Test, Order(3)]
+        public void SaveAndRestoreModelFS()
+        {
+            NetworkContainer container2 = new NetworkContainer();
+            EncogWrapper.SaveNetworkToFS(ref container, "./unittest.bin");
+            EncogWrapper.LoadNetworkFromFS(ref container2, "./unittest.bin");
+
+            var Layers = container.network.Structure.Flat.LayerCounts;
+
+            var Layers2 = container2.network.Structure.Flat.LayerCounts;
+
+            Assert.AreEqual(Layers, Layers2);
+        }
+    }
 }
