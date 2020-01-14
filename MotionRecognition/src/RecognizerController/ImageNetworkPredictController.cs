@@ -7,11 +7,13 @@ namespace MotionRecognition
 {
 	public struct ImageNetworkPredictSettings
 	{
+		// Filled by the preparePredictor.
 		public EncogPredictSettings predictSettings;
-
+		// Location of the to use network.
 		public string trainedNetwork;
+		// Location of the prediction data.
 		public string predictData;
-
+		// Size of input layer
 		public uint networkInputSize;
 	};
 

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -9,19 +7,20 @@ namespace MotionRecognition
 
 	public struct CountNetworkPredictSettings
 	{
+		// Filled by the preparePredictor Function.
 		public EncogPredictSettings predictSettings;
-
+		// Location of the to be loaded network.
 		public string trainedNetwork;
+		// Location of the to predict data.
 		public string predictData;
-
+		// Size of the input layer.
 		public uint networkInputSize;
 	};
 
 	public class CountNetworkPredictController : INetworkPredictController<CountNetworkPredictSettings>
 	{
-
-		// Prepare network predictor to predict the output of a dataset.
-		public static void PreparePredictor(ref NetworkContainer container, ref CountNetworkPredictSettings settings)
+		
+		public static void PreparePredictor(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 			TestForErrors(ref settings);
 

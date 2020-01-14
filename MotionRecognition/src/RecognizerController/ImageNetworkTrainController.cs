@@ -8,13 +8,17 @@ namespace MotionRecognition
 
 	public struct ImageNetworkTrainSettings
 	{
+		// Filled by the prepareNetwork function.
 		public EncogTrainSettings trainSettings;
+		// Location of the correct input data.
 		public string correctInputDirectory;
+		// Location of the incorrect input data.
 		public string incorrectInputDirectory;
-
+		// Location of the location the network needs to be saved to.
 		public string outputDirectory;
+		// Name of the network file.
 		public string outputName;
-
+		// Total of samples to be used.
 		public uint sampleCount;
 	}
 
