@@ -16,6 +16,8 @@ namespace MotionRecognition
 		public string outputName;
 
 		public uint sampleCount;
+
+		public int prev;
 	}
 
 	public class CountNetworkTrainController : INetworkTrainController<CountNetworkTrainSettings>
@@ -50,7 +52,8 @@ namespace MotionRecognition
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
 				1.0,
-				0);
+				0,
+				ref settings);
 
 			// Compute incorrect training data.
 			computeData(
@@ -59,7 +62,8 @@ namespace MotionRecognition
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
 				0.0,
-				correctFileCount);
+				correctFileCount,
+				ref settings);
 		}
 
 		public static void prepareNetwork(ref CountNetworkTrainSettings settings, ref NetworkContainer container)
@@ -125,7 +129,8 @@ namespace MotionRecognition
 			ref double[][] outputData,
 			ref double[][] outputAnswers,
 			double outputValue,
-			int index)
+			int index,
+			ref CountNetworkTrainSettings set)
 		{
 			DirectoryInfo inputDirectory = new DirectoryInfo(inputData);
 
@@ -153,9 +158,19 @@ namespace MotionRecognition
 					count = networkInputSize
 				};
 				CountBasedTransformer countTransformer = new CountBasedTransformer();
+				double[] temp = countTransformer.GetNeuralInput(countSettings);
+				if (set.prev < 10)
+				{
+					set.prev = temp.Length;
+				}
+
+				if(set.prev != temp.Length)
+				{
+					Console.WriteLine(file.FullName);
+				}
 
 				Project1DInto2D(
-					countTransformer.GetNeuralInput(countSettings),
+					temp,
 					ref outputData,
 					index);
 
