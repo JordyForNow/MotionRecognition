@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -16,10 +14,10 @@ namespace MotionRecognition
 		public uint networkInputSize;
 	};
 
-	class ImageNetworkPredictController : INetworkPredictController<ImageNetworkPredictSettings>
+	public class ImageNetworkPredictController : INetworkPredictController<ImageNetworkPredictSettings>
 	{
 
-		public static void preparePredictor(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
+		public static void preparePredictor(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 			verifyData(ref settings);
 
@@ -57,14 +55,14 @@ namespace MotionRecognition
 
 		}
 
-		public static bool predict(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
+		public static bool predict(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 
 			return EncogWrapper.Predict(ref container, ref settings.predictSettings);
 
 		}
 
-		private static void verifyData(ref CountNetworkPredictSettings settings)
+		private static void verifyData(ref ImageNetworkPredictSettings settings)
 		{
 
 			if (!File.Exists(settings.trainedNetwork))

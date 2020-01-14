@@ -17,7 +17,7 @@ namespace MotionRecognition
 		public uint sampleCount;
 	}
 
-	class ImageNetworkTrainController : INetworkTrainController<ImageNetworkTrainSettings>
+	public class ImageNetworkTrainController : INetworkTrainController<ImageNetworkTrainSettings>
 	{
 
 		public static void prepareData(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
@@ -27,7 +27,7 @@ namespace MotionRecognition
 
 			settings.trainSettings = new EncogTrainSettings
 			{
-				maxTrainingError = 0.01
+				maxTrainingError = 0.02
 			};
 
 			int correctFileCount = getFileCount(settings.correctInputDirectory);

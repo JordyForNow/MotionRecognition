@@ -1,4 +1,48 @@
-﻿using System;
+﻿//using System;
+//using System.IO;
+//using MotionRecognition;
+
+//namespace Sandbox
+//{
+//	class Program
+//	{
+//		static void Main(string[] args)
+//		{
+//			NetworkContainer container = new NetworkContainer
+//			{
+//				verbose = true
+//			};
+
+//			ImageNetworkTrainSettings trainSettings = new ImageNetworkTrainSettings
+//			{
+//				correctInputDirectory = @"../../../CorrectTestData",
+//				incorrectInputDirectory = @"../../../IncorrectTestData",
+
+//				outputDirectory = @"../../../DataOut",
+//				outputName = "ModelOne",
+
+//				sampleCount = 10
+//			};
+
+//			ImageNetworkTrainController.prepareData(ref trainSettings, ref container);
+//			ImageNetworkTrainController.prepareNetwork(ref trainSettings, ref container);
+//			ImageNetworkTrainController.train(ref trainSettings, ref container);
+
+//			ImageNetworkPredictSettings predictSettings = new ImageNetworkPredictSettings
+//			{
+//				trainedNetwork = @"../../../DataOut\ModelOne.eg",
+//				predictData = @"../../../testCor\0-2.csv",
+
+//				networkInputSize = 10
+//			};
+
+//			ImageNetworkPredictController.preparePredictor(ref predictSettings, ref container);
+//			Console.WriteLine(ImageNetworkPredictController.predict(ref predictSettings, ref container));
+//		}
+//	}
+//}
+
+using System;
 using System.IO;
 using MotionRecognition;
 
@@ -20,7 +64,7 @@ namespace Sandbox
 
 				outputDirectory = @"../../../DataOut",
 				outputName = "ModelOne",
-				
+
 				sampleCount = 10
 			};
 
@@ -30,8 +74,8 @@ namespace Sandbox
 
 			CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
 			{
-				trainedNetwork = @"../../../DataOut\ModelOne.eg",
-				predictData = @"../../../testCor\0-2.csv",
+				trainedNetwork = @"../../../DataOut/ModelOne.eg",
+				predictData = @"../../../TestCor/0-2.csv",
 
 				networkInputSize = 10
 			};
@@ -41,3 +85,4 @@ namespace Sandbox
 		}
 	}
 }
+
