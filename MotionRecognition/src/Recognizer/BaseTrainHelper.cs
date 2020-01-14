@@ -9,7 +9,7 @@ namespace MotionRecognition
 	{
 
 		// Helper function which returns the total number of files in a directory.
-		public static int getFileCount(string dataDirectory)
+		public static int GetFileCount(string dataDirectory)
 		{
 			// Get total number of '.csv' files inside Directory.
 			return Directory.GetFiles(

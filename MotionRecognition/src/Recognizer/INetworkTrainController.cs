@@ -2,11 +2,11 @@
 {
 	public interface INetworkTrainController<T>
 	{
-		static void prepareData(ref T settings, ref NetworkContainer container) { }
+		static void PrepareData(ref NetworkContainer container, ref T settings) { }
 
-		static void prepareNetwork(ref T settings, ref NetworkContainer container) { }
+		static void PrepareNetwork(ref NetworkContainer container, ref T settings) { }
 
-		static void train(ref T settings, ref NetworkContainer container) { }
+		static void Train(ref NetworkContainer container, ref T settings) { }
 
 	}
 }

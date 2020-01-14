@@ -3,9 +3,9 @@
 	public interface INetworkPredictController<T>
 	{
 
-		public static void preparePredictor(ref T settings, ref NetworkContainer container) { }
+		public static void PreparePredictor(ref NetworkContainer container, ref T settings) { }
 		
-		public static bool predict(ref T settings, ref NetworkContainer container) { return false; }
+		public static bool Predict(ref NetworkContainer container, ref T settings) { return false; }
 
 	}
 }
