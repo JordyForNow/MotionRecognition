@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -22,6 +21,8 @@ namespace InputManipulation
 		public string outputFolder;
 
 		public bool alterInput; // Alter the input files to have dots instead of commas in the timestamp value.
+
+		public bool verbose;
 	}
 
 	public static class CSVManipulator
@@ -39,31 +40,31 @@ namespace InputManipulation
 				ClearOutputFolder(settings.outputFolder); // Clear otherwise.
 			}
 
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
-
 			if (!string.IsNullOrEmpty(settings.dataFile))
 			{
 				// Mutate a single csv file.
-				Console.WriteLine($"From: {settings.dataFile} to {settings.outputFolder}");
+				if (settings.verbose)
+					Console.WriteLine($"From: {settings.dataFile} to {settings.outputFolder}");
+				
 				ChangeOriginalFile(ref settings);
 				MutateFile(ref settings);
 			}
 			else if (!string.IsNullOrEmpty(settings.dataFolder))
 			{
 				// Mutate a folder with csv files.
-				Console.WriteLine($"From: {settings.dataFolder} to {settings.outputFolder}");
+				if (settings.verbose)
+					Console.WriteLine($"From: {settings.dataFolder} to {settings.outputFolder}");
 				ChangeOriginalBatch(ref settings);
 				MutateFolder(ref settings);
 			}
 			else
 			{
-				Console.WriteLine("You didn't select any input!");
+				if (settings.verbose)
+					Console.WriteLine("You didn't select any input!");
 			}
 
-			stopwatch.Stop();
-			TimeSpan ts = stopwatch.Elapsed;
-			Console.WriteLine(string.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+			if (settings.verbose)
+				Console.WriteLine("Finished manipulating.");
 		}
 
 		// Method to make sleight changes to the original file,
@@ -123,7 +124,6 @@ namespace InputManipulation
 					ReplaceInString(ref line, 1, '.');
 				}
 
-
 				// Copy line to new mutated files.
 				if (CPL > 0)
 				{
@@ -168,7 +168,8 @@ namespace InputManipulation
 
 			for (int i = 0; i < fileInfo.Length; i++) // For each input do settings.MutationCount mutations.
 			{
-				Console.WriteLine($"Working on {fileInfo[i].Name}");
+				if (settings.verbose)
+					Console.WriteLine($"Working on {fileInfo[i].Name}");
 				settings.dataFile = fileInfo[i].FullName;
 				MutateFile(ref settings, i.ToString());
 			}

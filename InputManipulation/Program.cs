@@ -13,7 +13,7 @@ namespace InputManipulation
 			{
 				copyLines = 1,
 				removeLines = 1,
-				mutationCount = 10,
+				mutationCount = 5,
 				deviationPercentage = 0.05f,
 				innerDeviationPercentage = 0.01f,
 				dataFile = "",
