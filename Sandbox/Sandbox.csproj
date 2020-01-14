@@ -6,6 +6,7 @@
 	</PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MotionRecognitionHelper\MotionRecognitionHelper.csproj" />
     <ProjectReference Include="..\MotionRecognition\MotionRecognition.csproj" />
   </ItemGroup>
   <ItemGroup>

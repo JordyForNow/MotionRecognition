@@ -1,7 +1,6 @@
 ﻿﻿using MotionRecognition;
 using MotionRecognitionHelper;
 using System;
-using System.Collections.Generic;
 
 namespace Sandbox
 {
