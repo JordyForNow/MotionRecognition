@@ -124,7 +124,7 @@ namespace MotionRecognition
 				train.Iteration();
 				if (container.verbose) Console.WriteLine("Epoch # " + epoch + " Error: " + train.Error);
 				epoch++;
-			} while (train.Error > settings.maxTrainingError && (epoch < settings.maxEpochCount && settings.maxEpochCount > 0));
+			} while (train.Error > settings.maxTrainingError && (epoch < settings.maxEpochCount || settings.maxEpochCount == 0));
 		}
 
 		// Predict data using a network.
