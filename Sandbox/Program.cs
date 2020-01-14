@@ -1,5 +1,5 @@
-﻿using InputManipulation;
-using MotionRecognition;
+﻿using MotionRecognition;
+using MotionRecognitionHelper;
 using System;
 using System.Collections.Generic;
 
@@ -37,6 +37,8 @@ namespace Sandbox
 			var arr = transformer.GetNeuralInput(transformerSettings);
 			foreach (var d in arr)
 				Console.WriteLine(d);
+
+			//ManipulateAndImageCreate();
 		}
 
 		static void ManipulateAndImageCreate()
@@ -52,7 +54,8 @@ namespace Sandbox
 				dataFile = "",
 				dataFolder = "./CSV/",
 				outputFolder = "./mutated/",
-				alterInput = true
+				alterInput = true,
+				verbose = true
 			};
 
 			CSVManipulator.RunManipulator(ref manipulatorSettings);

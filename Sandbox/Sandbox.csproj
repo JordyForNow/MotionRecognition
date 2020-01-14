@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\InputManipulation\MotionRecognitionHelper.csproj" />
-    <ProjectReference Include="..\MotionRecognition\MotionRecognition.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="encog-dotnet-core" Version="3.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\MotionRecognition\MotionRecognition.csproj" />
+		<ProjectReference Include="..\MotionRecognitionHelper\MotionRecognitionHelper.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="encog-dotnet-core" Version="3.4.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Data\" />
+	</ItemGroup>
 </Project>
