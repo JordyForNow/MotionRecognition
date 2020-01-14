@@ -20,6 +20,7 @@ namespace MotionRecognition
 	public class CountNetworkPredictController : INetworkPredictController<CountNetworkPredictSettings>
 	{
 
+		// Prepare network predictor to predict the output of a dataset.
 		public static void preparePredictor(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 			verifyData(ref settings);
@@ -53,17 +54,22 @@ namespace MotionRecognition
 			{
 				threshold = 0.5,
 				data = countTransformer.GetNeuralInput(countSettings)
-		};
+			};
 
 		}
 
+		// Predict the output of a dataset using an existing network.
 		public static bool predict(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
 		{
 
+			if (settings.predictSettings.data == null)
+				throw new IncorrectActionOrderException("Prepare predictor before predicting.");
+
 			return EncogWrapper.Predict(ref container, ref settings.predictSettings);
-			
+
 		}
 
+		// Verify that all inputs are valid.
 		private static void verifyData(ref CountNetworkPredictSettings settings)
 		{
 

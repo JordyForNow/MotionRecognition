@@ -20,6 +20,7 @@ namespace MotionRecognition
 	public struct EncogTrainSettings
 	{
 		public double maxTrainingError;
+		public uint maxEpochCount;
 		public double[][] dataset;
 		public double[][] answers;
 	}
@@ -114,7 +115,7 @@ namespace MotionRecognition
 				train.Iteration();
 				if(container.verbose) Console.WriteLine("Epoch # " + epoch + " Error: " + train.Error);
 				epoch++;
-			} while (train.Error > settings.maxTrainingError);
+			} while (train.Error > settings.maxTrainingError && (epoch < settings.maxEpochCount && settings.maxEpochCount > 0));
 
 			return true;
 		}

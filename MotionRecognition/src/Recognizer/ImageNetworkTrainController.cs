@@ -21,6 +21,7 @@ namespace MotionRecognition
 	public class ImageNetworkTrainController : INetworkTrainController<ImageNetworkTrainSettings>
 	{
 
+		// Prepare data which is used to train the network.
 		public static void prepareData(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
 		{
 			if (settings.trainSettings.dataset != null)
@@ -28,11 +29,12 @@ namespace MotionRecognition
 
 			settings.trainSettings = new EncogTrainSettings
 			{
-				maxTrainingError = 0.02
+				maxTrainingError = 0.02,
+				maxEpochCount = 200
 			};
 
-			int correctFileCount = getFileCount(settings.correctInputDirectory);
-			int incorrectFileCount = getFileCount(settings.incorrectInputDirectory);
+			int correctFileCount = BaseTrainHelper.getFileCount(settings.correctInputDirectory);
+			int incorrectFileCount = BaseTrainHelper.getFileCount(settings.incorrectInputDirectory);
 
 			settings.trainSettings.dataset = new double[correctFileCount + incorrectFileCount][];
 			settings.trainSettings.answers = new double[correctFileCount + incorrectFileCount][];
@@ -56,6 +58,7 @@ namespace MotionRecognition
 				correctFileCount);
 		}
 
+		// Prepare network for training, this is mainly setting up the layers and activation functions.
 		public static void prepareNetwork(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
 		{
 			if (settings.trainSettings.dataset == null)
@@ -91,6 +94,7 @@ namespace MotionRecognition
 			EncogWrapper.finalizeNetwork(ref container);
 		}
 
+		// Start actual training of the network.
 		public static void train(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
 		{
 			if (settings.trainSettings.dataset == null)
@@ -109,17 +113,8 @@ namespace MotionRecognition
 			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + "/" + settings.outputName + ".eg");
 		}
 
-		private static int getFileCount(string dataDirectory)
-		{
-			// Get total number of '.csv' files inside Directory.
-			return Directory.GetFiles(
-				dataDirectory,
-				"*.csv*",
-				SearchOption.TopDirectoryOnly
-			).Length;
-		}
-
-		private static void computeData(
+		// Convert data from a CSV file to the actual input array for the network.
+		public static void computeData(
 			uint sampleCount,
 			string inputData,
 			ref double[][] outputData,
@@ -155,7 +150,7 @@ namespace MotionRecognition
 				};
 				ImageTransformer imageTransformer = new ImageTransformer();
 
-				Project1DInto2D(
+				BaseTrainHelper.Project1DInto2D(
 					imageTransformer.GetNeuralInput(imageSettings),
 					ref outputData,
 					index);
@@ -165,18 +160,5 @@ namespace MotionRecognition
 				index++;
 			}
 		}
-
-		private static void Project1DInto2D(double[] source, ref double[][] dest, int index)
-		{
-			double[] temp = new double[source.Length];
-
-			for (int i = 0; i < source.Length; i++)
-			{
-				temp[i] = source[i];
-			}
-
-			dest[index] = temp;
-		}
-
 	}
 }

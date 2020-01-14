@@ -33,8 +33,8 @@ namespace MotionRecognition
 				maxTrainingError = 0.01
 			};
 
-			int correctFileCount = getFileCount(settings.correctInputDirectory);
-			int incorrectFileCount = getFileCount(settings.incorrectInputDirectory);
+			int correctFileCount = BaseTrainHelper.getFileCount(settings.correctInputDirectory);
+			int incorrectFileCount = BaseTrainHelper.getFileCount(settings.incorrectInputDirectory);
 
 			if (correctFileCount <= 0)
 				throw new FileNotFoundException("correctFiles not found.");
@@ -51,7 +51,7 @@ namespace MotionRecognition
 				settings.correctInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
-				1.0d,
+				1.0,
 				0);
 
 			// Compute incorrect training data.
@@ -111,16 +111,6 @@ namespace MotionRecognition
 			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
 		}
 
-		private static int getFileCount(string dataDirectory)
-		{
-			// Get total number of '.csv' files inside Directory.
-			return Directory.GetFiles(
-				dataDirectory,
-				"*.csv",
-				SearchOption.TopDirectoryOnly
-			).Length;
-		}
-
 		private static void computeData(
 			uint networkInputSize,
 			string inputData,
@@ -156,7 +146,7 @@ namespace MotionRecognition
 				};
 				CountBasedTransformer countTransformer = new CountBasedTransformer();
 
-				Project1DInto2D(
+				BaseTrainHelper.Project1DInto2D(
 					countTransformer.GetNeuralInput(countSettings),
 					ref outputData,
 					index);
@@ -165,18 +155,6 @@ namespace MotionRecognition
 				outputAnswers[index] = new double[] { outputValue };
 				index++;
 			}
-		}
-
-		private static void Project1DInto2D(double[] source, ref double[][] dest, int index)
-		{
-			double[] temp = new double[source.Length];
-
-			for (int i = 0; i < source.Length; i++)
-			{
-				temp[i] = source[i];
-			}
-
-			dest[index] = temp;
 		}
 	}
 }
