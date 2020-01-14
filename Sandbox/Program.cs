@@ -24,7 +24,7 @@ namespace Sandbox
 				outputDirectory = @"C:\Users\Jordy\Documents\KBS-SE3_VR-Rehabilitation-Data\Sandbox\DataOut\",
 				outputName = "ModelOne",
 				
-				networkInputSize = 10
+				sampleCount = 10
 			};
 
 			CountNetworkTrainController.prepareData(ref trainSettings, ref container);

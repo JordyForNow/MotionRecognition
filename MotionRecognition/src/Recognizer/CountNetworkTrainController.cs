@@ -15,7 +15,7 @@ namespace MotionRecognition
 		public string outputDirectory;
 		public string outputName;
 
-		public uint networkInputSize;
+		public uint sampleCount;
 	}
 
 	public class CountNetworkTrainController : INetworkTrainController<CountNetworkTrainSettings>
@@ -39,7 +39,7 @@ namespace MotionRecognition
 
 			// Compute correct training data.
 			computeData(
-				settings.networkInputSize,
+				settings.sampleCount,
 				settings.correctInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
@@ -48,7 +48,7 @@ namespace MotionRecognition
 
 			// Compute incorrect training data.
 			computeData(
-				settings.networkInputSize,
+				settings.sampleCount,
 				settings.incorrectInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
