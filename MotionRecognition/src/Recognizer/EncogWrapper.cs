@@ -11,12 +11,15 @@ using Encog.Neural.Networks;
 
 namespace MotionRecognition
 {
+	// Layer settings which holds information to generate custom layers.
 	public struct EncogLayerSettings
 	{
 		public IActivationFunction activationFunction;
 		public bool hasBias;
 		public int neuronCount;
 	}
+
+	// Settings which are used while training the network.
 	public struct EncogTrainSettings
 	{
 		public double maxTrainingError;
@@ -24,13 +27,17 @@ namespace MotionRecognition
 		public double[][] dataset;
 		public double[][] answers;
 	}
+
+	// Settings which are used while predicting with the network.
 	public struct EncogPredictSettings
 	{
 		public double threshold;
 		public double[] data;
 	}
+
 	public static class EncogWrapper
 	{
+		// Setup a new network.
 		public static bool Instantiate(ref NetworkContainer container)
 		{
 			if (container.network != null)
@@ -41,9 +48,12 @@ namespace MotionRecognition
 			return true;
 		}
 
-		public static bool AddLayer(ref NetworkContainer container, ref EncogLayerSettings settings)
+		// Add a custom layer to the network.
+		public static void AddLayer(ref NetworkContainer container, ref EncogLayerSettings settings)
 		{
-			if (settings.neuronCount <= 0) return false;
+			if (settings.neuronCount <= 0)
+				throw new InvalidNeuronCountException("Neuroncount should be higher than 0.");
+
 			try
 			{
 				container.network.AddLayer(new BasicLayer(
@@ -53,12 +63,11 @@ namespace MotionRecognition
 			}
 			catch
 			{
-				return false;
+				throw new EncogException("Adding layer failed.");
 			}
-			return true;
 		}
 
-		public static bool finalizeNetwork(ref NetworkContainer container)
+		public static void finalizeNetwork(ref NetworkContainer container)
 		{
 			try
 			{
@@ -67,12 +76,11 @@ namespace MotionRecognition
 			}
 			catch
 			{
-				return false;
+				throw new EncogException("Failed to finalize network.");
 			}
-			return true;
 		}
 
-		public static bool SaveNetworkToFS(ref NetworkContainer container, string fileName)
+		public static void SaveNetworkToFS(ref NetworkContainer container, string fileName)
 		{
 			try
 			{
@@ -80,12 +88,11 @@ namespace MotionRecognition
 			}
 			catch
 			{
-				return false;
+				throw new EncogException("Failed to save network to file system.");
 			}
-			return true;
 		}
 
-		public static bool LoadNetworkFromFS(ref NetworkContainer container, string fileName)
+		public static void LoadNetworkFromFS(ref NetworkContainer container, string fileName)
 		{
 			try
 			{
@@ -93,14 +100,15 @@ namespace MotionRecognition
 			}
 			catch
 			{
-				return false;
+				throw new EncogException("Failed to load network from file system.");
 			}
-			return true;
 		}
 
-		public static bool Train(ref NetworkContainer container, ref EncogTrainSettings settings)
+		// Train network using the according settings.
+		public static void Train(ref NetworkContainer container, ref EncogTrainSettings settings)
 		{
-			if (settings.maxTrainingError <= 0) return false;
+			if (settings.maxTrainingError <= 0)
+				throw new EncogException("Maxtrainingerror should be higher than 0");
 
 			// Create training data.
 			IMLDataSet trainingSet = new BasicMLDataSet(settings.dataset, settings.answers);
@@ -113,19 +121,19 @@ namespace MotionRecognition
 			do
 			{
 				train.Iteration();
-				if(container.verbose) Console.WriteLine("Epoch # " + epoch + " Error: " + train.Error);
+				if (container.verbose) Console.WriteLine("Epoch # " + epoch + " Error: " + train.Error);
 				epoch++;
 			} while (train.Error > settings.maxTrainingError && (epoch < settings.maxEpochCount && settings.maxEpochCount > 0));
-
-			return true;
 		}
 
+		// Predict data using a network.
 		public static bool Predict(ref NetworkContainer container, ref EncogPredictSettings settings)
 		{
 			IMLData output = container.network.Compute(new BasicMLData(settings.data));
 
 			if (container.verbose) Console.WriteLine("Raw output: " + output[0]);
 
+			// Return true or false according to threshold.
 			return (1 - output[0] < settings.threshold);
 		}
 	}

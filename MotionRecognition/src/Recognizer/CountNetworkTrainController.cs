@@ -16,8 +16,6 @@ namespace MotionRecognition
 		public string outputName;
 
 		public uint sampleCount;
-
-		public int prev;
 	}
 
 	public class CountNetworkTrainController : INetworkTrainController<CountNetworkTrainSettings>
@@ -27,6 +25,8 @@ namespace MotionRecognition
 		{
 			if (settings.trainSettings.dataset != null)
 				throw new IncorrectActionOrderException("This action has already been completed.");
+
+			verifyData(ref settings);
 
 			settings.trainSettings = new EncogTrainSettings
 			{
@@ -155,6 +155,18 @@ namespace MotionRecognition
 				outputAnswers[index] = new double[] { outputValue };
 				index++;
 			}
+		}
+
+		public static void verifyData(ref CountNetworkTrainSettings settings)
+		{
+			if (!Directory.Exists(settings.correctInputDirectory))
+				throw new DirectoryNotFoundException("Correct data directory was not found.");
+
+			if (!Directory.Exists(settings.incorrectInputDirectory))
+				throw new DirectoryNotFoundException("Incorrect data directory was not found.");
+
+			if (!Directory.Exists(settings.outputDirectory))
+				throw new DirectoryNotFoundException("Output data directory was not found.");
 		}
 	}
 }

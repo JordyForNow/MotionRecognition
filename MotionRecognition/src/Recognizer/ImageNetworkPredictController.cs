@@ -58,9 +58,10 @@ namespace MotionRecognition
 
 		public static bool predict(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
 		{
+			if (settings.predictSettings.data == null)
+				throw new IncorrectActionOrderException("Prepare predictor before predicting.");
 
 			return EncogWrapper.Predict(ref container, ref settings.predictSettings);
-
 		}
 
 		private static void verifyData(ref ImageNetworkPredictSettings settings)
@@ -77,8 +78,6 @@ namespace MotionRecognition
 
 			if (!Regex.IsMatch(settings.predictData, @"(\.csv$)"))
 				throw new WrongFileTypeException("Wrong network input given.");
-
 		}
-
 	}
 }

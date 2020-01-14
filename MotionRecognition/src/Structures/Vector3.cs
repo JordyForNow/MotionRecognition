@@ -1,4 +1,6 @@
-﻿namespace MotionRecognition
+﻿using System.Globalization;
+
+namespace MotionRecognition
 {
     /* 
 	* Vector3 contains an x, y and z coordinate which are used to display a 3D position.
@@ -23,9 +25,9 @@
             if (points.Length > 3)
                 throw new InputTooLargeException("Too many arguments at parsing Vector3.");
 
-            vec3.x = float.Parse(points[0]);
-            vec3.y = float.Parse(points[1]);
-            vec3.z = float.Parse(points[2]);
+            vec3.x = float.Parse(points[0], CultureInfo.InvariantCulture);
+            vec3.y = float.Parse(points[1], CultureInfo.InvariantCulture);
+            vec3.z = float.Parse(points[2], CultureInfo.InvariantCulture);
             return vec3;
         }
 

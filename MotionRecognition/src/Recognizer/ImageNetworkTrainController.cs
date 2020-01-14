@@ -27,6 +27,8 @@ namespace MotionRecognition
 			if (settings.trainSettings.dataset != null)
 				throw new IncorrectActionOrderException("This action has already been completed.");
 
+			verifyData(ref settings);
+
 			settings.trainSettings = new EncogTrainSettings
 			{
 				maxTrainingError = 0.02,
@@ -64,6 +66,8 @@ namespace MotionRecognition
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before preparing network.");
 
+			EncogWrapper.Instantiate(ref container);
+
 			EncogLayerSettings inputLayerSettings = new EncogLayerSettings
 			{
 				activationFunction = null,
@@ -71,7 +75,6 @@ namespace MotionRecognition
 				neuronCount = settings.trainSettings.dataset[0].Length
 			};
 
-			EncogWrapper.Instantiate(ref container);
 			EncogWrapper.AddLayer(ref container, ref inputLayerSettings);
 
 			EncogLayerSettings hiddenLayerOneSettings = new EncogLayerSettings
@@ -159,6 +162,18 @@ namespace MotionRecognition
 				outputAnswers[index] = new double[] { outputValue };
 				index++;
 			}
+		}
+
+		public static void verifyData(ref ImageNetworkTrainSettings settings)
+		{
+			if (!Directory.Exists(settings.correctInputDirectory))
+				throw new DirectoryNotFoundException("Correct data directory was not found.");
+
+			if (!Directory.Exists(settings.incorrectInputDirectory))
+				throw new DirectoryNotFoundException("Incorrect data directory was not found.");
+
+			if (!Directory.Exists(settings.outputDirectory))
+				throw new DirectoryNotFoundException("Output data directory was not found.");
 		}
 	}
 }

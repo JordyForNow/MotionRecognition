@@ -55,7 +55,6 @@ namespace MotionRecognition
 				threshold = 0.5,
 				data = countTransformer.GetNeuralInput(countSettings)
 			};
-
 		}
 
 		// Predict the output of a dataset using an existing network.
@@ -84,8 +83,6 @@ namespace MotionRecognition
 
 			if (!Regex.IsMatch(settings.predictData, @"(\.csv$)"))
 				throw new WrongFileTypeException("Wrong network input given.");
-
 		}
-
 	}
 }
