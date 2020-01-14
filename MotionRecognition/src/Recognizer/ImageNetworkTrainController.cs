@@ -22,12 +22,12 @@ namespace MotionRecognition
 	{
 
 		// Prepare data which is used to train the network.
-		public static void PrepareData(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void PrepareData(ref NetworkContainer container, ref ImageNetworkTrainSettings settings)
 		{
 			if (settings.trainSettings.dataset != null)
 				throw new IncorrectActionOrderException("This action has already been completed.");
 
-			VerifyData(ref settings);
+			TestForErrors(ref settings);
 
 			settings.trainSettings = new EncogTrainSettings
 			{
@@ -61,7 +61,7 @@ namespace MotionRecognition
 		}
 
 		// Prepare network for training, this is mainly setting up the layers and activation functions.
-		public static void PrepareNetwork(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void PrepareNetwork(ref NetworkContainer container, ref ImageNetworkTrainSettings settings)
 		{
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before preparing network.");
@@ -98,7 +98,7 @@ namespace MotionRecognition
 		}
 
 		// Start actual training of the network.
-		public static void Train(ref ImageNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void Train(ref NetworkContainer container, ref ImageNetworkTrainSettings settings)
 		{
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before training network.");
@@ -164,7 +164,8 @@ namespace MotionRecognition
 			}
 		}
 
-		public static void VerifyData(ref ImageNetworkTrainSettings settings)
+		// Test if all inputs are valid.
+		public static void TestForErrors(ref ImageNetworkTrainSettings settings)
 		{
 			if (!Directory.Exists(settings.correctInputDirectory))
 				throw new DirectoryNotFoundException("Correct data directory was not found.");

@@ -38,14 +38,12 @@ namespace MotionRecognition
 	public static class EncogWrapper
 	{
 		// Setup a new network.
-		public static bool Instantiate(ref NetworkContainer container)
+		public static void Instantiate(ref NetworkContainer container)
 		{
 			if (container.network != null)
 				throw new IncorrectActionOrderException("Network has already been instantiated.");
 
 			container.network = new BasicNetwork();
-
-			return true;
 		}
 
 		// Add a custom layer to the network.

@@ -21,12 +21,12 @@ namespace MotionRecognition
 	public class CountNetworkTrainController : INetworkTrainController<CountNetworkTrainSettings>
 	{
 
-		public static void PrepareData(ref CountNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void PrepareData(ref NetworkContainer container, ref CountNetworkTrainSettings settings)
 		{
 			if (settings.trainSettings.dataset != null)
 				throw new IncorrectActionOrderException("This action has already been completed.");
 
-			VerifyData(ref settings);
+			TestForErrors(ref settings);
 
 			settings.trainSettings = new EncogTrainSettings
 			{
@@ -64,7 +64,7 @@ namespace MotionRecognition
 				correctFileCount);
 		}
 
-		public static void PrepareNetwork(ref CountNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void PrepareNetwork(ref NetworkContainer container, ref CountNetworkTrainSettings settings)
 		{
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before preparing network.");
@@ -99,7 +99,7 @@ namespace MotionRecognition
 			EncogWrapper.FinalizeNetwork(ref container);
 		}
 
-		public static void Train(ref CountNetworkTrainSettings settings, ref NetworkContainer container)
+		public static void Train(ref NetworkContainer container, ref CountNetworkTrainSettings settings)
 		{
 			if (settings.trainSettings.dataset == null)
 				throw new IncorrectActionOrderException("Prepare data before training network.");
@@ -157,7 +157,8 @@ namespace MotionRecognition
 			}
 		}
 
-		public static void VerifyData(ref CountNetworkTrainSettings settings)
+		// Test if input is valid.
+		public static void TestForErrors(ref CountNetworkTrainSettings settings)
 		{
 			if (!Directory.Exists(settings.correctInputDirectory))
 				throw new DirectoryNotFoundException("Correct data directory was not found.");

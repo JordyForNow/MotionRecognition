@@ -21,9 +21,9 @@ namespace MotionRecognition
 	{
 
 		// Prepare network predictor to predict the output of a dataset.
-		public static void PreparePredictor(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
+		public static void PreparePredictor(ref NetworkContainer container, ref CountNetworkPredictSettings settings)
 		{
-			verifyData(ref settings);
+			TestForErrors(ref settings);
 
 			EncogWrapper.LoadNetworkFromFS(ref container, settings.trainedNetwork);
 
@@ -58,7 +58,7 @@ namespace MotionRecognition
 		}
 
 		// Predict the output of a dataset using an existing network.
-		public static bool Predict(ref CountNetworkPredictSettings settings, ref NetworkContainer container)
+		public static bool Predict(ref NetworkContainer container, ref CountNetworkPredictSettings settings)
 		{
 
 			if (settings.predictSettings.data == null)
@@ -68,8 +68,8 @@ namespace MotionRecognition
 
 		}
 
-		// Verify that all inputs are valid.
-		private static void VerifyData(ref CountNetworkPredictSettings settings)
+		// Test if all inputs are valid.
+		private static void TestForErrors(ref CountNetworkPredictSettings settings)
 		{
 
 			if (!File.Exists(settings.trainedNetwork))

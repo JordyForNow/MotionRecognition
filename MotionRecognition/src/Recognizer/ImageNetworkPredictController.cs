@@ -19,9 +19,9 @@ namespace MotionRecognition
 	{
 
 		// Prepare input data for prediction.
-		public static void PreparePredictor(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
+		public static void PreparePredictor(ref NetworkContainer container, ref ImageNetworkPredictSettings settings)
 		{
-			VerifyData(ref settings);
+			TestForErrors(ref settings);
 
 			EncogWrapper.LoadNetworkFromFS(ref container, settings.trainedNetwork);
 
@@ -58,7 +58,7 @@ namespace MotionRecognition
 		}
 
 		// Predict output for a given input.
-		public static bool Predict(ref ImageNetworkPredictSettings settings, ref NetworkContainer container)
+		public static bool Predict(ref NetworkContainer container, ref ImageNetworkPredictSettings settings)
 		{
 			if (settings.predictSettings.data == null)
 				throw new IncorrectActionOrderException("Prepare predictor before predicting.");
@@ -66,8 +66,8 @@ namespace MotionRecognition
 			return EncogWrapper.Predict(ref container, ref settings.predictSettings);
 		}
 
-		// Verify if input data is valid.
-		private static void VerifyData(ref ImageNetworkPredictSettings settings)
+		// Test if input data is valid.
+		private static void TestForErrors(ref ImageNetworkPredictSettings settings)
 		{
 			if (!File.Exists(settings.trainedNetwork))
 				throw new FileNotFoundException("Trained network was not found.");
