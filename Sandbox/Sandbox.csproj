@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InputManipulation\InputManipulation.csproj" />
     <ProjectReference Include="..\MotionRecognition\MotionRecognition.csproj" />
   </ItemGroup>
   <ItemGroup>
