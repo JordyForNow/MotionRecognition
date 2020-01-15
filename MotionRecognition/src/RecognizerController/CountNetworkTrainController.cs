@@ -167,7 +167,7 @@ namespace MotionRecognition
 		public static void TestForErrors(ref CountNetworkTrainSettings settings)
 		{
 			if (!Directory.Exists(settings.correctInputDirectory))
-				throw new DirectoryNotFoundException("Correct data directory was not found. " + settings.correctInputDirectory);
+				throw new DirectoryNotFoundException("Correct data directory was not found.");
 
 			if (!Directory.Exists(settings.incorrectInputDirectory))
 				throw new DirectoryNotFoundException("Incorrect data directory was not found.");
