@@ -22,7 +22,7 @@ NetworkContainer container = new NetworkContainer
 };
 ```
 ### Training a network
-The library currently has two methods of using data to train and use a Neural Net. ImageBased and CountBased methods, the image based method transforms the input into a 3D-matrix and uses this as input for the network. The count based method retrieves a specific count of samples from the original input, it does this by calculating an interval at which it takes data out from the original set. 
+The library currently has two methods of using data to train and use a Neural Net. ImageBased and CountBased methods, the image based method transforms the input into a 2D-matrix and uses this as input for the network. The count based method retrieves a specific count of samples from the original input, it does this by calculating an interval at which it takes data out from the original set. 
 
 For both methods a seperate controller has been created, to use either of the methods the corresponding controller can be picked. (ImageNetworkController or CountNetworkController) 
 
