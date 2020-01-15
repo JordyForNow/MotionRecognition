@@ -56,7 +56,7 @@ namespace MotionRecognition
 				data = countTransformer.GetNeuralInput(countSettings)
 			};
 
-			if (data.Length != container.network.InputCount)
+			if (settings.predictSettings.data.Length != container.network.InputCount)
 				throw new NoNetworkMatchException("Sample count doesn't match network input count.");
 
 		}
