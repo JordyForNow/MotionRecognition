@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+    branches: 
+      - master
+      - dev
+      - inputCreation
+      - Encog
+  pull_request:
+    branches: 
+      - master
+      - dev
+          
+
+jobs:
+  build_3-1-100:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+    - name: Build with dotnet
+      run: dotnet build
+      
+  build-_3-0-100:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.100
+    - name: Build with dotnet
+      run: dotnet build
+    
+  build_2-2-103:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.103
+    - name: Build with dotnet
+      run: dotnet build
+    
