@@ -1,4 +1,5 @@
 # Motion Recognition Library
+#### [![GitHub Actions status | sdras/awesome-actions](https://github.com/sdras/awesome-actions/workflows/Lint%20Awesome%20List/badge.svg)](https://github.com/sdras/awesome-actions/actions?workflow=Lint+Awesome+List)
 
 ## Installation
 To install the Motion Recognition library you should download the latest release from the [releases](https://github.com/JordyForNow/KBS-SE3_VR-Rehabilitation-Data/releases) page.
