@@ -69,7 +69,7 @@ CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
   predictData = @"/path/to/predict/data.csv",
 
   // number of input entries
-  networkInputSize = 10
+  sampleCount = 10
 };
 ```
 
