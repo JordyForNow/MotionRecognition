@@ -7,8 +7,8 @@ A release includes the MotionRecognition and the MotionRecognitionHelper DLL's. 
 Once downloaded you can add the DLL's to your .NET project, they are not available in NuGet and will require a manual installation. (Check the Microsoft documention to see how to add DLLs manually)
 
 ### Dependencies
-..* [encog-dotnet-core](https://github.com/jeffheaton/encog-dotnet-core) is needed for the neural net, it's available in the NuGet Package Manager. To use this package you will need to run it on the windows platform.
-..* .NET core 2.2.103 or higher
+* [encog-dotnet-core](https://github.com/jeffheaton/encog-dotnet-core) is needed for the neural net, it's available in the NuGet Package Manager. To use this package you will need to run it on the windows platform.
+* .NET core 2.2.103 or higher
 
 ## Setup
 To get started with the neural network you will need a NetworkContainer, this will hold and manage the neural net.
