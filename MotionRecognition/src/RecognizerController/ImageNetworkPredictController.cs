@@ -12,7 +12,7 @@ namespace MotionRecognition
 		public string trainedNetwork;
 		public string predictData;
 
-		public uint networkInputSize;
+		public uint sampleCount;
 	};
 
 	public class ImageNetworkPredictController : INetworkPredictController<ImageNetworkPredictSettings>
