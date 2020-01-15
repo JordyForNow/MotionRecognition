@@ -39,7 +39,7 @@ CountNetworkTrainSettings trainSettings = new CountNetworkTrainSettings
   outputName = "NetworkName",
 
   // number of input entries
-	sampleCount = 10
+  sampleCount = 10
 };
 ```
 
@@ -69,7 +69,7 @@ CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
   predictData = @"/path/to/predict/data.csv",
 
   // number of input entries
-	networkInputSize = 10
+  networkInputSize = 10
 };
 ```
 
