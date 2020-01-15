@@ -1,6 +1,7 @@
 # Motion Recognition Library
 
 #### ![](https://github.com/JordyForNow/KBS-SE3_VR-Rehabilitation-Data/workflows/Build/badge.svg)
+#### ![](https://github.com/JordyForNow/KBS-SE3_VR-Rehabilitation-Data/workflows/Run%20UnitTests/badge.svg)
 
 ## Installation
 To install the Motion Recognition library you should download the latest release from the [releases](https://github.com/JordyForNow/KBS-SE3_VR-Rehabilitation-Data/releases) page.
