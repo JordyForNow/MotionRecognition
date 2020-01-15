@@ -108,7 +108,13 @@ namespace MotionRecognition
 				throw new IncorrectActionOrderException("Prepare network before training network.");
 
 			EncogWrapper.Train(ref container, ref settings.trainSettings);
-			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
+			if (settings.outputDirectory[settings.outputDirectory.Length - 1].Equals("/"))
+			{
+				EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
+				return;
+			}
+
+			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + "/" + settings.outputName + ".eg");
 		}
 
 		private static void ComputeData(
