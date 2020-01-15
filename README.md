@@ -1,5 +1,6 @@
 # Motion Recognition Library
-#### ![](https://github.com/actions/hello-world/workflows/Greet%20Everyone/badge.svg)
+
+#### ![](https://github.com/JordyForNow/KBS-SE3_VR-Rehabilitation-Data/actions/building.yml/badge.svg)
 
 ## Installation
 To install the Motion Recognition library you should download the latest release from the [releases](https://github.com/JordyForNow/KBS-SE3_VR-Rehabilitation-Data/releases) page.
