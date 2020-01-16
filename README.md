@@ -69,7 +69,10 @@ CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
   predictData = @"/path/to/predict/data.csv",
 
   // number of input entries
-  sampleCount = 10
+  sampleCount = 10,
+
+  // set threshold
+  predictSettings.threshold = 0.9
 };
 ```
 

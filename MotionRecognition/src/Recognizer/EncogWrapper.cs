@@ -28,12 +28,13 @@ namespace MotionRecognition
 		// Maximum error coefficiënt.
 		public double maxTrainingError;
 
+		public uint maxEpochCount;
 		public double[][] dataset;
 		public double[][] answers;
 	}
 
 	// Settings which are used while predicting with the network.
-	public struct EncogPredictSettings
+	public class EncogPredictSettings
 	{
 		public double threshold;
 		public double[] data;
@@ -139,7 +140,7 @@ namespace MotionRecognition
 			if (container.verbose) Console.WriteLine("Raw output: " + output[0]);
 
 			// Return true or false according to threshold.
-			return (1 - output[0] < settings.threshold);
+			return (output[0] >= settings.threshold);
 		}
 	}
 }
