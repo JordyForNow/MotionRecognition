@@ -35,10 +35,11 @@ CountNetworkTrainSettings trainSettings = new CountNetworkTrainSettings
   correctInputDirectory = @"/path/to/CorrectData",
   incorrectInputDirectory = @"/path/to/IncorrectTestData",
 
+  // Where the network should be saved after training
   outputDirectory = @"/path/to/DataOut",
   outputName = "NetworkName",
 
-  // number of input entries
+  // Number of input entries
   sampleCount = 10
 };
 ```
@@ -65,14 +66,20 @@ After the network has been trained it can be used to predict if supplied data is
 ```
 CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
 {
+  // Path to the previously trained network
   trainedNetwork = @"/path/to/network.eg",
+
+  // Path to data you want the network to give an outcome for
   predictData = @"/path/to/predict/data.csv",
 
-  // number of input entries
+  // Number of input entries (neurons in the network)
   sampleCount = 10,
 
-  // set threshold
-  predictSettings.threshold = 0.9
+  // Set threshold, value which determines when an outcome is acceptable
+  predictSettings = new EncogPredictSettings
+	{
+	  threshold = 0.99
+	}
 };
 ```
 
