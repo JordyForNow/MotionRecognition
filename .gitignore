@@ -14,5 +14,8 @@
 # Skip movement files
 **.csv
 
+# Don't skip UnitTest files
+!/UnitTests/**/*.csv
+
 # Skip model files
 **.eg

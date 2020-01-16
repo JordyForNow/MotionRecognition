@@ -8,36 +8,53 @@ namespace Sandbox
 	{
 		static void Main(string[] args)
 		{
-			NetworkContainer container = new NetworkContainer
-			{
-				verbose = true
-			};
+			// Main program.
+			// A Network container is used to control and hold a network
+            NetworkContainer container = new NetworkContainer
+            {
+                verbose = true
+            };
 
-			ImageNetworkTrainSettings trainSettings = new ImageNetworkTrainSettings
-			{
-				correctInputDirectory = @"../../../CorrectTestData",
-				incorrectInputDirectory = @"../../../IncorrectTestData",
 
-				outputDirectory = @"../../../DataOut",
-				outputName = "ModelTwo",
+            // Used to declare settings for a particular network
+            CountNetworkTrainSettings trainSettings = new CountNetworkTrainSettings
+            {
+                correctInputDirectory = @"./Data_Correct",
+                incorrectInputDirectory = @"./Data_Incorrect",
+                outputDirectory = @"./Data_Out",
+                outputName = "Handleiding",
 
-				sampleCount = 10
-			};
+                sampleCount = 20
+            };
 
-			ImageNetworkTrainController.PrepareData(ref container, ref trainSettings);
-			ImageNetworkTrainController.PrepareNetwork(ref container, ref trainSettings);
-			ImageNetworkTrainController.Train(ref container, ref trainSettings);
+            CountNetworkTrainController.PrepareData(ref container, ref trainSettings);
+            CountNetworkTrainController.PrepareNetwork(ref container, ref trainSettings);
+            CountNetworkTrainController.Train(ref container, ref trainSettings);
 
-			ImageNetworkPredictSettings predictSettings = new ImageNetworkPredictSettings
-			{
-				trainedNetwork = @"../../../DataOut/ModelTwo.eg",
-				predictData = @"../../../testCor/0-2.csv",
+            CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
+            {
 
-				networkInputSize = 10
-			};
+                trainedNetwork = @"./Data_Out/Handleiding.eg",
+                predictData = @"./Data_Predict/data.csv",
+                sampleCount = 20,
 
-			ImageNetworkPredictController.PreparePredictor(ref container, ref predictSettings);
-			Console.WriteLine(ImageNetworkPredictController.Predict(ref container, ref predictSettings));
+				predictSettings = new EncogPredictSettings 
+				{
+					threshold = 0.94
+				}
+            };
+
+            CountNetworkPredictController.PreparePredictor(ref container, ref predictSettings);
+            Console.Write(CountNetworkPredictController.Predict(ref container, ref predictSettings));
+
+            Console.WriteLine(predictSettings.predictSettings.threshold);
+
+            predictSettings.trainedNetwork = @"./Data_Out/Handleiding.eg";
+            predictSettings.predictData = @"./Data_Predict/0-4.csv";
+
+            CountNetworkPredictController.PreparePredictor(ref container, ref predictSettings);
+            Console.Write(CountNetworkPredictController.Predict(ref container, ref predictSettings));
+            Console.WriteLine(predictSettings.predictSettings.threshold);
 		}
 	}
 }

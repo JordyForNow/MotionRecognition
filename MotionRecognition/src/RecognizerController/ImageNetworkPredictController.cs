@@ -7,12 +7,14 @@ namespace MotionRecognition
 {
 	public struct ImageNetworkPredictSettings
 	{
+		// Filled by the preparePredictor.
 		public EncogPredictSettings predictSettings;
-
+		// Location of the to use network.
 		public string trainedNetwork;
+		// Location of the prediction data.
 		public string predictData;
 
-		public uint networkInputSize;
+		public uint sampleCount;
 	};
 
 	public class ImageNetworkPredictController : INetworkPredictController<ImageNetworkPredictSettings>
@@ -49,11 +51,13 @@ namespace MotionRecognition
 			};
 			ImageTransformer imageTransformer = new ImageTransformer();
 
-			settings.predictSettings = new EncogPredictSettings
-			{
-				threshold = 0.5,
-				data = imageTransformer.GetNeuralInput(imageSettings)
-			};
+
+            if (settings.predictSettings == null) settings.predictSettings = new EncogPredictSettings();
+            
+            settings.predictSettings.data = imageTransformer.GetNeuralInput(imageSettings);
+
+			if (settings.predictSettings.data.Length != container.network.InputCount)
+				throw new NoNetworkMatchException("Sample count doesn't match network input count.");
 
 		}
 

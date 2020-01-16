@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace MotionRecognition
 {
-    public enum LeapMotionJoint
+	// Context given to all columns in a CSV file.
+	public enum LeapMotionJoint
     {
         PALM = 0,
         THUMB_0 = 1,
@@ -28,21 +29,22 @@ namespace MotionRecognition
         LITTLE_3 = 20
     }
 
-    // Settings struct with properties needed for the functions in the transformer.
-    public struct ImageTransformerSettings
-    {
-        public uint size;
-        public Sample<Vector3>[] samples;
-
-        // Which items are used of the sample column list.
-        public LeapMotionJoint[] focusJoints;
+	// Settings struct with properties needed for the functions in the transformer.
+	public struct ImageTransformerSettings
+	{
+		// Size of the image in pixels size*size.
+		public uint size;
+		// List of samples which needs to be transformed.
+		public Sample<Vector3>[] samples;
+		// Which items are used of the sample column list.
+		public LeapMotionJoint[] focusJoints;
     }
 
 	// Transforms sample list to a 3D-matrix.
     public class ImageTransformer : IMovementTransformer<ImageTransformerSettings>
-    {
-        // Remap a value to another range.
-        private float Remap(float value, float from1, float to1, float from2, float to2)
+	{
+		// <summary>Remap a value to another range.
+		private float Remap(float value, float from1, float to1, float from2, float to2)
         {
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }

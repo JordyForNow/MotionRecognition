@@ -14,22 +14,27 @@ namespace MotionRecognition
 	// Layer settings which holds information to generate custom layers.
 	public struct EncogLayerSettings
 	{
+		// Activation Function for example backpropagation.
 		public IActivationFunction activationFunction;
+		// Whether the layer is biased.
 		public bool hasBias;
+		// How many neurons need to be created in the layer.
 		public int neuronCount;
 	}
 
 	// Settings which are used while training the network.
 	public struct EncogTrainSettings
 	{
+		// Maximum error coefficiënt.
 		public double maxTrainingError;
+
 		public uint maxEpochCount;
 		public double[][] dataset;
 		public double[][] answers;
 	}
 
 	// Settings which are used while predicting with the network.
-	public struct EncogPredictSettings
+	public class EncogPredictSettings
 	{
 		public double threshold;
 		public double[] data;
@@ -135,7 +140,7 @@ namespace MotionRecognition
 			if (container.verbose) Console.WriteLine("Raw output: " + output[0]);
 
 			// Return true or false according to threshold.
-			return (1 - output[0] < settings.threshold);
+			return (output[0] >= settings.threshold);
 		}
 	}
 }

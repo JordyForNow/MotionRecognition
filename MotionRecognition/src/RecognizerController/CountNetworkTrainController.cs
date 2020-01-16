@@ -8,13 +8,17 @@ namespace MotionRecognition
 
 	public struct CountNetworkTrainSettings
 	{
+		// Filled by the prepareNetwork function.
 		public EncogTrainSettings trainSettings;
+		// The directory where the correct data is being loaded from.
 		public string correctInputDirectory;
+		// The directory where the incorrect data is being loaded from.
 		public string incorrectInputDirectory;
-
+		// The directory where the outpufile is placed.
 		public string outputDirectory;
+		// The name of the outputfile
 		public string outputName;
-
+		// The total of samples to be included.
 		public uint sampleCount;
 	}
 
@@ -108,7 +112,13 @@ namespace MotionRecognition
 				throw new IncorrectActionOrderException("Prepare network before training network.");
 
 			EncogWrapper.Train(ref container, ref settings.trainSettings);
-			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
+			if (settings.outputDirectory[settings.outputDirectory.Length - 1].Equals("/"))
+			{
+				EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + settings.outputName + ".eg");
+				return;
+			}
+
+			EncogWrapper.SaveNetworkToFS(ref container, settings.outputDirectory + "/" + settings.outputName + ".eg");
 		}
 
 		private static void ComputeData(
