@@ -49,7 +49,7 @@ namespace MotionRecognition
 			};
 			CountBasedTransformer countTransformer = new CountBasedTransformer();
 
-			if (settings.predictSettings == null)
+			if (settings.predictSettings.threshold.Equals(null))
 			{
 				settings.predictSettings = new EncogPredictSettings
 				{

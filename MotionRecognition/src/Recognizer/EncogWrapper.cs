@@ -34,7 +34,7 @@ namespace MotionRecognition
 	}
 
 	// Settings which are used while predicting with the network.
-	public class EncogPredictSettings
+	public struct EncogPredictSettings
 	{
 		public double threshold;
 		public double[] data;
