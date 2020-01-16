@@ -98,11 +98,9 @@ namespace UnitTests
 		public void ImageTransformerReturns3DImage()
 		{
 			var image = imageTransformer.GetNeuralInput(imageSettings);
-			uint expectedLength = 0;
-			// One dimensional Image.
-			expectedLength += imageSettings.size * imageSettings.size
-				// Top and Front View.
-				* 2;
+			// One dimensional Image of top and front view.
+			uint expectedLength = imageSettings.size * imageSettings.size * 2;
+			
 			Assert.IsTrue(image.Length == expectedLength);
 		}
 	}

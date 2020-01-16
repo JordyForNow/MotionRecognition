@@ -52,7 +52,13 @@ namespace MotionRecognition
 			ImageTransformer imageTransformer = new ImageTransformer();
 
 
-			if (settings.predictSettings == null) settings.predictSettings = new EncogPredictSettings();
+			if (settings.predictSettings == null)
+			{
+				settings.predictSettings = new EncogPredictSettings
+				{
+					threshold = 0.9
+				};
+			}
 
 			settings.predictSettings.data = imageTransformer.GetNeuralInput(imageSettings);
 
