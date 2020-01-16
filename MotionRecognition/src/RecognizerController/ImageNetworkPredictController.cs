@@ -47,7 +47,7 @@ namespace MotionRecognition
 			{
 				focusJoints = (LeapMotionJoint[])Enum.GetValues(typeof(LeapMotionJoint)),
 				samples = data,
-				size = 10
+				size = settings.sampleCount
 			};
 			ImageTransformer imageTransformer = new ImageTransformer();
 
