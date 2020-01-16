@@ -1,8 +1,4 @@
-﻿﻿using MotionRecognition;
-using MotionRecognitionHelper;
-using System;
-
-namespace Sandbox
+﻿namespace Sandbox
 {
 	class Program
 	{

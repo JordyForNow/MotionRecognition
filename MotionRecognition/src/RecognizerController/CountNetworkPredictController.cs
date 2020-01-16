@@ -13,8 +13,8 @@ namespace MotionRecognition
 		public string trainedNetwork;
 		// Location of the to predict data.
 		public string predictData;
-		// Size of the input layer.
-		public uint networkInputSize;
+
+		public uint sampleCount;
 	};
 
 	public class CountNetworkPredictController : INetworkPredictController<CountNetworkPredictSettings>
@@ -45,7 +45,7 @@ namespace MotionRecognition
 			IntervalBasedTransformerSettings countSettings = new IntervalBasedTransformerSettings
 			{
 				sampleList = data,
-				count = settings.networkInputSize
+				count = settings.sampleCount
 			};
 			CountBasedTransformer countTransformer = new CountBasedTransformer();
 
@@ -54,6 +54,10 @@ namespace MotionRecognition
 				threshold = 0.5,
 				data = countTransformer.GetNeuralInput(countSettings)
 			};
+
+			if (settings.predictSettings.data.Length != container.network.InputCount)
+				throw new NoNetworkMatchException("Sample count doesn't match network input count.");
+
 		}
 
 		// Predict the output of a dataset using an existing network.
