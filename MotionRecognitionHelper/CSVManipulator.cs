@@ -45,7 +45,7 @@ namespace MotionRecognitionHelper
 				// Mutate a single csv file.
 				if (settings.verbose)
 					Console.WriteLine($"From: {settings.dataFile} to {settings.outputFolder}");
-				
+
 				ChangeOriginalFile(ref settings);
 				MutateFile(ref settings);
 			}

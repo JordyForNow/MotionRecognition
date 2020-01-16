@@ -52,9 +52,9 @@ namespace MotionRecognition
 			ImageTransformer imageTransformer = new ImageTransformer();
 
 
-            if (settings.predictSettings == null) settings.predictSettings = new EncogPredictSettings();
-            
-            settings.predictSettings.data = imageTransformer.GetNeuralInput(imageSettings);
+			if (settings.predictSettings == null) settings.predictSettings = new EncogPredictSettings();
+
+			settings.predictSettings.data = imageTransformer.GetNeuralInput(imageSettings);
 
 			if (settings.predictSettings.data.Length != container.network.InputCount)
 				throw new NoNetworkMatchException("Sample count doesn't match network input count.");

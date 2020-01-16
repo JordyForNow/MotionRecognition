@@ -1,4 +1,4 @@
-﻿﻿namespace MotionRecognition
+﻿namespace MotionRecognition
 {
 	public interface IParseable<T>
 	{

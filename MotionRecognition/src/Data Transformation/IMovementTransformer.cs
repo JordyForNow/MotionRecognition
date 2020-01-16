@@ -1,5 +1,5 @@
-namespace MotionRecognition
+﻿namespace MotionRecognition
 {
 	// Specifies transformer category.
-    public interface IMovementTransformer<T> : IInputTransformer<T> { }
+	public interface IMovementTransformer<T> : IInputTransformer<T> { }
 }
