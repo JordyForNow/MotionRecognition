@@ -7,9 +7,13 @@ namespace MotionRecognition
 {
 	public struct CSVLoaderSettings
 	{
+		// Path to the file that needs to be read.
 		public string filePath;
+		// Boolean whether the CSV file has a header.
 		public bool CSVHasHeader;
+		// Options to trim the rows from the top or bottomup.
 		public int trimUp, trimDown;
+		// Filters whether a column needs to be used.
 		public List<ICSVFilter> filters;
 	}
 

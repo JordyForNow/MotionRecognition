@@ -10,7 +10,7 @@ A release includes the MotionRecognition and the MotionRecognitionHelper DLL's. 
 Once downloaded you can add the DLL's to your .NET project, they are not available in NuGet and will require a manual installation. (Check the Microsoft documention to see how to add DLLs manually)
 
 #### Dependencies
-* [encog-dotnet-core](https://github.com/jeffheaton/encog-dotnet-core) is needed for the neural net, it's available in the NuGet Package Manager. To use this package you will need to run it on the windows platform.
+* [encog-dotnet-core](https://github.com/jeffheaton/encog-dotnet-core) is needed for the neural net, it's available in the NuGet Package Manager. 
 * .NET core 2.2.103 or higher
 
 ## Setup
@@ -35,10 +35,11 @@ CountNetworkTrainSettings trainSettings = new CountNetworkTrainSettings
   correctInputDirectory = @"/path/to/CorrectData",
   incorrectInputDirectory = @"/path/to/IncorrectTestData",
 
+  // Where the network should be saved after training
   outputDirectory = @"/path/to/DataOut",
   outputName = "NetworkName",
 
-  // number of input entries
+  // Number of input entries
   sampleCount = 10
 };
 ```
@@ -65,11 +66,20 @@ After the network has been trained it can be used to predict if supplied data is
 ```
 CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
 {
+  // Path to the previously trained network
   trainedNetwork = @"/path/to/network.eg",
+
+  // Path to data you want the network to give an outcome for
   predictData = @"/path/to/predict/data.csv",
 
-  // number of input entries
-  sampleCount = 10
+  // Number of input entries (neurons in the network)
+  sampleCount = 10,
+
+  // Set threshold, value which determines when an outcome is acceptable (if not set a default of 0.9 will be used)
+  predictSettings = new EncogPredictSettings
+	{
+	  threshold = 0.93
+	}
 };
 ```
 

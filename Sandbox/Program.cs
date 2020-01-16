@@ -1,4 +1,5 @@
-﻿namespace Sandbox
+﻿
+namespace Sandbox
 {
 	class Program
 	{
