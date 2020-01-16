@@ -75,10 +75,10 @@ CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
   // Number of input entries (neurons in the network)
   sampleCount = 10,
 
-  // Set threshold, value which determines when an outcome is acceptable
+  // Set threshold, value which determines when an outcome is acceptable (if not set a default of 0.9 will be used)
   predictSettings = new EncogPredictSettings
 	{
-	  threshold = 0.99
+	  threshold = 0.93
 	}
 };
 ```
