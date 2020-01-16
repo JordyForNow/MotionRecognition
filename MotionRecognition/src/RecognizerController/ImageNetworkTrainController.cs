@@ -18,8 +18,8 @@ namespace MotionRecognition
 		public string outputDirectory;
 		// Name of the network file.
 		public string outputName;
-		// Total of samples to be used.
-		public uint sampleCount;
+		// Size of input image.
+		public uint imgSize;
 	}
 
 	public class ImageNetworkTrainController : INetworkTrainController<ImageNetworkTrainSettings>
@@ -47,7 +47,7 @@ namespace MotionRecognition
 
 			// Compute correct training data.
 			ComputeData(
-				settings.sampleCount,
+				settings.imgSize,
 				settings.correctInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
@@ -56,7 +56,7 @@ namespace MotionRecognition
 
 			// Compute incorrect training data.
 			ComputeData(
-				settings.sampleCount,
+				settings.imgSize,
 				settings.incorrectInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,

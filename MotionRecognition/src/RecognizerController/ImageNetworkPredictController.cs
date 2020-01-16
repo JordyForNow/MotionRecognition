@@ -13,8 +13,8 @@ namespace MotionRecognition
 		public string trainedNetwork;
 		// Location of the prediction data.
 		public string predictData;
-
-		public uint sampleCount;
+		// Size of input image.
+		public uint imgSize;
 	};
 
 	public class ImageNetworkPredictController : INetworkPredictController<ImageNetworkPredictSettings>
@@ -47,7 +47,7 @@ namespace MotionRecognition
 			{
 				focusJoints = (LeapMotionJoint[])Enum.GetValues(typeof(LeapMotionJoint)),
 				samples = data,
-				size = settings.sampleCount
+				size = settings.imgSize
 			};
 			ImageTransformer imageTransformer = new ImageTransformer();
 
