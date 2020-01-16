@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MotionRecognition
@@ -9,9 +7,11 @@ namespace MotionRecognition
 
 	public struct CountNetworkPredictSettings
 	{
+		// Filled by the preparePredictor Function.
 		public EncogPredictSettings predictSettings;
-
+		// Location of the to be loaded network.
 		public string trainedNetwork;
+		// Location of the to predict data.
 		public string predictData;
 
 		public uint sampleCount;
@@ -20,7 +20,6 @@ namespace MotionRecognition
 	public class CountNetworkPredictController : INetworkPredictController<CountNetworkPredictSettings>
 	{
 
-		// Prepare network predictor to predict the output of a dataset.
 		public static void PreparePredictor(ref NetworkContainer container, ref CountNetworkPredictSettings settings)
 		{
 			TestForErrors(ref settings);
@@ -50,11 +49,15 @@ namespace MotionRecognition
 			};
 			CountBasedTransformer countTransformer = new CountBasedTransformer();
 
-			settings.predictSettings = new EncogPredictSettings
+			if (settings.predictSettings.threshold.Equals(null))
 			{
-				threshold = 0.5,
-				data = countTransformer.GetNeuralInput(countSettings)
-			};
+				settings.predictSettings = new EncogPredictSettings
+				{
+					threshold = 0.9
+				};
+			}
+
+			settings.predictSettings.data = countTransformer.GetNeuralInput(countSettings);
 
 			if (settings.predictSettings.data.Length != container.network.InputCount)
 				throw new NoNetworkMatchException("Sample count doesn't match network input count.");

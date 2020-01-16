@@ -8,14 +8,18 @@ namespace MotionRecognition
 
 	public struct ImageNetworkTrainSettings
 	{
+		// Filled by the prepareNetwork function.
 		public EncogTrainSettings trainSettings;
+		// Location of the correct input data.
 		public string correctInputDirectory;
+		// Location of the incorrect input data.
 		public string incorrectInputDirectory;
-
+		// Location of the location the network needs to be saved to.
 		public string outputDirectory;
+		// Name of the network file.
 		public string outputName;
-
-		public uint sampleCount;
+		// Size of input image.
+		public uint imgSize;
 	}
 
 	public class ImageNetworkTrainController : INetworkTrainController<ImageNetworkTrainSettings>
@@ -43,7 +47,7 @@ namespace MotionRecognition
 
 			// Compute correct training data.
 			ComputeData(
-				settings.sampleCount,
+				settings.imgSize,
 				settings.correctInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,
@@ -52,7 +56,7 @@ namespace MotionRecognition
 
 			// Compute incorrect training data.
 			ComputeData(
-				settings.sampleCount,
+				settings.imgSize,
 				settings.incorrectInputDirectory,
 				ref settings.trainSettings.dataset,
 				ref settings.trainSettings.answers,

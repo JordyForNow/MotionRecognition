@@ -6,9 +6,11 @@ namespace MotionRecognition
 	// Settings struct with properties needed for the functions in the transformer.
 	public struct IntervalBasedTransformerSettings
 	{
+		// Samples to transform.
 		public Sample<Vector3>[] sampleList;
-
+		// Interval used.
 		public double interval { get; set; }
+		// For the countbased a diffrent context is provided.
 		public double count
 		{
 			get

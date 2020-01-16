@@ -4,31 +4,31 @@ using NUnit.Framework;
 
 namespace UnitTests
 {
-    public class InputTransformerTests
-    {
-        string dataPath = @"../../../Data/";
-        IMovementTransformer<IntervalBasedTransformerSettings> intervalTransformer;
-        IMovementTransformer<IntervalBasedTransformerSettings> countTransformer;
-        IMovementTransformer<ImageTransformerSettings> imageTransformer;
-        IntervalBasedTransformerSettings intervalSettings;
-        IntervalBasedTransformerSettings countSettings;
-        ImageTransformerSettings imageSettings;
+	public class InputTransformerTests
+	{
+		string dataPath = @"../../../Data/";
+		IMovementTransformer<IntervalBasedTransformerSettings> intervalTransformer;
+		IMovementTransformer<IntervalBasedTransformerSettings> countTransformer;
+		IMovementTransformer<ImageTransformerSettings> imageTransformer;
+		IntervalBasedTransformerSettings intervalSettings;
+		IntervalBasedTransformerSettings countSettings;
+		ImageTransformerSettings imageSettings;
 
-        [SetUp]
-        public void Setup()
-        {
-            // Setup loader.
-            CSVLoaderSettings settings = new CSVLoaderSettings();
-            settings.filePath = dataPath + "data.csv";
-            settings.trimUp = 1;
-            settings.trimDown = 0;
+		[SetUp]
+		public void Setup()
+		{
+			// Setup loader.
+			CSVLoaderSettings settings = new CSVLoaderSettings();
+			settings.filePath = dataPath + "data.csv";
+			settings.trimUp = 1;
+			settings.trimDown = 0;
 
-            List<ICSVFilter> filters = new List<ICSVFilter>(1);
-            ICSVFilter quaternions = new CSVEvenColumnFilter();
-            filters.Add(quaternions);
-            settings.filters = filters;
+			List<ICSVFilter> filters = new List<ICSVFilter>(1);
+			ICSVFilter quaternions = new CSVEvenColumnFilter();
+			filters.Add(quaternions);
+			settings.filters = filters;
 
-            var data = CSVLoader<Vector3>.LoadData(ref settings);
+			var data = CSVLoader<Vector3>.LoadData(ref settings);
 
 			// Initialize IntervalBased Transformer settings.
 			intervalSettings = new IntervalBasedTransformerSettings
@@ -54,56 +54,54 @@ namespace UnitTests
 				size = 10
 			};
 			imageTransformer = new ImageTransformer();
-        }
+		}
 
-        [Test]
-        public void IntervalBasedTransformerReturnsValues()
-        {
-            Assert.IsNotEmpty(intervalTransformer.GetNeuralInput(intervalSettings));
-        }
+		[Test]
+		public void IntervalBasedTransformerReturnsValues()
+		{
+			Assert.IsNotEmpty(intervalTransformer.GetNeuralInput(intervalSettings));
+		}
 
-        [Test]
-        public void CountBasedTransformerReturnsValues()
-        {
-            Assert.IsNotEmpty(countTransformer.GetNeuralInput(countSettings));
-        }
+		[Test]
+		public void CountBasedTransformerReturnsValues()
+		{
+			Assert.IsNotEmpty(countTransformer.GetNeuralInput(countSettings));
+		}
 
-        [Test]
-        public void ImageTransformerReturnsValues()
-        {
-            Assert.IsNotEmpty(imageTransformer.GetNeuralInput(imageSettings));
-        }
+		[Test]
+		public void ImageTransformerReturnsValues()
+		{
+			Assert.IsNotEmpty(imageTransformer.GetNeuralInput(imageSettings));
+		}
 
-        [Test]
-        public void TransformerReturnDifferentResults()
-        {
-            Assert.AreNotEqual(intervalTransformer.GetNeuralInput(intervalSettings), countTransformer.GetNeuralInput(countSettings));
-        }
+		[Test]
+		public void TransformerReturnDifferentResults()
+		{
+			Assert.AreNotEqual(intervalTransformer.GetNeuralInput(intervalSettings), countTransformer.GetNeuralInput(countSettings));
+		}
 
-        [Test]
-        public void TransformerReturnEqualResults()
-        {
-            // 59 rows in data file, a run with count 5 should equal a run with an interval of 11.8 (59 / 5 = 11.8)
-            countSettings.count = 5;
-            double[] countTransformerResult = countTransformer.GetNeuralInput(countSettings);
+		[Test]
+		public void TransformerReturnEqualResults()
+		{
+			// 59 rows in data file, a run with count 5 should equal a run with an interval of 11.8 (59 / 5 = 11.8)
+			countSettings.count = 5;
+			double[] countTransformerResult = countTransformer.GetNeuralInput(countSettings);
 
-            intervalSettings.interval = 59d / 5d;
-            double[] intervalTransformerResult = intervalTransformer.GetNeuralInput(intervalSettings);
+			intervalSettings.interval = 59d / 5d;
+			double[] intervalTransformerResult = intervalTransformer.GetNeuralInput(intervalSettings);
 
-            Assert.AreEqual(countTransformerResult, intervalTransformerResult);
-        }
+			Assert.AreEqual(countTransformerResult, intervalTransformerResult);
+		}
 
-        // ImageFactory
-        [Test]
-        public void ImageTransformerReturns3DImage()
-        {
-            var image = imageTransformer.GetNeuralInput(imageSettings);
-            uint expectedLength = 0;
-            // One dimensional Image.
-            expectedLength += imageSettings.size * imageSettings.size
-                // Top and Front View.
-                * 2;
-            Assert.IsTrue(image.Length == expectedLength);
-        }
-    }
+		// ImageFactory
+		[Test]
+		public void ImageTransformerReturns3DImage()
+		{
+			var image = imageTransformer.GetNeuralInput(imageSettings);
+			// One dimensional Image of top and front view.
+			uint expectedLength = imageSettings.size * imageSettings.size * 2;
+			
+			Assert.IsTrue(image.Length == expectedLength);
+		}
+	}
 }
