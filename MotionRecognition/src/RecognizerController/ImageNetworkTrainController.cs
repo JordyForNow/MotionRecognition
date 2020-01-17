@@ -89,6 +89,7 @@ namespace MotionRecognition
 			};
 
 			EncogWrapper.AddLayer(ref container, ref hiddenLayerOneSettings);
+			EncogWrapper.AddLayer(ref container, ref hiddenLayerOneSettings);
 
 			EncogLayerSettings outputLayerSettings = new EncogLayerSettings
 			{
@@ -99,6 +100,7 @@ namespace MotionRecognition
 
 			EncogWrapper.AddLayer(ref container, ref outputLayerSettings);
 			EncogWrapper.FinalizeNetwork(ref container);
+
 		}
 
 		// Start actual training of the network.
