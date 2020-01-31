@@ -33,8 +33,8 @@ namespace Sandbox
             CountNetworkPredictSettings predictSettings = new CountNetworkPredictSettings
             {
 
-                trainedNetwork = @"./Data_Out/Handleiding.eg",
-                predictData = @"./Data_Predict/data.csv",
+                trainedNetwork = @"./Data_Out/DemoNetwork.eg",
+                predictData = @"./Data_Predict/good.csv",
                 sampleCount = 20,
 
                 predictSettings = new EncogPredictSettings
