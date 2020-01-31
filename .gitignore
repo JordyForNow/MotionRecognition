@@ -12,7 +12,7 @@
 **/obj
 
 # Skip movement files
-**.csv
+#**.csv
 
 # Don't skip UnitTest files
 !/UnitTests/**/*.csv
